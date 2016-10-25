@@ -26,21 +26,23 @@ class WorkerTest extends \Codeception\TestCase\Test
     public function testRegister()
     {
 		$form = new RegisterForm([
-			'mobile' => '',
+			'email' => '',
 			'password' => '',
 		]);
 		$this->assertFalse($form->validate());
-		$this->assertArrayHasKey('mobile', $form->errors, '包含手机的错误');
+		$this->assertArrayHasKey('email', $form->errors, '包含邮箱的错误');
 		$this->assertArrayHasKey('password', $form->errors, '包含密码的错误');
 		
-		$form->mobile = '13800138099';
+		$form->email = 'xx@yy.com';
 		$form->password = 'abc';
 		$this->assertFalse($form->validate());
 		$this->assertArrayHasKey('password', $form->errors, '包含密码的错误');
-		$this->assertArrayNotHasKey('mobile', $form->errors, '不会包含手机号的错误');
+		$this->assertArrayNotHasKey('email', $form->errors, '不会包含邮箱的错误');
 		
 		$form->password = '121212';
 		$worker = $form->register();
-		$this->assertInstanceOf(Worker::className(), $worker);
+		$this->assertInstanceOf(Worker::className(), $worker, '注册后应返回worker实例');
+		
+		$this->tester->seeInDatabase(Worker::tableName(), ['id' => $worker->id], '注册后数据库应该有这个ID的记录');
     }
 }

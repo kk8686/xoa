@@ -29,10 +29,6 @@
 				}
 			}, aOption);
 			
-			if(aUsingOption.type == 'post' && !aUsingOption.data._csrf){
-				aUsingOption.data._csrf = $('meta[name="csrf-token"]').attr('content');
-			}
-			
 			return $.ajax(aUsingOption);
 		},
 		

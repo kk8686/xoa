@@ -11,7 +11,7 @@ class RegisterForm extends \yii\base\Model{
 	/**
 	 * @var string 邮箱
 	 */
-	public $mobile = '';
+	public $email = '';
 	/**
 	 * @var string 密码
 	 */
@@ -19,9 +19,9 @@ class RegisterForm extends \yii\base\Model{
 	
 	public function rules(){
 		return [
-			[['mobile', 'password'], 'required'],
-			['mobile', 'xoa\common\ext\validators\MobileValidator'],
-			['mobile', 'unique', 'targetClass' => 'xoa\common\models\Worker'],
+			[['email', 'password'], 'required'],
+			['email', 'email'],
+			['email', 'unique', 'targetClass' => 'xoa\common\models\Worker'],
 			['password', 'string', 'length' => [6, 16]],
 		];
 	}
@@ -29,12 +29,12 @@ class RegisterForm extends \yii\base\Model{
 	public function register() : Worker{
 		$passwordInfo = Worker::generatePassword($this->password);
 		$worker = new Worker([
-			'mobile' => $this->mobile,
-			'email' => '',
-			'name' => '',
+			'email' => $this->email,
 			'password_hash' => $passwordInfo['password_hash'],
 			'hash_key' => $passwordInfo['hash_key'],
 			'add_time' => date('Y-m-d'),
+			'mobile' => '',
+			'name' => '',
 		]);
 		if($worker->save()){
 			return $worker;

@@ -1,35 +1,28 @@
 <?php
-$serverPath = dirname(__DIR__);
 $config = [
     'id' => 'basic',
-    'basePath' => $serverPath,
+    'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
 	'aliases' => [
-		'@webRoot' => $serverPath . '/../../web/home',
+		'@webPath' => PROJECT_PATH . '/web/home',
 	],
+	'controllerNamespace' => 'xoa\home\controllers',
     'components' => [
         'request' => [
-            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '121212',
             'enableCsrfValidation' => false,
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'user' => [
-            'identityClass' => 'xoa\models\User',
+        'worker' => [
+			'class' => 'yii\web\User',
+            'identityClass' => 'xoa\common\models\Worker',
             'enableAutoLogin' => true,
-			'loginUrl' => '/user/login.html',
+			'loginUrl' => '/login.html',
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
-        ],
-        'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
-            'useFileTransport' => true,
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -37,6 +30,7 @@ $config = [
                 [
                     'class' => 'xoa\common\ext\log\FileLog',
                     'levels' => ['error', 'warning', 'info'],
+					'logFile' => '@runtime/logs/' . date('Y-m-d') . '.log'
                 ],
             ],
         ],
@@ -45,9 +39,13 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-				'user/register.do' => 'user/register',
-				'user/login.do' => 'user/login',
-				'user/login.html' => 'user/show-login',
+				'worker/register.do' => 'worker/register',
+				'worker/login.do' => 'worker/login',
+				'worker/check-login.do' => 'worker/check-login',
+				
+				'project/list.json' => 'project/list',
+				
+				'<page:\w+>.htm' => 'worker/check-login',
             ],
         ],
     ],

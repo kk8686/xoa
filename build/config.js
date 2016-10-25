@@ -3,13 +3,14 @@ var path = require('path');
 module.exports = {
 	projects : {
 		1 : { //前台
-			src : path.resolve('../frontent/src-frontent'),
-			dist : path.resolve('../web/frontent'),
-			mockData : path.resolve('../frontent/mock-frontent'),
+			src : path.resolve('../frontent/src-home'),
+			dist : path.resolve('../web/home'),
+			mockData : path.resolve('../frontent/mock-home'),
 			layouts : [
 				{
 					layoutFile : '',
 					files : [
+						'worker/register.html',
 						'login.html'
 					]
 				}

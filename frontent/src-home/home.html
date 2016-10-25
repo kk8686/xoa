@@ -1,0 +1,21 @@
+<ul id="projectList"></ul>
+<script>
+$(function(){
+	App.ajax({
+		url : '/project/list.json',
+		success : function(result){
+			if(result.code){
+				alert(result.message);
+				return;
+			}
+			
+			var projectListHtml = [];
+			for(var i in result.data){
+				var project = result.data[i];
+				projectListHtml.push('<li><a href="/project/' + project.id + '.htm">' + project.name + '</a></li>');
+			}
+			$('#projectList').html(projectListHtml.join(''));
+		}
+	});
+});
+</script>

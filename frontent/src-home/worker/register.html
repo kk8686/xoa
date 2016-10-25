@@ -1,14 +1,4 @@
 <!DOCTYPE html>
-<html>
-<head>
-<title>Small OA</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="/assets/bootstrap4/bootstrap.css" />
-<script type="text/javascript" src="/assets/js/jquery-1.9.1.min.js"></script>
-</head>
-<body>
-<div><!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
@@ -20,18 +10,18 @@
 <body class="container">
 <form style="width:300px; height:200px; margin:30px auto;">
 	<fieldset class="form-group">
-		<input class="form-control" id="email" type="text" placeholder="邮箱，用于登陆" />
+		<input class="form-control" id="email" type="text" placeholder="邮箱" />
 	</fieldset>
 	<fieldset class="form-group">
 		<input class="form-control" id="password" type="password" placeholder="密码" />
 	</fieldset>
 	<fieldset class="form-group">
-		<button type="button" class="btn btn-primary" onclick="login()">注册</button>
-		&nbsp;&nbsp;<a href="/user/login.html">返回登陆</a>
+		<button type="button" class="btn btn-primary" onclick="register()">注册</button>
+		&nbsp;&nbsp;<a href="/login.html">返回登陆</a>
 	</fieldset>
 </form>
 <script type="text/javascript" src="/assets/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="/assets/bootstrap4/bootstrap.js"></script>
+<!--<script type="text/javascript" src="/assets/bootstrap4/bootstrap.js"></script>-->
 <script type="text/javascript" src="/assets/js/format-validator.js"></script>
 <script type="text/javascript" src="/assets/js/app.js"></script>
 <script type="text/javascript">
@@ -49,20 +39,19 @@ function register(){
 	}
 	
 	App.ajax({
-		url : '/user/register.do',
+		url : '/worker/register.do',
 		data : {
 			h79843 : email,
 			h79844 : password
 		},
 		success : function(result){
 			App.alert(result.message, result.code, result.data);
+			if(!result.code){
+				location.href = '/home.htm';
+			}
 		}
 	});
 }
 </script>
-</body>
-</html></div>
-<script type="text/javascript" src="/assets/bootstrap4/bootstrap.js"></script>
-<script type="text/javascript" src="/assets/js/app.js"></script>
 </body>
 </html>

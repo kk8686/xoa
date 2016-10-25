@@ -1,5 +1,5 @@
 <?php
-namespace app\controllers;
+namespace xoa\home\controllers;
 
 use Yii;
 use yii\web\Controller;
@@ -10,6 +10,7 @@ class SiteController extends Controller
 		return [
 			'access' => [
 				'class' => \yii\filters\AccessControl::className(),
+				'user' => 'worker',
 				'rules' => [
 					[
 						'allow' => true,
@@ -44,6 +45,6 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-		return $this->renderFile('@webRoot/home.html');
+		return $this->renderFile('@webPath/home.html');
     }
 }

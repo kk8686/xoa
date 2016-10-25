@@ -1,14 +1,4 @@
 <!DOCTYPE html>
-<html>
-<head>
-<title>Small OA</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="/assets/bootstrap4/bootstrap.css" />
-<script type="text/javascript" src="/assets/js/jquery-1.9.1.min.js"></script>
-</head>
-<body>
-<div><!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
@@ -27,11 +17,11 @@
 	</fieldset>
 	<fieldset class="form-group">
 		<button type="button" class="btn btn-primary" onclick="login()">登陆</button>
-		&nbsp;&nbsp;<a href="/user/register.html">注册新账号</a>
+		&nbsp;&nbsp;<a href="/worker/register.html">注册新账号</a>
 	</fieldset>
 </form>
 <script type="text/javascript" src="/assets/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="/assets/bootstrap4/bootstrap.js"></script>
+<!--<script type="text/javascript" src="/assets/bootstrap4/bootstrap.js"></script>-->
 <script type="text/javascript" src="/assets/js/format-validator.js"></script>
 <script type="text/javascript" src="/assets/js/app.js"></script>
 <script type="text/javascript">
@@ -49,7 +39,7 @@ function login(){
 	}
 	
 	App.ajax({
-		url : '/user/login.do',
+		url : '/worker/login.do',
 		data : {
 			h79843 : email,
 			h79844 : password
@@ -60,9 +50,5 @@ function login(){
 	});
 }
 </script>
-</body>
-</html></div>
-<script type="text/javascript" src="/assets/bootstrap4/bootstrap.js"></script>
-<script type="text/javascript" src="/assets/js/app.js"></script>
 </body>
 </html>

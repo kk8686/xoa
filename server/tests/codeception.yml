@@ -16,7 +16,7 @@ extensions:
 modules:
     config:
         Db:
-            dsn: 'sqlite:../data/database.db'
+            dsn: 'sqlite:../data/database-test.db'
             user: 'root'
             password: '121212'
             dump: codeception/_data/dump.sql
