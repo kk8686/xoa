@@ -1,6 +1,8 @@
 <?php
-use xoa\common\models\Worker;
-use xoa\home\models\Project;
+use xoa\common\models\{
+	Project,
+	Worker
+};
 
 class m160803_032057_init extends yii\db\Migration{
     public function safeUp(){
@@ -31,28 +33,30 @@ class m160803_032057_init extends yii\db\Migration{
 	private function _worker_create(){
 		$this->createTable(Worker::tableName(), [
 			'id' => $this->primaryKey(),
-			'mobile' => $this->string(11)->notNull()->comment('手机号'),
-			'email' => $this->string(255)->notNull()->comment('邮箱'),
+			//账号安全类
+			'email' => $this->string(255)->notNull()->comment('邮箱，可以用于登陆'),
+			'mobile' => $this->string(11)->notNull()->comment('手机号，可以用于登陆，未实现'),
 			'password_hash' => $this->string(64)->notNull()->comment('密码hash'),
 			'hash_key' => $this->string(64)->notNull()->comment('员工专属的hash密钥，可以用来hash其它东西'),
+			
+			//个人属性类
 			'name' => $this->string(255)->notNull()->comment('姓名'),
+			'gender' => $this->boolean()->notNull()->defaultValue(0)->comment('姓名'),
+			'birthday' => $this->date()->notNull()->comment('出生日期'),
 			'add_time' => $this->date()->notNull()->comment('添加日期'),
 		]);
 	}
 	
 	private function _worker_mock(){
-		$passwordHashKey = Yii::$app->security->generateRandomString();
-		$passwordHash = Yii::$app->security->generatePasswordHash('121212' . $passwordHashKey);
+		$hashKey = Yii::$app->security->generateRandomString();
+		$passwordHash = Yii::$app->security->generatePasswordHash('121212' . $hashKey);
 		
-		(new Worker([
-			'id' => 1,
-			'email' => 'ff@yy.com',
-			'password_hash' => $passwordHash,
-			'hash_key' => $passwordHashKey,
-			'add_time' => date('Y-m-d'),
-			'mobile' => '',
-			'name' => '',
-		]))->save();
+		$today = date('Y-m-d');
+		$fields = ['id', 'email', 'mobile', 'password_hash', 'hash_key', 'name', 'gender', 'birthday', 'add_time'];
+		Yii::$app->db->createCommand()->batchInsert(Worker::tableName(), $fields, [
+			[1, '12@12.com', '13800138000', $passwordHash, $hashKey, '陈莹莹', Worker::GENDER_FEMALE, '1995-05-05', $today], //手动调试测试专用
+			[2, '99@99.com', '13800138099', $passwordHash, $hashKey, '王自动', Worker::GENDER_MALE, $today, $today], //自动化测试专用
+		])->execute();
 	}
 	
 	private function _project_create(){

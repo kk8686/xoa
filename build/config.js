@@ -1,11 +1,11 @@
 var path = require('path');
-
+var PROJECT_PATH = path.resolve('../');
 module.exports = {
 	projects : {
 		1 : { //前台
-			src : path.resolve('../frontent/src-home'),
-			dist : path.resolve('../web/home'),
-			mockData : path.resolve('../frontent/mock-home'),
+			src : PROJECT_PATH + '/frontent/src-home',
+			dist : PROJECT_PATH + '/web/home',
+			mockData : PROJECT_PATH + '/frontent/mock-home',
 			layouts : [
 				{
 					layoutFile : '',
@@ -14,12 +14,15 @@ module.exports = {
 						'login.html'
 					]
 				}
-			]
+			],
+			urlRulesFile : PROJECT_PATH + '/frontent/home-url-rules.js',
+			buildUrlRulesFileName : PROJECT_PATH+ '/web/home-url-rules.json'
 		},
+		
 		2 : { //后台
-			src : path.resolve('../frontent/src-backend'),
-			dist : path.resolve('../web/backend'),
-			mockData : path.resolve('../frontent/mock-backend'),
+			src : PROJECT_PATH + '/frontent/src-backend',
+			dist : PROJECT_PATH + '/web/backend',
+			mockData : PROJECT_PATH + '/frontent/mock-backend',
 			layouts : [
 				{
 					layoutFile : '',

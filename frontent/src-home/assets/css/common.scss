@@ -1,0 +1,68 @@
+@import "base";
+header{
+	padding:10px 50px;
+	background:#333;
+	clear:both;
+	height:45px;
+	.left{
+		float:left;
+	}
+	
+	.right{
+		float:right;
+	}
+	a{
+		color:#FFF;
+	}
+}
+
+.mainOut{
+	width:1280px; 
+	margin:30px auto 0;
+	clear:both;
+}
+.projectList{
+	li{
+		width:220px; 
+		height:115px; 
+		line-height:115px; 
+		margin-right:7px;
+		margin-bottom:7px;
+		font-size:24px; 
+		font-weight:bold;
+		float:left; 
+		border:1px solid #DDD; 
+		text-align:center;
+		
+		&:last-child{
+			a{
+				color:#666;
+			}
+		}
+	}
+}
+
+.dProjectName{
+	background:#EEE;
+	padding:8px 16px;
+	border-top-color:#C7C7C7;
+	border-bottom-color:#D9D9D9;
+	font-size:24px;
+	margin-bottom:20px;
+}
+
+.taskCategorys{
+	clear:both;
+	.taskList{
+		float:left;
+		background:#EEE;
+		padding:4px;
+		border-radius:2px;
+		margin-right:7px;
+		width:290px;
+		min-height:680px;
+		h4{
+			color:#383838;
+		}
+	}
+}

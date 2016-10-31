@@ -2,6 +2,7 @@
 return [
     'id' => 'xoa-cli',
     'basePath' => PROJECT_PATH . '/server/console',
+    'runtimePath' => '@app/../runtime',
     'controllerNamespace' => 'xoa\console\commands',
 	'aliases' => [
 		'@tests' => PROJECT_PATH . '/server/tests/codeception',

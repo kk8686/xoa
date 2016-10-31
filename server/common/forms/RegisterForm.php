@@ -26,6 +26,14 @@ class RegisterForm extends \yii\base\Model{
 		];
 	}
 	
+	
+	/**
+	 * 注册新的工作者
+	 * @author KK
+	 * @return Worker
+	 * @throws \yii\base\ErrorException
+	 * @test \xoa_test\home\unit\WorkerTest
+	 */
 	public function register() : Worker{
 		$passwordInfo = Worker::generatePassword($this->password);
 		$worker = new Worker([
@@ -39,8 +47,7 @@ class RegisterForm extends \yii\base\Model{
 		if($worker->save()){
 			return $worker;
 		}else{
-			$this->addError('register', '注册失败，请联系管理员');
-			return null;
+			throw new \yii\base\ErrorException('注册失败');
 		}
 	}
 }

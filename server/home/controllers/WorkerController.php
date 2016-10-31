@@ -2,7 +2,7 @@
 namespace xoa\home\controllers;
 
 use Yii;
-use xoa\forms\LoginForm;
+use xoa\home\forms\LoginForm;
 use xoa\common\ext\web\Response;
 use xoa\common\forms\RegisterForm;
 
@@ -76,5 +76,12 @@ class WorkerController extends \yii\web\Controller{
 			throw new \yii\base\UserException('登陆失败，请联系管理员');
 		}
 		return new Response('登陆成功', 0);
+	}
+	
+	public function actionHeadbar(){
+		return new Response('', 0, [
+			'id' => Yii::$app->worker->id,
+			'name' => Yii::$app->worker->identity->name,
+		]);
 	}
 }

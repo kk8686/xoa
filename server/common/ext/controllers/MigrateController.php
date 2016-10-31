@@ -110,7 +110,6 @@ class MigrateController extends \yii\console\controllers\MigrateController{
         if ($class === self::BASE_MIGRATION) {
             return true;
         }
-
         $this->stdout("*** applying $class\n", Console::FG_YELLOW);
         $start = microtime(true);
         $migration = $this->createMigration($class);

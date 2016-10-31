@@ -20,7 +20,7 @@ function setupTasks(config){
 	var srcOptions = {base : config.src};
 
 	//默认任务	
-	gulp.task('default', ['minjs', 'mincss', 'layout', 'assets', 'mock']);
+	gulp.task('default', ['minjs', 'mincss', 'layout', 'assets', 'url-rules', 'mock']);
 
 	//同步图片、字体、图标等
 	gulp.task('assets', function(){
@@ -96,11 +96,16 @@ function setupTasks(config){
 			.on('change', buildHtml)
 			.on('unlink', unlinkDistFile);
 	});
+	
+	gulp.task('url-rules', function(){
+		watch(config.urlRulesFile).on('change', buildUrlRules);
+	});
 
 	gulp.task('mock', function(){
 		mockServer({
 			webPath : config.dist,
-			dataPath : config.mockData
+			dataPath : config.mockData,
+			urlRulesFile : config.urlRulesFile
 		});
 	});
 	
@@ -129,12 +134,22 @@ function setupTasks(config){
 		gulp.src(config.src + '/**/**.html')
 			.pipe(layout.run())
 			.pipe(gulp.dest(config.dist));
+	
+		buildUrlRules();
 	});
 	
 	function unlinkDistFile(file){
 		console.log(file + ' 删除');
 		var distFile = config.dist + '/' + path.relative(config.src, file); //计算相对路径
 		fs.existsSync(distFile) && fs.unlink(distFile);
+	}
+
+	function buildUrlRules(){
+		console.log('url规则文件发生变动');
+		var buildToFile = config.buildUrlRulesFileName;
+		delete require.cache[config.urlRulesFile];
+		var urlRules = require(config.urlRulesFile);
+		fs.writeFile(buildToFile, JSON.stringify(urlRules));
 	}
 }
 
@@ -146,5 +161,5 @@ function getBuildProjectId(){
 	process.stdin.pause();  
 	var response = fs.readSync(process.stdin.fd, 1000, 0, 'utf8');  
 	process.stdin.end();
-	return response[0].trim();  
+	return response[0].trim();
 }

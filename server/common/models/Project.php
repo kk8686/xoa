@@ -1,5 +1,5 @@
 <?php
-namespace xoa\home\models;
+namespace xoa\common\models;
 
 class Project extends \yii\db\ActiveRecord{
 	public static function tableName(){

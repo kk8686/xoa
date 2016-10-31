@@ -6,22 +6,6 @@ use yii\web\Controller;
 
 class SiteController extends Controller
 {
-	public function behaviors() {
-		return [
-			'access' => [
-				'class' => \yii\filters\AccessControl::className(),
-				'user' => 'worker',
-				'rules' => [
-					[
-						'allow' => true,
-						'actions' => ['index'],
-						'roles' => ['@'],
-					],
-				],
-			],
-		];
-	}
-	
     /**
      * @inheritdoc
      */
@@ -35,6 +19,10 @@ class SiteController extends Controller
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? '121212' : null,
             ],
+			'r' => [
+				'class' => 'xoa\common\ext\actions\R',
+				'urlRulesFile' => Yii::getAlias('@project/web/home-url-rules.json')
+			],
         ];
     }
 

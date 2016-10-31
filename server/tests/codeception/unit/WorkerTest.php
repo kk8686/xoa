@@ -1,5 +1,5 @@
 <?php
-namespace xoa_test;
+namespace xoa_test\home\unit;
 
 use xoa\common\models\Worker;
 use xoa\common\forms\RegisterForm;

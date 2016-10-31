@@ -6,7 +6,7 @@
 use yii\helpers\Html;
 use xoa\assets\CommonAsset;
 
-CommonAsset::register($this);
+//CommonAsset::register($this);
 ?>
 <?php $this->beginPage(); ?>
 <!DOCTYPE html>

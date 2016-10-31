@@ -9,6 +9,9 @@ use Yii;
  */
 class Worker extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
+	const GENDER_MALE = 1;
+	const GENDER_FEMALE = 2;
+	
     public $authKey;
     public $accessToken;
 
@@ -34,9 +37,8 @@ class Worker extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     }
 
     /**
-     * Finds user by username
-     *
-     * @param string $username
+     * Finds user by email
+     * @param string $mail
      * @return static|null
      */
     public static function findByEmail($mail)
@@ -76,7 +78,8 @@ class Worker extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function validatePassword($password)
     {
-        return Yii::$app->security->validatePassword($password . $this->password_hash_key, $this->password_hash);
+		header('xx2:'.$password);
+        return Yii::$app->security->validatePassword($password . $this->hash_key, $this->password_hash);
     }
 	
 	public function fields(){

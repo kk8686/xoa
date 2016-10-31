@@ -72,6 +72,93 @@
 				}
 				return cookieValue;
 			}
+		},
+		
+		//装载URL参数
+		loadParam : function(rule){
+			var pathinfo = location.pathname.substr(1);
+			if(pathinfo.substr(-4) == '.htm'){
+				pathinfo += 'l';
+			}
+			if(rule == pathinfo || rule + 'l' == pathinfo){
+				return {};
+			}
+			//console.log('pathinfo', pathinfo);
+			var matchResults = rule.match(new RegExp('<\\w+:.+?>', 'g'));
+			var paramNames = [];
+			if(!matchResults){
+				return null;
+			}
+
+			matchResults.map(function(item){
+				var pattern = item.replace(/<\w+:/, '(');
+				var paramNameMatchResult = item.match(/<(\w+)/);
+				paramNames.push(paramNameMatchResult[1]);
+				pattern = pattern.replace('>', ')');
+				//console.log('pattern', pattern);
+				rule = rule.replace(item, pattern);
+			});
+
+			//console.log('RegExp', eRule);
+			var paramVaules = pathinfo.match(new RegExp(rule));
+			//console.log('matched', paramVaules);
+			if(!paramVaules){
+				$.error('App.loadParam 加载请求参数失败');
+				return null;
+			}
+			var params = {};
+			for(var i = 1; i < paramVaules.length; i++){
+				params[paramNames[i - 1]] = paramVaules[i];
+			}
+			self.aParams = $.extend(self.aParams, params);
+			return params;
+		},
+		
+		aParams : {},
+		
+		init : function(){
+			var url = window.location.href;
+			var aParams = null;
+			if(url.indexOf('?') != -1){
+				aParams = {};
+				var paramsStr = url.split('?')[1],
+					paramsArr = paramsStr.split('&'),
+					aParamsPropertyArr = [];
+				for(var j in paramsArr){
+					aParamsPropertyArr = paramsArr[j].split('=');
+					var key = aParamsPropertyArr[0],
+						value = aParamsPropertyArr[1];
+					aParams[key] = value;
+				}
+			}
+			aParams && (this.aParams = aParams);
+		},
+		
+		showHeadBar : function(){
+			var userInfo = sessionStorage.getItem('userInfo');
+			if(!userInfo){
+				self.ajax({
+					url : '/worker/headbar.json',
+					async : false,
+					success : function(result){
+						if(result.code){
+							App.alert(result.message, result.code, result.data);
+							return;
+						}
+						userInfo = result.data;
+						sessionStorage.setItem('userInfo', JSON.stringify(result.data));
+					}
+				});
+			}else{
+				userInfo = JSON.parse(userInfo);
+			}
+			$('#mainOut').before('<header>\
+				<div class="left"><a href="/home.html">首页</a></div>\
+				<div class="right"><a href="/worker/center.html">' + userInfo.name + '</a></div>\
+			</header>');
 		}
 	};
+	
+	var self = container.App;
+	self.init();
 })(window, jQuery);

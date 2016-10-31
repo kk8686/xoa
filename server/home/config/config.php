@@ -2,6 +2,7 @@
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
+    'runtimePath' => '@app/../runtime',
     'bootstrap' => ['log'],
 	'aliases' => [
 		'@webPath' => PROJECT_PATH . '/web/home',
@@ -42,13 +43,33 @@ $config = [
 				'worker/register.do' => 'worker/register',
 				'worker/login.do' => 'worker/login',
 				'worker/check-login.do' => 'worker/check-login',
+				'worker/headbar.json' => 'worker/headbar',
 				
 				'project/list.json' => 'project/list',
+				'project/<projectId:\d+>.json' => 'project/info',
+				'project/<projectId:\d+>/task-categorys.json' => 'project/categorys',
+				'project/add.do' => 'project/add',
 				
-				'<page:\w+>.htm' => 'worker/check-login',
+				'<page:.+>.htm<xx:l{0,1}>' => 'site/r',
             ],
         ],
     ],
+	'on beforeAction' => function($event){
+		$isNeedentLoginAction = in_array($event->action->controller->module->requestedRoute, [
+			'worker/register',
+			'worker/login',
+			'worker/check-login',
+			'site/error',
+			'site/captcha',
+			'site/r',
+		]); //是否无须登陆的action
+		
+		if(!$isNeedentLoginAction && Yii::$app->worker->isGuest){
+			$event->isValid = false;
+			header('xx:yy');
+			Yii::$app->response->redirect(Yii::$app->worker->loginUrl);
+		}
+	},
     'params' => [],
 ];
 

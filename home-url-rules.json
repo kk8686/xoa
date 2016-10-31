@@ -1,0 +1,1 @@
+{"project/<projectId:\\d+>.html":"project/dashboard.html","project/<projectId:\\d+>.json":"@mock/project/info.json"}

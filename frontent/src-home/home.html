@@ -1,5 +1,25 @@
-<ul id="projectList"></ul>
+<h3>我参加的项目</h3>
+<ul id="projectList" class="projectList"></ul>
 <script>
+function add(){
+	var name = prompt('请输入项目名称').trim();
+	if(!name){
+		return;
+	}
+	App.ajax({
+		url : '/project/add.do',
+		data : {
+			name : name
+		},
+		success : function(result){
+			alert(result.message);
+			if(!result.code){
+				location.reload();
+			}
+		}
+	});
+}
+
 $(function(){
 	App.ajax({
 		url : '/project/list.json',
@@ -14,6 +34,7 @@ $(function(){
 				var project = result.data[i];
 				projectListHtml.push('<li><a href="/project/' + project.id + '.htm">' + project.name + '</a></li>');
 			}
+			projectListHtml.push('<li><a href="javascript:add();">+项目</a></li>');
 			$('#projectList').html(projectListHtml.join(''));
 		}
 	});

@@ -1,8 +1,8 @@
 <?php
-namespace xoa\forms;
+namespace xoa\home\forms;
 
 use Yii;
-use xoa\models\Worker;
+use xoa\common\models\Worker;
 
 /**
  * 登陆表单
@@ -13,7 +13,7 @@ class LoginForm extends \yii\base\Model
     public $password;
     public $rememberMe = true;
 
-    private $_user = false;
+    private $_worker = null;
 
 
     /**
@@ -40,9 +40,9 @@ class LoginForm extends \yii\base\Model
     public function validatePassword($attribute, $params)
     {
         if (!$this->hasErrors()) {
-            $user = $this->getUser();
+            $worker = $this->getWorker();
 
-            if (!$user || !$user->validatePassword($this->password)) {
+            if (!$worker || !$worker->validatePassword($this->password)) {
                 $this->addError($attribute, '无效的帐号或密码');
             }
         }
@@ -55,7 +55,7 @@ class LoginForm extends \yii\base\Model
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+            return Yii::$app->worker->login($this->getWorker(), $this->rememberMe ? 3600*24*30 : 0);
         }
         return false;
     }
@@ -65,12 +65,12 @@ class LoginForm extends \yii\base\Model
      *
      * @return Worker|null
      */
-    public function getUser()
+    public function getWorker()
     {
-        if ($this->_user === false) {
-            $this->_user = Worker::findByEmail($this->email);
+        if ($this->_worker === null) {
+            $this->_worker = Worker::findByEmail($this->email);
         }
 
-        return $this->_user;
+        return $this->_worker;
     }
 }
