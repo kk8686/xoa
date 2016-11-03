@@ -1,6 +1,6 @@
 <?php
 $config = [
-    'id' => 'basic',
+    'id' => 'xoa',
     'basePath' => dirname(__DIR__),
     'runtimePath' => '@app/../runtime',
     'bootstrap' => ['log'],
@@ -40,33 +40,39 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+				//工作者
 				'worker/register.do' => 'worker/register',
 				'worker/login.do' => 'worker/login',
 				'worker/check-login.do' => 'worker/check-login',
 				'worker/headbar.json' => 'worker/headbar',
 				
+				//项目
 				'project/list.json' => 'project/list',
 				'project/<projectId:\d+>.json' => 'project/info',
-				'project/<projectId:\d+>/task-categorys.json' => 'project/categorys',
+				'project/<projectId:\d+>/task-categorys.json' => 'project/task-categories',
 				'project/add.do' => 'project/add',
+				'project/invite-member.do' => 'project/invite-member',
 				
 				'<page:.+>.htm<xx:l{0,1}>' => 'site/r',
             ],
         ],
     ],
 	'on beforeAction' => function($event){
-		$isNeedentLoginAction = in_array($event->action->controller->module->requestedRoute, [
+		//暂时在此做统一登陆校验
+		if(!Yii::$app->worker->isGuest){
+			return;
+		}
+		$isCommonAccessAction = in_array($event->action->controller->module->requestedRoute, [
 			'worker/register',
 			'worker/login',
 			'worker/check-login',
 			'site/error',
 			'site/captcha',
 			'site/r',
-		]); //是否无须登陆的action
+		]); //是否请求谁都可以访问的action
 		
-		if(!$isNeedentLoginAction && Yii::$app->worker->isGuest){
+		if(!$isCommonAccessAction){
 			$event->isValid = false;
-			header('xx:yy');
 			Yii::$app->response->redirect(Yii::$app->worker->loginUrl);
 		}
 	},

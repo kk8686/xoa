@@ -156,7 +156,7 @@ function setupTasks(config){
 //从控制台获取输入的项目ID
 function getBuildProjectId(){
 	console.log('1. 前台\n\
-2. 后台\n\
+2. 后台（还没开发）\n\n\
 请输入要构建的项目ID：');
 	process.stdin.pause();  
 	var response = fs.readSync(process.stdin.fd, 1000, 0, 'utf8');  

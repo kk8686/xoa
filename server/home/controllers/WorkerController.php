@@ -79,9 +79,6 @@ class WorkerController extends \yii\web\Controller{
 	}
 	
 	public function actionHeadbar(){
-		return new Response('', 0, [
-			'id' => Yii::$app->worker->id,
-			'name' => Yii::$app->worker->identity->name,
-		]);
+		return new Response('', 0, Yii::$app->worker->identity->toArray(['id', 'name']));
 	}
 }

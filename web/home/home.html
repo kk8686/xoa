@@ -4,12 +4,12 @@
 <title>小OA</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="/assets/bootstrap4/bootstrap.css" />
+<link rel="stylesheet" href="/assets/bootstrap3/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/assets/css/common.css" />
 <script type="text/javascript" src="/assets/js/jquery-1.9.1.min.js"></script>
 </head>
 <body>
-<div id="mainOut" class="mainOut"><h3>我参加的项目</h3>
+<div id="mainOut" class="container-full mainOut"><h3>我参加的项目</h3>
 <ul id="projectList" class="projectList"></ul>
 <script>
 function add(){
@@ -23,7 +23,7 @@ function add(){
 			name : name
 		},
 		success : function(result){
-			alert(result.message);
+			App.alert(result.message);
 			if(!result.code){
 				location.reload();
 			}
@@ -36,7 +36,7 @@ $(function(){
 		url : '/project/list.json',
 		success : function(result){
 			if(result.code){
-				alert(result.message);
+				App.alert(result.message);
 				return;
 			}
 			
@@ -56,7 +56,7 @@ $(function(){
    App.showHeadBar(); 
 });
 </script>
-<!--<script type="text/javascript" src="/assets/bootstrap4/bootstrap.js"></script>-->
+<script type="text/javascript" src="/assets/bootstrap3/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/assets/js/app.js"></script>
 </body>
 </html>

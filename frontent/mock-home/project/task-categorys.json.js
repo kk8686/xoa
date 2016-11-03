@@ -14,13 +14,18 @@ module.exports = {
 		},
 		{
 			id : 3,
-			name : '已验收',
+			name : '返修中',
 			order : 3
 		},
 		{
 			id : 4,
-			name : '返修',
+			name : '已验收',
 			order : 4
 		},
+		{
+			id : 5,
+			name : '已验收（返修）',
+			order : 5
+		}
 	]
 };

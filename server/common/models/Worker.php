@@ -9,7 +9,13 @@ use Yii;
  */
 class Worker extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
+	/**
+	 * 性别：男
+	 */
 	const GENDER_MALE = 1;
+	/**
+	 * 性别：女
+	 */
 	const GENDER_FEMALE = 2;
 	
     public $authKey;

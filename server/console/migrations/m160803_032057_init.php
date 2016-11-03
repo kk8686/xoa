@@ -4,6 +4,11 @@ use xoa\common\models\{
 	Worker
 };
 
+use xoa\home\models\{
+	ProjectInvite,
+	TaskCategory
+};
+
 class m160803_032057_init extends yii\db\Migration{
     public function safeUp(){
 		$migrateReflection = new ReflectionClass(self::className());
@@ -28,6 +33,8 @@ class m160803_032057_init extends yii\db\Migration{
     public function safeDown(){
 		$this->dropTable(Worker::tableName());
 		$this->dropTable(Project::tableName());
+		$this->dropTable(TaskCategory::tableName());
+		$this->dropTable(ProjectInvite::tableName());
     }
 	
 	private function _worker_create(){
@@ -54,8 +61,9 @@ class m160803_032057_init extends yii\db\Migration{
 		$today = date('Y-m-d');
 		$fields = ['id', 'email', 'mobile', 'password_hash', 'hash_key', 'name', 'gender', 'birthday', 'add_time'];
 		Yii::$app->db->createCommand()->batchInsert(Worker::tableName(), $fields, [
-			[1, '12@12.com', '13800138000', $passwordHash, $hashKey, '陈莹莹', Worker::GENDER_FEMALE, '1995-05-05', $today], //手动调试测试专用
+			[1, '12@12.com', '13800138000', $passwordHash, $hashKey, '陈莹莹', Worker::GENDER_FEMALE, '1995-05-05', $today], //手动调试测试专用，项目管理员
 			[2, '99@99.com', '13800138099', $passwordHash, $hashKey, '王自动', Worker::GENDER_MALE, $today, $today], //自动化测试专用
+			[3, '13@12.com', '13800138001', $passwordHash, $hashKey, '叶聪', Worker::GENDER_MALE, '1997-12-23', $today], //手动调试测试专用，普通员工
 		])->execute();
 	}
 	
@@ -64,6 +72,7 @@ class m160803_032057_init extends yii\db\Migration{
 			'id' => $this->primaryKey(),
 			'name' => $this->string(30)->notNull()->comment('名称'),
 			Worker::tableName() . '_id' => $this->integer()->notNull()->comment('创建者的ID'),
+			'member_ids' => $this->string(255)->notNull()->defaultValue('')->comment('成员的ID集合'),
 			'add_time' => $this->date()->notNull()->comment('添加日期'),
 		]);
 	}
@@ -74,5 +83,34 @@ class m160803_032057_init extends yii\db\Migration{
 			[2, '嘟嘟打车', 1, date('Y-m-d')],
 			[3, '去那儿', 1, date('Y-m-d')],
 		])->execute();
+	}
+	
+	private function _task_category_create(){
+		$this->createTable(TaskCategory::tableName(), [
+			'id' => $this->primaryKey(),
+			'name' => $this->string(30)->notNull()->comment('名称'),
+			Project::tableName() . '_id' => $this->integer()->notNull()->comment('所属项目的ID'),
+			'order' => $this->boolean()->notNull()->defaultValue(0)->comment('排序'),
+		]);
+	}
+	
+	private function _task_category_mock(){
+		Yii::$app->db->createCommand()->batchInsert(TaskCategory::tableName(), ['id', 'name', Project::tableName() . '_id', 'order'], [
+			[1, '待处理', 1, 1],
+			[2, '进行中', 1, 2],
+			[3, '返修', 1, 3],
+			[4, '已验收', 1, 4],
+			[5, '已验收（返修）', 1, 5],
+		])->execute();
+	}
+	
+	private function _project_invite_create(){
+		$this->createTable(ProjectInvite::tableName(), [
+			'id' => $this->primaryKey(),
+			Project::tableName() . '_id' => $this->integer()->notNull()->defaultValue(0)->comment('项目ID'),
+			Worker::tableName() . '_id' => $this->integer()->notNull()->defaultValue(0)->comment('工作者ID'),
+			'status' => $this->boolean()->notNull()->defaultValue(0)->comment('状态 1=待处理，2=通过，3=拒绝'),
+			'add_time' => $this->date()->notNull()->comment('邀请时间'),
+		]);
 	}
 }

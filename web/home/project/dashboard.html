@@ -4,20 +4,25 @@
 <title>小OA</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="/assets/bootstrap4/bootstrap.css" />
+<link rel="stylesheet" href="/assets/bootstrap3/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/assets/css/common.css" />
 <script type="text/javascript" src="/assets/js/jquery-1.9.1.min.js"></script>
 </head>
 <body>
-<div id="mainOut" class="mainOut"><div id="projectName" class="dProjectName"></div>
-<div id="taskCategorys" class="taskCategorys"></div>
-<script src="dashboard.js"></script></div>
+<div id="mainOut" class="container-full mainOut"><div id="wrapProjectHead" class="row wrapProjectName">
+	<label id="projectName"></label>
+	<button type="button" class="btn btn-success J-btnAddMember">+成员</label>
+</div>
+<div id="taskCategorys" class="row taskCategorys"></div>
+<script src="dashboard.js"></script>
+<script src="/assets/plugins/modal-dialog.js"></script>
+<script src="/assets/plugins/format-validator.js"></script></div>
 <script type="text/javascript">
 $(function(){
    App.showHeadBar(); 
 });
 </script>
-<!--<script type="text/javascript" src="/assets/bootstrap4/bootstrap.js"></script>-->
+<script type="text/javascript" src="/assets/bootstrap3/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/assets/js/app.js"></script>
 </body>
 </html>

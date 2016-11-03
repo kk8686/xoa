@@ -1,4 +1,8 @@
 @import "base";
+
+$mainFontColor:#000;
+$mainBackgroundColor:#EEE;
+$unMainFontColor:#666;
 header{
 	padding:10px 50px;
 	background:#333;
@@ -36,33 +40,44 @@ header{
 		
 		&:last-child{
 			a{
-				color:#666;
+				color:$unMainFontColor;
 			}
 		}
 	}
 }
 
-.dProjectName{
-	background:#EEE;
+.wrapProjectName{
+	background:$mainBackgroundColor;
 	padding:8px 16px;
-	border-top-color:#C7C7C7;
-	border-bottom-color:#D9D9D9;
 	font-size:24px;
 	margin-bottom:20px;
+	
+	button{
+		display:none;
+	}
 }
 
 .taskCategorys{
-	clear:both;
+	overflow-x: scroll;
+	
 	.taskList{
-		float:left;
-		background:#EEE;
+		//display:inline-block;
+		background:$mainBackgroundColor;
 		padding:4px;
 		border-radius:2px;
 		margin-right:7px;
 		width:290px;
 		min-height:680px;
 		h4{
-			color:#383838;
+			color:$unMainFontColor;
+			
+			&:hover{
+				color:$mainFontColor;
+			}
+			
+			button{
+				display:none;
+			}
 		}
 	}
 }

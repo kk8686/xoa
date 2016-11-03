@@ -12,7 +12,7 @@ function add(){
 			name : name
 		},
 		success : function(result){
-			alert(result.message);
+			App.alert(result.message);
 			if(!result.code){
 				location.reload();
 			}
@@ -25,7 +25,7 @@ $(function(){
 		url : '/project/list.json',
 		success : function(result){
 			if(result.code){
-				alert(result.message);
+				App.alert(result.message);
 				return;
 			}
 			
