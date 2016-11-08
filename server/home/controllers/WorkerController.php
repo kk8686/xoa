@@ -73,9 +73,9 @@ class WorkerController extends \yii\web\Controller{
 		}
 		
 		if(!Yii::$app->worker->login($worker)){
-			throw new \yii\base\UserException('登陆失败，请联系管理员');
+			throw new \yii\base\UserException('注册后登陆失败，请联系管理员');
 		}
-		return new Response('登陆成功', 0);
+		return new Response('注册成功', 0);
 	}
 	
 	public function actionHeadbar(){

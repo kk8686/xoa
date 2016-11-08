@@ -34,3 +34,15 @@
 	Yii2的本地化做得挺好，我以前已经用它搞过2个双框架项目，甚至三框架也试验过，说到底其实全局的东西不冲突就行
 	
 	其实基于Codeception框架下引入Yii2框架跑测试代码已经是双框架了，再算上Codeception底层还用了PHPUnit、Symfony和Guzzle框架，没事的，一个项目里框架可多了 -_-
+	
+---
+	
+附录：
+	
+[通用代码规范](http://www.kkh86.com/it/code-standard/guide-std-global.html)
+
+[后端代码规范](http://www.kkh86.com/it/code-standard/guide-std-php.html)
+
+[JS代码规范](http://www.kkh86.com/it/code-standard/guide-std-js.html)
+
+[HTML+CSS](http://www.kkh86.com/it/code-standard/guide-std-html-css.html)
