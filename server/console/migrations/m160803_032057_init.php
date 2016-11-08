@@ -21,11 +21,16 @@ class m160803_032057_init extends yii\db\Migration{
     }
 	
 	public function mockData() {
+		$controller = Yii::$app->controller;
+		$controller->stdout(PHP_EOL . PHP_EOL . 'Start to mock data' . PHP_EOL);
 		$migrateReflection = new \ReflectionClass(self::className());
-		foreach($migrateReflection->getMethods(\ReflectionMethod::IS_PRIVATE) as $method){
-			if(substr($method->getName(), -5) == '_mock'){
+		foreach($migrateReflection->getMethods(ReflectionMethod::IS_PRIVATE) as $method){
+			if(
+				preg_match('#^_(.+)_mock$#', $method->getName(), $matchResult)){
+				$controller->stdout('    > mock ' . $matchResult[1] . ' ...');
 				$method->setAccessible(true);
 				$method->invoke($migrateReflection->newInstanceArgs());
+				$controller->stdout(' done' . PHP_EOL);
 			}
 		}
 	}
