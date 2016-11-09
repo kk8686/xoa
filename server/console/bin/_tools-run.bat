@@ -31,8 +31,14 @@ if %want%==%buildDbOnly% (
 if %want%==%checkRequirements% (
 	set command=php %~dp0\requirements.php
 )
+if %want%==%exit% (
+	exit
+)
 
 %command%
+
+echo 居然运行不到这里，一直未能解决，求高人
+pause
 
 echo .
 if errorLevel 1 (
@@ -40,5 +46,4 @@ if errorLevel 1 (
 ) else (
 	set /p tmp = 执行成功，回车返回上一级
 )
-
-@endlocal
+goto start
