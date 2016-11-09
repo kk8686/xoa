@@ -45,3 +45,5 @@
 KK [http://www.kkh86.com/it](http://www.kkh86.com/it)
 
 Since 2016.08.03
+
+开源地址：[https://github.com/kk8686/xoa](https://github.com/kk8686/xoa)
