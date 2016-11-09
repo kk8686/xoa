@@ -1,2 +1,2 @@
 @echo off
-cmd /k %~sdp0\bin\_db-run.bat
+cmd /k %~sdp0\bin\_tools-run.bat
