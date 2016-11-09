@@ -9,6 +9,7 @@ use xoa\home\forms\ProjectForm;
 /**
  * 项目控制器
  * @author KK
+ * @property-read array $taskCategories 任务分类
  */
 class ProjectController extends \yii\web\Controller{
 	
@@ -47,7 +48,7 @@ class ProjectController extends \yii\web\Controller{
 			return new Response('无效的项目ID' . $id);
 		}
 		
-		return new Response('', 0, []); //!@!!!!待实现
+		return new Response('', 0, $project->taskCategories);
 	}
 	
 	/**

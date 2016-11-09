@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `task_category` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`name` varchar(30) NOT NULL,
 	`project_id` integer NOT NULL DEFAULT 0,
-	`order` boolean NOT NULL DEFAULT 0
+	`order` smallint NOT NULL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS `project_invite` (
@@ -33,9 +33,9 @@ CREATE TABLE IF NOT EXISTS `project_invite` (
 	`add_time` date NOT NULL
 );
 
-INSERT INTO `worker` (`id`, `email`, `mobile`, `password_hash`, `hash_key`, `name`, `gender`, `birthday`, `add_time`) VALUES (1, '12@12.com', '13800138000', '$2y$13$OqKiZx8eyJYzI2UoeQO.ze5UXXtyRo.mgRUzm0nlhFMWw0NWAyj2e', 'kgn7PuN5_nD7VUP9ek6m1tIJt36UpxkD', '陈莹莹', 1, '1995-05-05', '2016-11-09'), (2, '99@99.com', '13800138099', '$2y$13$OqKiZx8eyJYzI2UoeQO.ze5UXXtyRo.mgRUzm0nlhFMWw0NWAyj2e', 'kgn7PuN5_nD7VUP9ek6m1tIJt36UpxkD', '王自动', 1, '2016-11-09', '2016-11-09'), (3, '13@12.com', '13800138001', '$2y$13$OqKiZx8eyJYzI2UoeQO.ze5UXXtyRo.mgRUzm0nlhFMWw0NWAyj2e', 'kgn7PuN5_nD7VUP9ek6m1tIJt36UpxkD', '叶聪', 1, '1997-12-23', '2016-11-09');
+INSERT INTO `worker` (`id`, `email`, `mobile`, `password_hash`, `hash_key`, `name`, `gender`, `birthday`, `add_time`) VALUES (1, '12@12.com', '13800138000', '$2y$13$WA7/5Nq2EIY/aAnsU8VswOAaS9Ry2z/VZLf7Ef294zJ7tUFjsHhsa', 'CNHjPllbjUMXvO_eDQ3KHilYfU0Q2EZS', '陈莹莹', 1, '1995-05-05', '2016-11-09'), (2, '99@99.com', '13800138099', '$2y$13$WA7/5Nq2EIY/aAnsU8VswOAaS9Ry2z/VZLf7Ef294zJ7tUFjsHhsa', 'CNHjPllbjUMXvO_eDQ3KHilYfU0Q2EZS', '王自动', 1, '2016-11-09', '2016-11-09'), (3, '13@12.com', '13800138001', '$2y$13$WA7/5Nq2EIY/aAnsU8VswOAaS9Ry2z/VZLf7Ef294zJ7tUFjsHhsa', 'CNHjPllbjUMXvO_eDQ3KHilYfU0Q2EZS', '叶聪', 1, '1997-12-23', '2016-11-09');
 
 INSERT INTO `project` (`id`, `name`, `worker_id`, `add_time`) VALUES (1, '兔子外卖', 1, '2016-11-09'), (2, '嘟嘟打车', 1, '2016-11-09'), (3, '去那儿', 1, '2016-11-09');
 
-INSERT INTO `task_category` (`id`, `name`, `project_id`, `order`) VALUES (1, '待处理', 1, 1), (2, '进行中', 1, 1), (3, '返修', 1, 1), (4, '已验收', 1, 1), (5, '已验收（返修）', 1, 1);
+INSERT INTO `task_category` (`id`, `name`, `project_id`, `order`) VALUES (1, '待处理', 1, 1), (2, '进行中', 1, 2), (3, '返修', 1, 3), (4, '已验收', 1, 4), (5, '已验收（返修）', 1, 5);
 

@@ -23,6 +23,6 @@ class Project extends \yii\db\ActiveRecord{
 	 * @return array
 	 */
 	public function getTaskCategories(){
-		return $this->hasMany(TaskCategory::className(), [static::tableName() . '_id' => TaskCategory::tableName() . '_id']);
+		return $this->hasMany(TaskCategory::className(), [static::tableName() . '_id' => 'id']);
 	}
 }

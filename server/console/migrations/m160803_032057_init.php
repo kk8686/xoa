@@ -11,10 +11,12 @@ use xoa\home\models\{
 
 /**
  * 初始化迁移
+ * @author KK
  */
 class m160803_032057_init extends yii\db\Migration{
 	/**
 	 * 执行建表
+	 * @author KK
 	 */
     public function safeUp(){
 		$migrateReflection = new ReflectionClass(self::className());
@@ -28,6 +30,7 @@ class m160803_032057_init extends yii\db\Migration{
 	
 	/**
 	 * 执行模拟数据
+	 * @author KK
 	 */
 	public function mockData() {
 		$controller = Yii::$app->controller;
@@ -51,6 +54,10 @@ class m160803_032057_init extends yii\db\Migration{
 		$this->dropTable(ProjectInvite::tableName());
     }
 	
+	/**
+	 * 工作者表创建
+	 * @author KK
+	 */
 	private function _worker_create(){
 		$this->createTable(Worker::tableName(), [
 			'id' => $this->primaryKey(),
@@ -68,6 +75,11 @@ class m160803_032057_init extends yii\db\Migration{
 		]);
 	}
 	
+	
+	/**
+	 * 工作者表模拟数据
+	 * @author KK
+	 */
 	private function _worker_mock(){
 		$hashKey = Yii::$app->security->generateRandomString();
 		$passwordHash = Yii::$app->security->generatePasswordHash('121212' . $hashKey);
@@ -86,6 +98,11 @@ class m160803_032057_init extends yii\db\Migration{
 		])->execute();
 	}
 	
+	
+	/**
+	 * 项目表创建
+	 * @author KK
+	 */
 	private function _project_create(){
 		$this->createTable(Project::tableName(), [
 			'id' => $this->primaryKey(),
@@ -96,6 +113,11 @@ class m160803_032057_init extends yii\db\Migration{
 		]);
 	}
 	
+	
+	/**
+	 * 项目表模拟数据
+	 * @author KK
+	 */
 	private function _project_mock(){
 		Yii::$app->db->createCommand()->batchInsert(Project::tableName(), ['id', 'name', Worker::tableName() . '_id', 'add_time'], [
 			[1, '兔子外卖', 1, date('Y-m-d')],
@@ -104,15 +126,25 @@ class m160803_032057_init extends yii\db\Migration{
 		])->execute();
 	}
 	
+	
+	/**
+	 * 任务分类表创建
+	 * @author KK
+	 */
 	private function _task_category_create(){
 		$this->createTable(TaskCategory::tableName(), [
 			'id' => $this->primaryKey(),
 			'name' => $this->string(30)->notNull()->comment('名称'),
 			Project::tableName() . '_id' => $this->integer()->notNull()->defaultValue(0)->comment('所属项目的ID'),
-			'order' => $this->boolean()->notNull()->defaultValue(0)->comment('排序'),
+			'order' => $this->smallInteger()->notNull()->defaultValue(0)->comment('排序'),
 		]);
 	}
 	
+	
+	/**
+	 * 任务分类表模拟数据
+	 * @author KK
+	 */
 	private function _task_category_mock(){
 		Yii::$app->db->createCommand()->batchInsert(TaskCategory::tableName(), ['id', 'name', Project::tableName() . '_id', 'order'], [
 			[1, '待处理', 1, 1],
@@ -123,6 +155,11 @@ class m160803_032057_init extends yii\db\Migration{
 		])->execute();
 	}
 	
+	
+	/**
+	 * 项目加入邀请表创建
+	 * @author KK
+	 */
 	private function _project_invite_create(){
 		$this->createTable(ProjectInvite::tableName(), [
 			'id' => $this->primaryKey(),
