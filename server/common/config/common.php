@@ -1,5 +1,6 @@
 <?php
 return [
+	'runtimePath' => PROJECT_PATH . '/runtime',
 	'aliases' => [
 		'@project' => PROJECT_PATH,
 		'@xoa' => PROJECT_PATH . '/server',

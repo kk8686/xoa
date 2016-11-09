@@ -9,7 +9,13 @@ use xoa\home\models\{
 	TaskCategory
 };
 
+/**
+ * 初始化迁移
+ */
 class m160803_032057_init extends yii\db\Migration{
+	/**
+	 * 执行建表
+	 */
     public function safeUp(){
 		$migrateReflection = new ReflectionClass(self::className());
 		foreach($migrateReflection->getMethods(ReflectionMethod::IS_PRIVATE) as $method){
@@ -20,6 +26,9 @@ class m160803_032057_init extends yii\db\Migration{
 		}
     }
 	
+	/**
+	 * 执行模拟数据
+	 */
 	public function mockData() {
 		$controller = Yii::$app->controller;
 		$controller->stdout(PHP_EOL . PHP_EOL . 'Start to mock data' . PHP_EOL);
@@ -66,9 +75,14 @@ class m160803_032057_init extends yii\db\Migration{
 		$today = date('Y-m-d');
 		$fields = ['id', 'email', 'mobile', 'password_hash', 'hash_key', 'name', 'gender', 'birthday', 'add_time'];
 		Yii::$app->db->createCommand()->batchInsert(Worker::tableName(), $fields, [
-			[1, '12@12.com', '13800138000', $passwordHash, $hashKey, '陈莹莹', Worker::GENDER_FEMALE, '1995-05-05', $today], //手动调试测试专用，项目管理员
-			[2, '99@99.com', '13800138099', $passwordHash, $hashKey, '王自动', Worker::GENDER_MALE, $today, $today], //自动化测试专用
-			[3, '13@12.com', '13800138001', $passwordHash, $hashKey, '叶聪', Worker::GENDER_MALE, '1997-12-23', $today], //手动调试测试专用，普通员工
+			//手动调试测试专用，项目管理员
+			[1, '12@12.com', '13800138000', $passwordHash, $hashKey, '陈莹莹', Worker::GENDER_FEMALE, '1995-05-05', $today],
+			
+			//自动化测试专用
+			[2, '99@99.com', '13800138099', $passwordHash, $hashKey, '王自动', Worker::GENDER_MALE, $today, $today],
+			
+			//手动调试测试专用，普通员工
+			[3, '13@12.com', '13800138001', $passwordHash, $hashKey, '叶聪', Worker::GENDER_MALE, '1997-12-23', $today],
 		])->execute();
 	}
 	
@@ -76,7 +90,7 @@ class m160803_032057_init extends yii\db\Migration{
 		$this->createTable(Project::tableName(), [
 			'id' => $this->primaryKey(),
 			'name' => $this->string(30)->notNull()->comment('名称'),
-			Worker::tableName() . '_id' => $this->integer()->notNull()->comment('创建者的ID'),
+			Worker::tableName() . '_id' => $this->integer()->notNull()->defaultValue(0)->comment('创建者的ID'),
 			'member_ids' => $this->string(255)->notNull()->defaultValue('')->comment('成员的ID集合'),
 			'add_time' => $this->date()->notNull()->comment('添加日期'),
 		]);
@@ -94,7 +108,7 @@ class m160803_032057_init extends yii\db\Migration{
 		$this->createTable(TaskCategory::tableName(), [
 			'id' => $this->primaryKey(),
 			'name' => $this->string(30)->notNull()->comment('名称'),
-			Project::tableName() . '_id' => $this->integer()->notNull()->comment('所属项目的ID'),
+			Project::tableName() . '_id' => $this->integer()->notNull()->defaultValue(0)->comment('所属项目的ID'),
 			'order' => $this->boolean()->notNull()->defaultValue(0)->comment('排序'),
 		]);
 	}

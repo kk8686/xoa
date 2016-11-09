@@ -2,7 +2,6 @@
 $config = [
     'id' => 'xoa',
     'basePath' => dirname(__DIR__),
-    'runtimePath' => '@app/../runtime',
     'bootstrap' => ['log'],
 	'aliases' => [
 		'@webPath' => PROJECT_PATH . '/web/home',
@@ -31,7 +30,7 @@ $config = [
                 [
                     'class' => 'xoa\common\ext\log\FileLog',
                     'levels' => ['error', 'warning', 'info'],
-					'logFile' => '@runtime/logs/' . date('Y-m-d') . '.log'
+					'logFile' => '@runtime/logs/home-' . date('Y-m-d') . '.log'
                 ],
             ],
         ],

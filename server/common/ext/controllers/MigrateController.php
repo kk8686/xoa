@@ -101,9 +101,7 @@ class MigrateController extends \yii\console\controllers\MigrateController{
 	}
 
     /**
-     * Upgrades with the specified migration class.
-     * @param string $class the migration class name
-     * @return boolean whether the migration is successful
+     * @inheritdoc
      */
     protected function migrateUp($class)
     {

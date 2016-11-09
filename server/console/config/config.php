@@ -19,8 +19,9 @@ return [
         'log' => [
             'targets' => [
                 [
-                    'class' => 'xoa\common\ext\log\FileTarget',
-                    'levels' => ['error', 'warning'],
+                    'class' => 'xoa\common\ext\log\FileLog',
+                    'levels' => ['error', 'warning', 'info'],
+					'logFile' => '@runtime/logs/console-' . date('Y-m-d') . '.log'
                 ],
             ],
         ],
