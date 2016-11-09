@@ -42,6 +42,7 @@ $config = [
 				//工作者
 				'worker/register.do' => 'worker/register',
 				'worker/login.do' => 'worker/login',
+				'worker/logout.do' => 'worker/logout',
 				'worker/check-login.do' => 'worker/check-login',
 				'worker/headbar.json' => 'worker/headbar',
 				

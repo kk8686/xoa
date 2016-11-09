@@ -14,6 +14,11 @@ header{
 	
 	.right{
 		float:right;
+		a{
+			&:nth-child(2){
+				color:#666;
+			}
+		}
 	}
 	a{
 		color:#FFF;

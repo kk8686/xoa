@@ -27,12 +27,14 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays homepage.
-     *
-     * @return string
+     * 显示站内首页
+	 * @author KK
      */
-    public function actionIndex()
-    {
-		return $this->renderFile('@webPath/home.html');
+    public function actionIndex(){
+		if(Yii::$app->worker->isGuest){
+			return $this->redirect('/worker/login.html');
+		}else{
+			return $this->renderFile('@webPath/home.html');
+		}
     }
 }

@@ -81,4 +81,13 @@ class WorkerController extends \yii\web\Controller{
 	public function actionHeadbar(){
 		return new Response('', 0, Yii::$app->worker->identity->toArray(['id', 'name']));
 	}
+	
+	/**
+	 * 退出登陆
+	 * @author KK
+	 */
+	public function actionLogout() {
+		!Yii::$app->worker->isGuest && Yii::$app->worker->logout();
+		return $this->redirect('/');
+	}
 }
