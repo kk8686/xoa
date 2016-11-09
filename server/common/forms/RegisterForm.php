@@ -40,7 +40,6 @@ class RegisterForm extends \yii\base\Model{
 			'email' => $this->email,
 			'password_hash' => $passwordInfo['password_hash'],
 			'hash_key' => $passwordInfo['hash_key'],
-			'birthday' => '0000-00-00',
 			'add_time' => date('Y-m-d'),
 			'mobile' => '',
 			'name' => '',

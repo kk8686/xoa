@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `worker` (
 	`hash_key` varchar(64) NOT NULL,
 	`name` varchar(255) NOT NULL,
 	`gender` boolean NOT NULL DEFAULT 0,
-	`birthday` date NOT NULL,
+	`birthday` date NOT NULL DEFAULT '0000-00-00',
 	`add_time` date NOT NULL
 );
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `project_invite` (
 	`add_time` date NOT NULL
 );
 
-INSERT INTO `worker` (`id`, `email`, `mobile`, `password_hash`, `hash_key`, `name`, `gender`, `birthday`, `add_time`) VALUES (1, '12@12.com', '13800138000', '$2y$13$aWV/Oko9jf90O2W.nsTMhumy3ijP306fozb1xuFF3jMWxhKN3N9g6', '2qg7hddF4yTIqAIF2pC98C_rF-wJCwq0', '陈莹莹', 1, '1995-05-05', '2016-11-09'), (2, '99@99.com', '13800138099', '$2y$13$aWV/Oko9jf90O2W.nsTMhumy3ijP306fozb1xuFF3jMWxhKN3N9g6', '2qg7hddF4yTIqAIF2pC98C_rF-wJCwq0', '王自动', 1, '2016-11-09', '2016-11-09'), (3, '13@12.com', '13800138001', '$2y$13$aWV/Oko9jf90O2W.nsTMhumy3ijP306fozb1xuFF3jMWxhKN3N9g6', '2qg7hddF4yTIqAIF2pC98C_rF-wJCwq0', '叶聪', 1, '1997-12-23', '2016-11-09');
+INSERT INTO `worker` (`id`, `email`, `mobile`, `password_hash`, `hash_key`, `name`, `gender`, `birthday`, `add_time`) VALUES (1, '12@12.com', '13800138000', '$2y$13$360yolgY1fMYdsuu7DM29eUHET.R6FajfiHa8DbzVQ7o3STIkNB4K', 'le_5_AT6-1EUsGqEKd0aNhljE-c4DhlN', '陈莹莹', 1, '1995-05-05', '2016-11-09'), (2, '99@99.com', '13800138099', '$2y$13$360yolgY1fMYdsuu7DM29eUHET.R6FajfiHa8DbzVQ7o3STIkNB4K', 'le_5_AT6-1EUsGqEKd0aNhljE-c4DhlN', '王自动', 1, '2016-11-09', '2016-11-09'), (3, '13@12.com', '13800138001', '$2y$13$360yolgY1fMYdsuu7DM29eUHET.R6FajfiHa8DbzVQ7o3STIkNB4K', 'le_5_AT6-1EUsGqEKd0aNhljE-c4DhlN', '叶聪', 1, '1997-12-23', '2016-11-09');
 
 INSERT INTO `project` (`id`, `name`, `worker_id`, `add_time`) VALUES (1, '兔子外卖', 1, '2016-11-09'), (2, '嘟嘟打车', 1, '2016-11-09'), (3, '去那儿', 1, '2016-11-09');
 

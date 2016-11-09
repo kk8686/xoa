@@ -63,7 +63,7 @@ class m160803_032057_init extends yii\db\Migration{
 			//个人属性类
 			'name' => $this->string(255)->notNull()->comment('姓名'),
 			'gender' => $this->boolean()->notNull()->defaultValue(0)->comment('姓名'),
-			'birthday' => $this->date()->notNull()->comment('出生日期'),
+			'birthday' => $this->date()->notNull()->defaultValue('0000-00-00')->comment('出生日期'),
 			'add_time' => $this->date()->notNull()->comment('添加日期'),
 		]);
 	}
