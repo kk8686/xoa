@@ -119,10 +119,10 @@ class m160803_032057_init extends yii\db\Migration{
 	 * @author KK
 	 */
 	private function _project_mock(){
-		Yii::$app->db->createCommand()->batchInsert(Project::tableName(), ['id', 'name', Worker::tableName() . '_id', 'add_time'], [
-			[1, '兔子外卖', 1, date('Y-m-d')],
-			[2, '嘟嘟打车', 1, date('Y-m-d')],
-			[3, '去那儿', 1, date('Y-m-d')],
+		Yii::$app->db->createCommand()->batchInsert(Project::tableName(), ['id', 'name', Worker::tableName() . '_id', 'member_ids', 'add_time'], [
+			[1, '兔子外卖', 1, '2', date('Y-m-d')],
+			[2, '嘟嘟打车', 1, '', date('Y-m-d')],
+			[3, '去那儿', 1, '', date('Y-m-d')],
 		])->execute();
 	}
 	

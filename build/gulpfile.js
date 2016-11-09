@@ -24,7 +24,7 @@ function setupTasks(config){
 
 	//同步图片、字体、图标等
 	gulp.task('assets', function(){
-		watch(config.src + '/**/**.{jpg,jpeg,png,bmp,gif,woff,ttf,map,ico}', function(file){
+		watch(config.src + '/**/**.{jpg,jpeg,png,bmp,gif,woff,ttf,eot,map,ico,svg}', function(file){
 			gulp.src(file, srcOptions)
 				.pipe(gulp.dest(config.dist));
 		})
