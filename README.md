@@ -46,4 +46,4 @@ Since 2016.08.03
 
 - [开源地址](https://github.com/kk8686/xoa)
 
-- [技术文档](https://github.com/kk8686/xoa-dev-doc)
+- [技术文档](https://github.com/kk8686/xoa/tree/master/docs/%E6%8A%80%E6%9C%AF%E6%8C%87%E5%BC%95)
