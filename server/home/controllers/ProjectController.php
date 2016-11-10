@@ -56,12 +56,18 @@ class ProjectController extends \yii\web\Controller{
 	 * @author KK
 	 * @return Response
 	 */
-	public function actionWorkers(){
+	public function actionMembers(){
 		$id = (int)Yii::$app->request->get('projectId');
 		if(!$project = Project::findOne($id)){
 			return new Response('无效的项目ID' . $id);
 		}
-		return new Response('', 0, $project->workers);
+		
+		$workersInfo = [];
+		foreach($project->workers as $worker){
+			$workerInfo = $worker->toArray(['id', 'name', 'avatar']);
+			$workersInfo[] = $workerInfo;
+		}
+		return new Response('', 0, $workersInfo);
 	}
 	
 	/**

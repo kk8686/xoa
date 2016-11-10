@@ -62,13 +62,14 @@ class m160803_032057_init extends yii\db\Migration{
 		$this->createTable(Worker::tableName(), [
 			'id' => $this->primaryKey(),
 			//账号安全类
-			'email' => $this->string(255)->notNull()->comment('邮箱，可以用于登陆'),
-			'mobile' => $this->string(11)->notNull()->comment('手机号，可以用于登陆，未实现'),
-			'password_hash' => $this->string(64)->notNull()->comment('密码hash'),
-			'hash_key' => $this->string(64)->notNull()->comment('员工专属的hash密钥，可以用来hash其它东西'),
+			'email' => $this->string(255)->notNull()->defaultValue('')->comment('邮箱，可以用于登陆'),
+			'mobile' => $this->string(11)->notNull()->defaultValue('')->comment('手机号，可以用于登陆，未实现'),
+			'password_hash' => $this->string(64)->notNull()->defaultValue('')->comment('密码hash'),
+			'hash_key' => $this->string(64)->notNull()->defaultValue('')->comment('员工专属的hash密钥，可以用来hash其它东西'),
 			
 			//个人属性类
-			'name' => $this->string(255)->notNull()->comment('姓名'),
+			'name' => $this->string(255)->notNull()->defaultValue('')->comment('姓名'),
+			'avatar' => $this->string(255)->notNull()->defaultValue('')->comment('头像'),
 			'gender' => $this->boolean()->notNull()->defaultValue(0)->comment('姓名'),
 			'birthday' => $this->date()->notNull()->defaultValue('0000-00-00')->comment('出生日期'),
 			'add_time' => $this->date()->notNull()->comment('添加日期'),

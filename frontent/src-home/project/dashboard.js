@@ -19,37 +19,74 @@ function TaskCategory(options){
 	$category.on('click', '.J-btnAddTask', function(){
 		var $dialog = new ModalDialog({
 			title : '新任务',
-			content: '<form role="form" style="padding:10px;">\
+			content: '<form role="form" class="wrapAddTaskWorker">\
 				<div class="form-group">\
 					<input type="email" class="form-control" placeholder="任务标题">\
 				</div>\
 				<div class="form-group">\
-					<label>详情</label>\
-					<textarea class="form-control" rows="5"></textarea>\
+					<textarea class="form-control" rows="5" placeholder="任务详情"></textarea>\
 				</div>\
 				<div class="form-group">\
-					<button type="button" class="btn btn-success">+负责人</button>\
-					<p class="help-block"></p>\
+					<button type="button" class="btn btn-success J-btnAddWorker">+负责人</button>\
+					\
+					<span class="J-wrapWorkerResult"></span>\
 				</div>\
-				<div class="checkbox">\
-					<label>\
-						<input type="checkbox">\
-					</label>\
+				<div class="checkbox warpMembers J-wrapMembers">\
 				</div>\
 				\
 			</form>',
-			width : '500px',
-			height : '400px',
+			width : 500,
+			height : 400,
 			footer : '<button type="button" class="btn btn-primary">确定</button>'
 		});
 		
-		$dialog.on('click', 'J-btnAddWorker', function(){
+		$dialog.on('click', '.J-btnAddWorker', function(){
 			var $this = $(this);
-			var members = $this.data('members');
-			if(!members){
-				App.ajax({
-					url : '/project/' + App.aParams.projectId + '/workers.json'
+			var $wrapWorkerResult = $dialog.find('.J-wrapWorkerResult'),
+				$wrapMembers = $dialog.find('.J-wrapMembers');
+			if($this.text() == '+负责人'){
+				//显示成员选项
+				var members = $this.data('members');
+				if(!members){
+					App.ajax({
+						url : '/project/' + App.aParams.projectId + '/members.json',
+						async : false,
+						success : function(aResult){
+							$(this).data('members', aResult.data);
+							members = aResult.data;
+						}
+					});
+				}
+
+				//已经选中的负责人ID
+				var selectedIds = (function(){
+					var ids = [];
+					$wrapWorkerResult.find('.J-worker').each(function(){
+						ids.push($(this).data('id'));
+					});
+					return ids;
+				})();
+				
+				var membersHtml = [];
+				for(var i in members){
+					var checked = $.inArray(members[i].id, selectedIds) !== -1 ? ' checked' : '';
+					membersHtml.push('<label class="J-memberItem"><input class="J-member" type="checkbox" value="' + members[i].id + '"' + checked + '>' + members[i].name + '</label>');
+				};
+				$wrapMembers.html(membersHtml.join(''));
+				
+				$this.text('确定');
+				
+			}else{
+				//确定负责人成员
+				var membersHtml = [];
+				$wrapMembers.find(':checkbox').each(function(){
+					if(this.checked){
+						membersHtml.push('<label class="J-worker" data-id="' + this.value + '">' + $(this).closest('.J-memberItem').text() + '</label>');
+					}
 				});
+				$wrapWorkerResult.html(membersHtml.join('、'));
+				$wrapMembers.empty();
+				$this.text('+负责人');
 			}
 		});
 		

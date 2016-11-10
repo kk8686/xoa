@@ -1,6 +1,7 @@
 <?php
 namespace xoa\common\models;
 
+use xoa\common\models\Worker;
 use xoa\home\models\TaskCategory;
 
 /**
@@ -8,6 +9,7 @@ use xoa\home\models\TaskCategory;
  * @author KK
  * @property-read array $taskCategories 项目的所有分类
  * @property array $member_ids 项目成员的ID集
+ * @property-read array $workers 项目成员集合
  */
 class Project extends \yii\db\ActiveRecord{
 	/**
@@ -24,5 +26,15 @@ class Project extends \yii\db\ActiveRecord{
 	 */
 	public function getTaskCategories(){
 		return $this->hasMany(TaskCategory::className(), [static::tableName() . '_id' => 'id']);
+	}
+	
+	/**
+	 * 获取项目成员集合
+	 * @author KK
+	 * @return array
+	 */
+	public function getWorkers(){
+		$workerIds = array_merge([$this->worker_id], explode(',', $this->member_ids));
+		return Worker::findAll(['id' => $workerIds]);
 	}
 }

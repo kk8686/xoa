@@ -1,4 +1,4 @@
-if(request.body.h79843 === 'root@soa.com' && request.body.h79844 === '121212'){
+if(request.body.h79843 === '12@12.com' && request.body.h79844 === '121212'){
 	module.exports = {
 		message : '登陆成功',
 		code : 0,
@@ -6,7 +6,7 @@ if(request.body.h79843 === 'root@soa.com' && request.body.h79844 === '121212'){
 	};
 }else{
 	module.exports = {
-		message : '帐号或密2码错误',
+		message : '帐号或密码错误',
 		code : 1,
 		data : null
 	};

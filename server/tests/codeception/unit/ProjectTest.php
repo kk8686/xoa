@@ -1,11 +1,13 @@
 <?php
 namespace xoa_test\home\unit;
 
+use Yii;
 use xoa\common\models\{
 	Project,
 	Worker
 };
 use xoa\home\forms\ProjectForm;
+use xoa\home\controllers\ProjectController;
 
 class ProjectTest extends \Codeception\TestCase\Test
 {
@@ -66,5 +68,18 @@ class ProjectTest extends \Codeception\TestCase\Test
 		$this->assertTrue($form->inviteMember(), '第一次邀请会成功');
 		
 		$this->assertFalse($form->inviteMember(), '已经邀请过');
+	}
+	
+	/**
+	 * 测试获取项目成员
+	 * @author KK
+	 */
+	public function testMembers(){
+		$controller = new ProjectController('project', Yii::$app);
+		Yii::$app->request->setQueryParams(['projectId' => 1]);
+		$response = $controller->runAction('members');
+		$workerList = $response->data['data'];
+		$this->assertInternalType('array', $workerList);
+		$this->tester->assertListHasKeys(['id', 'name', 'avatar'], $workerList);
 	}
 }

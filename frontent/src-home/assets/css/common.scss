@@ -15,7 +15,7 @@ header{
 	.right{
 		float:right;
 		a{
-			&:nth-child(2){
+			&:nth-child(3){
 				color:#666;
 			}
 		}
@@ -83,6 +83,19 @@ header{
 			button{
 				display:none;
 			}
+		}
+	}
+}
+
+.wrapAddTaskWorker{
+	padding:10px;
+	
+	.btn-success{
+		width:78px;
+	}
+	.warpMembers{
+		label{
+			margin-right:12px;
 		}
 	}
 }

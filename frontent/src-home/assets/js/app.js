@@ -2,6 +2,7 @@
 	container.App = {
 		alert : function(message, level, callback){
 			alert(message);
+			
 			if(typeof(callback) == 'string'){
 				location.href = callback;
 			}else if(typeof(callback) == 'function'){
@@ -24,8 +25,8 @@
 					}
 					aOption.complete && aOption.complete(oXhr);
 				},
-				error : function(xhr){
-					alert(xhr.responseText);
+				error : function(oXhr){
+					alert(oXhr.responseText);
 				}
 			}, aOption);
 			
@@ -85,7 +86,7 @@
 			}
 			//console.log('pathinfo', pathinfo);
 			var matchResults = rule.match(new RegExp('<\\w+:.+?>', 'g'));
-			var paramNames = [];
+			var aParamNames = [];
 			if(!matchResults){
 				return null;
 			}
@@ -93,25 +94,25 @@
 			matchResults.map(function(item){
 				var pattern = item.replace(/<\w+:/, '(');
 				var paramNameMatchResult = item.match(/<(\w+)/);
-				paramNames.push(paramNameMatchResult[1]);
+				aParamNames.push(paramNameMatchResult[1]);
 				pattern = pattern.replace('>', ')');
 				//console.log('pattern', pattern);
 				rule = rule.replace(item, pattern);
 			});
 
 			//console.log('RegExp', eRule);
-			var paramVaules = pathinfo.match(new RegExp(rule));
+			var aParamVaules = pathinfo.match(new RegExp(rule));
 			//console.log('matched', paramVaules);
-			if(!paramVaules){
+			if(!aParamVaules){
 				$.error('App.loadParam 加载请求参数失败');
 				return null;
 			}
-			var params = {};
-			for(var i = 1; i < paramVaules.length; i++){
-				params[paramNames[i - 1]] = paramVaules[i];
+			var aParams = {};
+			for(var i = 1; i < aParamVaules.length; i++){
+				aParams[aParamNames[i - 1]] = aParamVaules[i];
 			}
-			self.aParams = $.extend(self.aParams, params);
-			return params;
+			self.aParams = $.extend(self.aParams, aParams);
+			return aParams;
 		},
 		
 		aParams : {},
@@ -122,10 +123,10 @@
 			if(url.indexOf('?') != -1){
 				aParams = {};
 				var paramsStr = url.split('?')[1],
-					paramsArr = paramsStr.split('&'),
+					aParamsArr = paramsStr.split('&'),
 					aParamsPropertyArr = [];
-				for(var j in paramsArr){
-					aParamsPropertyArr = paramsArr[j].split('=');
+				for(var j in aParamsArr){
+					aParamsPropertyArr = aParamsArr[j].split('=');
 					var key = aParamsPropertyArr[0],
 						value = aParamsPropertyArr[1];
 					aParams[key] = value;
@@ -135,30 +136,30 @@
 		},
 		
 		showHeadBar : function(){
-			var userInfo = sessionStorage.getItem('userInfo');
-			if(!userInfo){
+			var aUserInfo = sessionStorage.getItem('userInfo');
+			if(!aUserInfo){
 				self.ajax({
 					url : '/worker/headbar.json',
 					async : false,
-					success : function(result){
-						if(result.code){
-							App.alert(result.message, result.code, result.data);
+					success : function(aResult){
+						if(aResult.code){
+							App.alert(aResult.message, aResult.code, aResult.data);
 							return;
 						}
-						userInfo = result.data;
-						sessionStorage.setItem('userInfo', JSON.stringify(result.data));
+						aUserInfo = aResult.data;
+						sessionStorage.setItem('userInfo', JSON.stringify(aResult.data));
 					}
 				});
 			}else{
-				userInfo = JSON.parse(userInfo);
+				aUserInfo = JSON.parse(aUserInfo);
 			}
 			
 			//为什么下面.glyphicon出不来图标 求解
 			$('#mainOut').before('<header class="container-full">\
 				<div class="left"><a href="/home.html">首页</a></div>\
-				<div class="right">\n\
+				<div class="right">\
 					<span class="glyphicon glyphicon-envelope"></span>\
-					<a href="/worker/center.html">' + userInfo.name + '</a>&nbsp;\
+					<a href="/worker/center.html">' + aUserInfo.name + '</a>&nbsp;\
 					<a href="/worker/logout.do">退出登陆</a>\
 				</div>\
 			</header>');
