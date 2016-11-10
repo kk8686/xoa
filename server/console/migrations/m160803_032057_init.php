@@ -140,7 +140,6 @@ class m160803_032057_init extends yii\db\Migration{
 		]);
 	}
 	
-	
 	/**
 	 * 任务分类表模拟数据
 	 * @author KK
