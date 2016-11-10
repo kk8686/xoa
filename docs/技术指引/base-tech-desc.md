@@ -15,7 +15,7 @@
 
 单元测试框架：**[Codeception](http://www.kkh86.com/it/codeception/guide-README.html)**
 
-Web服务器：**不限，但自带.htaccess，用Nginx请自主定义相关重写规则
+Web服务器：不限，但自带.htaccess，用Nginx请自主定义相关重写规则
 
 文档编写语言：**[Markdown](http://www.kkh86.com/it/markdown/guide-README.html)**
 
