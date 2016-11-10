@@ -1,35 +1,7 @@
 <?php
-if(function_exists('codecept_debug')){
+if(!function_exists('codecept_debug')){
 	/**
-	 * 测试开发时用的调试函数
-	 * @author KK
-	 * @param mixed $data 要输出的调试数据
-	 * @param int $mode 调试模式
-	 * 解释：11=输出调试数据并停止运行
-	 * 
-	 * @example
-	 * 
-	 * ```php
-	 * debug(123);
-	 * debug([1, 2, 3, 'a' => 'b'], 11); //停止运行
-	 * ```
-	 */
-	function debug($data, $mode = 0){
-		if($mode == 11){
-			echo PHP_EOL . PHP_EOL . '======debug start======' . PHP_EOL;
-			print_r($data);
-			echo PHP_EOL . '======debug end======' . PHP_EOL . PHP_EOL;
-			exit;
-		}else{
-			codecept_debug('======debug start======');
-			codecept_debug($data);
-			codecept_debug('======debug end======');
-		}
-	}
-	
-}else{
-	/**
-	 * 输出调试信息
+	 * 非测试输出调试信息
 	 * @author KK
 	 * @param mixed $data 要输出的调试数据
 	 * @param int $mode 调试模式
@@ -39,9 +11,11 @@ if(function_exists('codecept_debug')){
 	 * @example
 	 * 
 	 * ```php
-	 * debug(123, 110);
-	 * debug([1,2,3], 111); //输出轨迹并停止运行
-	 * debug([1, 2, 3, 'a' => 'b'], 11); //停止运行
+	 * debug(123); 普通输出
+	 * debug(123, 11); 输出后停止运行
+	 * debug([1, 2, 3, 'a' => 'b'], 11); 数组带排版
+	 * debug(123, 110); 输出运行回溯
+	 * debug([1,2,3], 111); 输出回溯并停止运行
 	 * ```
 	 */
 	function debug($data, $mode = 0){
@@ -113,5 +87,33 @@ EOL;
 		}
 
 		in_array($mode, [11, 111]) && exit();
+	}
+	
+}else{
+	/**
+	 * 运行Codeception测试框架时用的调试函数
+	 * @author KK
+	 * @param mixed $data 要输出的调试数据
+	 * @param int $mode 调试模式
+	 * 解释：默认为0=仅输出数据；11=输出调试数据并停止运行
+	 * 
+	 * @example
+	 * 
+	 * ```php
+	 * debug(123); 普通输出，需要以-d参数运行（调试模式）
+	 * debug([1, 2, 3, 'a' => 'b'], 11); //没排版，停止运行
+	 * ```
+	 */
+	function debug($data, $mode = 0){
+		if($mode == 11){
+			echo PHP_EOL . PHP_EOL . '======debug start======' . PHP_EOL;
+			print_r($data);
+			echo PHP_EOL . '======debug end======' . PHP_EOL . PHP_EOL;
+			exit;
+		}else{
+			codecept_debug('======debug start======');
+			codecept_debug($data);
+			codecept_debug('======debug end======');
+		}
 	}
 }

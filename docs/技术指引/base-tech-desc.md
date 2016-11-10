@@ -9,21 +9,23 @@
 
 主要编程语言**：PHP7** （提示：下载phpStudy最新版可以切换到PHP7）
 
-程序框架：**Yii2**
+程序框架：**[Yii2](https://github.com/yiisoft/yii2)**
 
-数据库：**sqlite3**（*熟悉Yii的话可以快速改成MySQL，未来会出修改指引*）
+数据库：**[SQLite3](http://www.runoob.com/sqlite/sqlite-tutorial.html)**（*熟悉Yii的话可以快速改成MySQL，未来会出修改指引*）
+
+单元测试框架：**[Codeception](http://www.kkh86.com/it/codeception/guide-README.html)**
 
 Web服务器：**不限，但自带.htaccess，用Nginx请自主定义相关重写规则
 
-文档编写语言：**Markdown**
+文档编写语言：**[Markdown](http://www.kkh86.com/it/markdown/guide-README.html)**
 
 运行平台：**Windows/Linux**
 
-前端UI：**暂时用Bootstrap3，最终是想用Bootstrap4的**
+前端UI：**暂时用[Bootstrap3](http://v3.bootcss.com/css)，最终是想用Bootstrap4的**
 
-样式语言：**SASS**
+样式语言：**[SASS](http://www.w3cplus.com/sassguide)**
 
-前端构建平台：**gulp**
+前端构建平台：**[Gulp](http://www.kkh86.com/it/gulp-build-dev-env/guide-README.html)**
 
 ---
 
