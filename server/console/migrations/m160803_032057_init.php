@@ -65,10 +65,10 @@ class m160803_032057_init extends yii\db\Migration{
 		
 		//执行删除表
 		foreach($dropTables as $dropTable){
-			if(!Yii::$app->db->getSchema()->getTableSchema($dropTable)){
-				continue;
+			if(Yii::$app->db->schema->getTableSchema($dropTable)){
+				$this->dropTable($dropTable);
 			}
-			$this->dropTable($dropTable);
+			
 		}
     }
 	

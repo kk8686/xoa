@@ -1,4 +1,5 @@
 @import "base";
+@import "project-dashboard";
 
 $mainFontColor:#000;
 $mainBackgroundColor:#EEE;
@@ -59,43 +60,5 @@ header{
 	
 	button{
 		display:none;
-	}
-}
-
-.taskCategorys{
-	overflow-x: scroll;
-	
-	.taskList{
-		//display:inline-block;
-		background:$mainBackgroundColor;
-		padding:4px;
-		border-radius:2px;
-		margin-right:7px;
-		width:290px;
-		min-height:680px;
-		h4{
-			color:$unMainFontColor;
-			
-			&:hover{
-				color:$mainFontColor;
-			}
-			
-			button{
-				display:none;
-			}
-		}
-	}
-}
-
-.wrapAddTaskWorker{
-	padding:10px;
-	
-	.btn-success{
-		width:78px;
-	}
-	.warpMembers{
-		label{
-			margin-right:12px;
-		}
 	}
 }

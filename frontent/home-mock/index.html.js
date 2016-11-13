@@ -1,4 +1,4 @@
 response.writeHead(302, {
-	'Location' : '/worker/login.html'
+	'Location' : '/home.html'
 });
 response.end();
