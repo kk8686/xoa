@@ -1,6 +1,7 @@
 <?php
 use xoa\common\models\{
 	Project,
+	Task,
 	Worker
 };
 
@@ -47,11 +48,28 @@ class m160803_032057_init extends yii\db\Migration{
 		}
 	}
 
+	/**
+	 * 回滚初始化迁移
+	 * 之所以下面foreach去getTableSchema判断，是转为防止加了新表的create后，而又将drop都添加到safeDown中（大部分菜鸟会这样做），这样造成的后果就是他想重新构造新的数据库时，要先将以前的进行回滚，但回滚过程中会找不到他新添加的drop表于是变成了回滚失败，这里加个判断就方便一点了，维护也爽快点
+	 * @author KK
+	 */
     public function safeDown(){
-		$this->dropTable(Worker::tableName());
-		$this->dropTable(Project::tableName());
-		$this->dropTable(TaskCategory::tableName());
-		$this->dropTable(ProjectInvite::tableName());
+		//要删除的表，新增了表的create后记得这里也加一个表
+		$dropTables = [
+			Project::tableName(),
+			ProjectInvite::tableName(),
+			Task::tableName(),
+			TaskCategory::tableName(),
+			Worker::tableName(),
+		];
+		
+		//执行删除表
+		foreach($dropTables as $dropTable){
+			if(!Yii::$app->db->getSchema()->getTableSchema($dropTable)){
+				continue;
+			}
+			$this->dropTable($dropTable);
+		}
     }
 	
 	/**
@@ -127,7 +145,6 @@ class m160803_032057_init extends yii\db\Migration{
 		])->execute();
 	}
 	
-	
 	/**
 	 * 任务分类表创建
 	 * @author KK
@@ -155,6 +172,34 @@ class m160803_032057_init extends yii\db\Migration{
 		])->execute();
 	}
 	
+	/**
+	 * 任务表创建
+	 * @author KK
+	 */
+	public function _task_create() {
+		$this->createTable(Task::tableName(), [
+			'id' => $this->primaryKey(),
+			'name' => $this->string(30)->notNull()->comment('名称'),
+			Project::tableName() . '_id' => $this->integer()->notNull()->defaultValue(0)->comment('所属项目的ID'),
+			TaskCategory::tableName() . '_id' => $this->integer()->notNull()->defaultValue(0)->comment('所属的分类ID'),
+			Worker::tableName() . '_ids' => $this->string()->notNull()->defaultValue('')->comment('负责人ID集，逗号隔开'),
+			'related_' . Worker::tableName() . '_ids' => $this->string()->notNull()->defaultValue('')->comment('相关人员ID集，逗号隔开'),
+			'ok' => $this->boolean()->notNull()->defaultValue(false)->comment('是否搞定了'),
+			'order' => $this->smallInteger()->notNull()->defaultValue(0)->comment('排序'),
+			'limit_end_time' => $this->smallInteger()->notNull()->defaultValue(0)->comment('要求完成时间'),
+			'end_time' => $this->smallInteger()->notNull()->defaultValue(0)->comment('实际完成时间'),
+			'add_time' => $this->smallInteger()->notNull()->defaultValue(0)->comment('发布时间'),
+		]);
+	}
+	
+	/**
+	 * 任务表数据模拟
+	 * @author KK
+	 */
+	public function _task_mock() {
+		//待定
+	}
+	
 	
 	/**
 	 * 项目加入邀请表创建
@@ -164,9 +209,8 @@ class m160803_032057_init extends yii\db\Migration{
 		$this->createTable(ProjectInvite::tableName(), [
 			'id' => $this->primaryKey(),
 			Project::tableName() . '_id' => $this->integer()->notNull()->defaultValue(0)->comment('项目ID'),
-			Worker::tableName() . '_id' => $this->integer()->notNull()->defaultValue(0)->comment('工作者ID'),
-			'status' => $this->boolean()->notNull()->defaultValue(0)->comment('状态 1=待处理，2=通过，3=拒绝'),
-			'add_time' => $this->date()->notNull()->comment('邀请时间'),
+			TaskCategory::tableName() . '_id' => $this->integer()->notNull()->defaultValue(0)->comment('分类ID'),
+			'add_time' => $this->date()->notNull()->comment('添加时间'),
 		]);
 	}
 }

@@ -1,11 +1,11 @@
 var path = require('path');
-var PROJECT_PATH = path.resolve('../');
+var PROJECT_PATH = path.resolve('../../');
 module.exports = {
 	projects : {
 		1 : { //前台
-			src : PROJECT_PATH + '/frontent/src-home',
+			src : PROJECT_PATH + '/frontent/home-src',
 			dist : PROJECT_PATH + '/web/home',
-			mockData : PROJECT_PATH + '/frontent/mock-home',
+			mockData : PROJECT_PATH + '/frontent/home-mock',
 			layouts : [
 				{
 					layoutFile : '',
@@ -20,9 +20,9 @@ module.exports = {
 		},
 		
 		2 : { //后台
-			src : PROJECT_PATH + '/frontent/src-backend',
+			src : PROJECT_PATH + '/frontent/backend-src',
 			dist : PROJECT_PATH + '/web/backend',
-			mockData : PROJECT_PATH + '/frontent/mock-backend',
+			mockData : PROJECT_PATH + '/frontent/backend-mock',
 			layouts : [
 				{
 					layoutFile : '',

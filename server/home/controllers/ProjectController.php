@@ -54,6 +54,7 @@ class ProjectController extends \yii\web\Controller{
 	/**
 	 * 获取项目的成员
 	 * @author KK
+	 * @test \xoa_test\home\unit\ProjectTest::testMembers
 	 * @return Response
 	 */
 	public function actionMembers(){
