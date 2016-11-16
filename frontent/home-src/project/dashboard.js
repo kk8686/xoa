@@ -159,6 +159,7 @@ function _fShowTaskForm(){
 				limitTime : limitTime,
 			},
 			success : function(aResult){
+				alert('添加成功');
 				var $task = new Task(aResult.data);
 			}
 		});
