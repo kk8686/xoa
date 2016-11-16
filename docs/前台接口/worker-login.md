@@ -1,7 +1,7 @@
 工作者 - 登陆
 ===
 
-- 地址：POST `worker/login.do`
+- 地址：POST `/worker/login.do`
 
 - 参数：
 

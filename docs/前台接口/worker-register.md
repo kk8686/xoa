@@ -1,7 +1,7 @@
 工作者 - 注册
 ===
 
-- 地址：POST `worker/register.do`
+- 地址：POST `/worker/register.do`
 
 - 参数：
 
