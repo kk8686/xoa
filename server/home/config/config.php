@@ -54,6 +54,9 @@ $config = [
 				'project/add.do' => 'project/add',
 				'project/invite-member.do' => 'project/invite-member',
 				
+				//任务
+				'task/add.do' => 'task/add',
+				
 				'<page:.+>.htm<xx:l{0,1}>' => 'site/r',
             ],
         ],

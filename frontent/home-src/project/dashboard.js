@@ -1,5 +1,7 @@
 (function(){
-function _fShowTaskForm(){
+function _fShowTaskForm(event){
+	var categoryId = $(event.delegateTarget).data('id');
+	
 	var today = new Date(),
 		todayStr = today.getFullYear() + '/' + today.getMonth() + '/' + today.getDate() + ' 18:00';
 	var $dialog = new ModalDialog({
@@ -154,9 +156,10 @@ function _fShowTaskForm(){
 			data : {
 				title : title,
 				detail : detail,
+				taskCategoryId : categoryId,
 				workerIds : aWorkerIds,
 				relatedMemberIds : aRelatedMemberIds,
-				limitTime : limitTime,
+				limitTime : limitTime
 			},
 			success : function(aResult){
 				alert('添加成功');

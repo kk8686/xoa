@@ -176,18 +176,19 @@ class m160803_032057_init extends yii\db\Migration{
 	 * 任务表创建
 	 * @author KK
 	 */
-	public function _task_create() {
+	private function _task_create() {
 		$this->createTable(Task::tableName(), [
 			'id' => $this->primaryKey(),
-			'name' => $this->string(30)->notNull()->comment('名称'),
 			Project::tableName() . '_id' => $this->integer()->notNull()->defaultValue(0)->comment('所属项目的ID'),
 			TaskCategory::tableName() . '_id' => $this->integer()->notNull()->defaultValue(0)->comment('所属的分类ID'),
 			Worker::tableName() . '_ids' => $this->string()->notNull()->defaultValue('')->comment('负责人ID集，逗号隔开'),
-			'related_' . Worker::tableName() . '_ids' => $this->string()->notNull()->defaultValue('')->comment('相关人员ID集，逗号隔开'),
+			'related_member_ids' => $this->string()->notNull()->defaultValue('')->comment('相关人员ID集，逗号隔开'),
+			'title' => $this->string(30)->notNull()->defaultValue('')->comment('标题'),
+			'detail' => $this->text()->notNull()->defaultValue('')->comment('详情'),
 			'ok' => $this->boolean()->notNull()->defaultValue(false)->comment('是否搞定了'),
 			'order' => $this->smallInteger()->notNull()->defaultValue(0)->comment('排序'),
-			'limit_end_time' => $this->smallInteger()->notNull()->defaultValue(0)->comment('要求完成时间'),
-			'end_time' => $this->smallInteger()->notNull()->defaultValue(0)->comment('实际完成时间'),
+			'limit_time' => $this->smallInteger()->notNull()->defaultValue(0)->comment('要求完成时间'),
+			'end_time' => $this->smallInteger()->notNull()->defaultValue('')->comment('实际完成时间'),
 			'add_time' => $this->smallInteger()->notNull()->defaultValue(0)->comment('发布时间'),
 		]);
 	}
@@ -196,7 +197,7 @@ class m160803_032057_init extends yii\db\Migration{
 	 * 任务表数据模拟
 	 * @author KK
 	 */
-	public function _task_mock() {
+	private function _task_mock() {
 		//待定
 	}
 	

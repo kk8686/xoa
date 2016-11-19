@@ -3,6 +3,7 @@ namespace xoa\home\forms;
 
 use xoa\common\models\Worker;
 use xoa\common\models\Task;
+use xoa\home\models\TaskCategory;
 
 /**
  * 任务表单
@@ -19,6 +20,11 @@ class TaskForm extends \yii\base\Model{
 	 * @var string 任务详情
 	 */
 	public $detail = '';
+	
+	/**
+	 * @var int 任务分类ID
+	 */
+	public $taskCategoryId = 0;
 	
 	/**
 	 * @var array 负责人ID集合
@@ -46,6 +52,11 @@ class TaskForm extends \yii\base\Model{
 	public $limitTime = '';
 	
 	/**
+	 * @var TaskCategory 任务分类
+	 */
+	private $_taskCategory = null;
+	
+	/**
 	 * @inheritedoc
 	 * @author KK
 	 */
@@ -56,6 +67,7 @@ class TaskForm extends \yii\base\Model{
 			['detail', 'string', 'length' => [4, 65535], 'message' => '任务详情在4到65535个字之间'],
 			[['workerIds', 'relatedMemberIds'], 'each', 'rule' => ['integer']],
 			[['workerIds', 'relatedMemberIds'], 'validateMemberIds'],
+			['taskCategoryId', 'validateCategoryId'],
 		];
 	}
 	
@@ -65,7 +77,7 @@ class TaskForm extends \yii\base\Model{
 	 */
 	public function scenarios() {
 		return [
-			static::SCENE_ADD => ['title', 'detail', 'workerIds', 'relatedMemberIds', 'limitTime'],
+			static::SCENE_ADD => ['title', 'detail', 'taskCategoryId', 'workerIds', 'relatedMemberIds', 'limitTime'],
 		];
 	}
 	
@@ -73,8 +85,6 @@ class TaskForm extends \yii\base\Model{
 	 * 验证成员ID集
 	 * @param string $attributeName 被验证的属性名称
 	 * @param array $params 验证的附加参数
-	 * @return Task
-	 * @throws \yii\base\ErrorException
 	 */
 	public function validateMemberIds($attributeName, $params){
 		$workers = Worker::findAll($this->{$attributeName});
@@ -88,23 +98,40 @@ class TaskForm extends \yii\base\Model{
 	}
 	
 	/**
+	 * 验证任务分类ID
+	 */
+	public function validateCategoryId(){
+		if(!$taskCategory = TaskCategory::findOne($this->taskCategoryId)){
+			return $this->addError('taskCategoryId', '无效的任务分类');
+		}
+		$this->_taskCategory = $taskCategory;
+	}
+	
+	/**
 	 * 添加任务
 	 * @author KK
 	 * @return Task
 	 * @throws \yii\base\ErrorException
+	 * @test \xoa_test\home\unit\TaskTest::testAdd
 	 */
 	public function add(){
 		if(!$this->validate()){
-			debug($this->errors,11);
-			return false;
+			return null;
 		}
+		
 		$task = new Task([
+			'project_id' => $this->_taskCategory->project->id,
+			'task_category_id' => $this->_taskCategory->id,
 			'title' => $this->title,
 			'detail' => $this->detail,
-			'worker_ids' => $this->workerIds,
-			'related_member_ids' => $this->relatedMemberIds,
+			'worker_ids' => implode(',', $this->workerIds),
 			'limit_time' => $this->limitTime,
+			'add_time' => date('Y-m-d H:i:'),
 		]);
+		if($this->relatedMemberIds){
+			$task->related_member_ids = implode(',', $this->relatedMemberIds);
+		}
+		
 		if(!$task->save()){
 			throw new \yii\base\ErrorException('添加任务失败');
 		}else{
