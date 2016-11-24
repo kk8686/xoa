@@ -180,7 +180,16 @@ function TaskCategory(options){
 		<h4 class="J-taskCategoryName">\n\
 			' + self.name + '\
 			<button type="button" class="btn btn-primary J-btnAddTask">+任务</button>\
-		</h4>\
+		</h4>\n\
+		<div class="J-listItems">\n\
+			<div class="item J-item">\n\
+				<p><input type="checkbox" name="" id="" /> 任务标题任务标题任务标题任务标题任务标题任务标题任务标题任务标题<p>\n\
+				<p>\n\
+					<span>周五 截止</span>\n\
+					<img src="/data/worker/avatar/avatar1.jpg" />\n\
+				</p>\n\
+			</div>\n\
+		</div>\
 	</div>');
 	
 	$category.find('.J-taskCategoryName').hover(function(){

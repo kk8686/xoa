@@ -117,7 +117,6 @@ class m160803_032057_init extends yii\db\Migration{
 		])->execute();
 	}
 	
-	
 	/**
 	 * 项目表创建
 	 * @author KK

@@ -1,0 +1,1 @@
+response.sendFile(__dirname + '/avatar1.jpg');
