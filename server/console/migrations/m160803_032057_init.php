@@ -104,16 +104,16 @@ class m160803_032057_init extends yii\db\Migration{
 		$passwordHash = Yii::$app->security->generatePasswordHash('121212' . $hashKey);
 		
 		$today = date('Y-m-d');
-		$fields = ['id', 'email', 'mobile', 'password_hash', 'hash_key', 'name', 'gender', 'birthday', 'add_time'];
+		$fields = ['id', 'email', 'mobile', 'password_hash', 'hash_key', 'name', 'avatar', 'gender', 'birthday', 'add_time'];
 		Yii::$app->db->createCommand()->batchInsert(Worker::tableName(), $fields, [
 			//手动调试测试专用，项目管理员
-			[1, '12@12.com', '13800138000', $passwordHash, $hashKey, '陈莹莹', Worker::GENDER_FEMALE, '1995-05-05', $today],
+			[1, '12@12.com', '13800138000', $passwordHash, $hashKey, '陈莹莹', '/data/worker/avatar/1.jpg', Worker::GENDER_FEMALE, '1995-05-05', $today],
 			
 			//自动化测试专用
-			[2, '99@99.com', '13800138099', $passwordHash, $hashKey, '王自动', Worker::GENDER_MALE, $today, $today],
+			[2, '99@99.com', '13800138099', $passwordHash, $hashKey, '王自动', '/data/worker/avatar/2.jpg', Worker::GENDER_MALE, $today, $today],
 			
 			//手动调试测试专用，普通员工
-			[3, '13@12.com', '13800138001', $passwordHash, $hashKey, '叶聪', Worker::GENDER_MALE, '1997-12-23', $today],
+			[3, '13@12.com', '13800138001', $passwordHash, $hashKey, '叶聪', '/data/worker/avatar/3.jpg', Worker::GENDER_MALE, '1997-12-23', $today],
 		])->execute();
 	}
 	
@@ -212,7 +212,9 @@ class m160803_032057_init extends yii\db\Migration{
 			'add_time'
 		];
 		Yii::$app->db->createCommand()->batchInsert(Task::tableName(), $fields, [
-			[1, 1, 1, '1', '', '完成用户登陆功能', '', false, 1, date('Y-m-d H:i:s', strtotime('+1day')), '0000-00-00 00:00:00', date('Y-m-d H:i:s')],
+			[1, 1, 2, '1', '', '修复登陆验证码错误3次后没有冻结账户的问题', '', false, 1, date('Y-m-d H:i:s', strtotime('+1day')), '0000-00-00 00:00:00', date('Y-m-d H:i:s')],
+			[2, 1, 2, '1,2', '', '新增团购功能，仿XX网站', '', false, 1, date('Y-m-d H:i:s', strtotime('+7day')), '0000-00-00 00:00:00', date('Y-m-d H:i:s')],
+			[3, 1, 1, '3', '', '准备一套mock数据，周六路演要用', '', false, 1, date('Y-m-d H:i:s', strtotime('+7day')), '0000-00-00 00:00:00', date('Y-m-d H:i:s')],
 		])->execute();
 	}
 	

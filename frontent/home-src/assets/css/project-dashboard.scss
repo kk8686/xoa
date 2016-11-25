@@ -3,10 +3,12 @@ $mainFontColor:#000;
 $mainBackgroundColor:#EEE;
 $unMainFontColor:#666;
 .taskCategorys{
-	overflow-x: scroll;
+	width:1280px;
+	height:676px;
+	overflow-x:scroll;
 	
 	.taskList{
-		//display:inline-block;
+		//	display:inline-block;
 		background:$mainBackgroundColor;
 		padding:4px 7px;
 		border-radius:4px;
@@ -26,14 +28,34 @@ $unMainFontColor:#666;
 		}
 	
 		.item{
-			padding:3px 6px;
+			clear:both;
 			background:#FFF;
+			min-height:100px;
+			margin-bottom:7px;
+			padding:3px 6px;
 			border:3px solid #DDD;
 			border-radius:4px;
 			cursor:pointer;
+			transition:0.2s background;
+			color:$unMainFontColor;
+			&:hover{
+				background:#00ccdd;
+				color:$mainFontColor;
+			}
+			
 			p{
+				clear:both;
 				&:last-child{
 					text-align:right;
+				}
+				
+				span{
+					background:#3DA8F5;
+					padding:3px;
+					border-radius:3px;
+					color:#FFF;
+					position:relative;
+					top:3px;
 				}
 			}
 		}

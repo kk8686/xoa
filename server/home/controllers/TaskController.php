@@ -23,8 +23,10 @@ class TaskController extends \yii\web\Controller{
 		}
 		if($task = $form->add()){
 			$taskInfo = $task->toArray(['id', 'title', 'limit_time']);
-			$taskInfo['workers'] = ArrayHelper::filter($task->workers, ['id', 'name', 'avatar']);
-			return new Response('', 0, $taskInfo);
+			foreach ($task->workers as $worker) {
+				$taskInfo['workers'][] = $worker->toArray(['name', 'avatar']);
+			}
+			return new Response('添加成功', 0, $taskInfo);
 		}else{
 			return new Response(current($form->errors)[0]);
 		}

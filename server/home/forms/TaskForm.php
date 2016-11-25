@@ -7,6 +7,7 @@ use xoa\common\models\{
 	Worker
 };
 use xoa\home\models\TaskCategory;
+use yii\helpers\ArrayHelper;
 
 /**
  * 任务表单
@@ -78,6 +79,7 @@ class TaskForm extends \yii\base\Model{
 			[['workerIds', 'relatedMemberIds'], 'each', 'rule' => ['integer']],
 			[['workerIds', 'relatedMemberIds'], 'validateMemberIds'],
 			['taskCategoryId', 'validateCategoryId'],
+			['limitTime', 'validateLimitTime'],
 		];
 	}
 	
@@ -120,6 +122,19 @@ class TaskForm extends \yii\base\Model{
 	}
 	
 	/**
+	 * 验证限制完成时间
+	 */
+	public function validateLimitTime(){
+		$time = strtotime($this->limitTime);
+		if($time < time()){
+			return $this->addError('limitTime', '完成时间必须是未来的时间点');
+		}
+		$this->limitTime = date('Y-m-d H:i', $time);
+	}
+	
+	
+	
+	/**
 	 * 获取任务列表
 	 * @author KK
 	 * @return Task
@@ -144,10 +159,10 @@ class TaskForm extends \yii\base\Model{
 			$task->related_member_ids = implode(',', $this->relatedMemberIds);
 		}
 		
-		if(!$task->save()){
-			throw new \yii\base\ErrorException('添加任务失败');
-		}else{
+		if($task->save()){
 			return $task;
+		}else{
+			throw new \yii\base\ErrorException('添加任务失败');
 		}
 	}
 	
@@ -169,9 +184,9 @@ class TaskForm extends \yii\base\Model{
 		$result = [];
 		foreach($tasks as $task){
 			$item = $task->toArray(['id', 'title', 'limit_time']);
-			$item['workers_avatar'] = [];
-			foreach($task->workers as $worker){
-				$item['workers_avatar'][] = $worker->avatar;
+			$item['workers'] = [];
+			foreach ($task->workers as $worker) {
+				$item['workers'][] = $worker->toArray(['name', 'avatar']);
 			}
 			$result[] = $item;
 		}

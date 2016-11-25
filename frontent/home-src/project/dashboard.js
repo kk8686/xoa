@@ -49,6 +49,7 @@ function _fShowTaskForm(event){
 		return ids;
 	});
 
+	//添加负责人
 	$dialog.on('click', '.J-btnAddWorker', function(){
 		var $this = $(this);
 		var $wrapWorkerResult = $dialog.find('.J-wrapWorkerResult'),
@@ -93,6 +94,7 @@ function _fShowTaskForm(event){
 		}
 	});
 
+	//添加相关人员
 	$dialog.on('click', '.J-btnAddRelatedMember', function(){
 		var $this = $(this);
 		var $wrapWorkerResult = $dialog.find('.J-wrapRelatedMembersResult'),
@@ -137,6 +139,7 @@ function _fShowTaskForm(event){
 		}
 	});
 	
+	//提交新任务
 	$dialog.find('.J-submit').click(function(){
 		var title = $dialog.find('.J-taskTitle').val().trim(),
 			detail = $dialog.find('.J-detail').val().trim(),
@@ -162,8 +165,14 @@ function _fShowTaskForm(event){
 				limitTime : limitTime
 			},
 			success : function(aResult){
-				alert('添加成功');
+				alert(aResult.message);
+				if(aResult.code){
+					return;
+				}
 				var $task = new Task(aResult.data);
+				var category = Page.getTaskCategory(categoryId);
+				category.addTask($task);
+				$dialog.hide();
 			}
 		});
 	});
@@ -171,6 +180,11 @@ function _fShowTaskForm(event){
 	$dialog.show();
 }
 
+/**
+ * 任务分类
+ * @param {object} options 分类信息，包含id和name
+ * @returns {Object} 分类的DOM实例
+ */
 function TaskCategory(options){
 	var self = this;
 	self.id = options.id;
@@ -192,10 +206,12 @@ function TaskCategory(options){
 		$(this).find('.J-btnAddTask').hide();
 	});
 	
+	//弹出添加任务对话框
 	$category.on('click', '.J-btnAddTask', _fShowTaskForm);
 	
+	//刷新任务列表
 	$category.refreshTasks = function(){
-		var $itemContainer = this.find('.J-listItems');
+		var $itemContainer = this.find('.J-listItems').empty();
 		App.ajax({
 			url : '/task/' + this.data('id') + '/tasks.json',
 			success : function(aResult){
@@ -206,6 +222,12 @@ function TaskCategory(options){
 			}
 		});
 	};
+	
+	//添加新任务
+	$category.addTask = function($task){
+		this.find('.J-listItems').append($task);
+	};
+	
 	return $.extend(self, $category);
 }
 
@@ -254,6 +276,7 @@ function showTasks(){
 				var category = new TaskCategory(aResult.data[i]);
 				$taskCategorys.append(category);
 				category.refreshTasks();
+				Page.taskCategorys.push(category);
 			}
 		}
 	});
@@ -270,23 +293,35 @@ function showProjectInfo(){
 
 function Task(aTask){
 	var fConvertTime = function(time){
-		return time;
+		return time.substr(5).substr(0, 11) + ' 完成';
 	};
 	
 	var avatarsHtml = [];
-	for(var i in aTask.workers_avatar){
-		avatarsHtml.push('<img src="' + aTask.workers_avatar[i] + '"/>');
+	for(var i in aTask.workers){
+		var worker = aTask.workers[i];
+		avatarsHtml.push('<img class="pull-right" src="' + worker.avatar + '" title="' + worker.name + '"/>');
 	}
 	
 	var taskHtml = '<div class="item J-item">\
 		<p><input type="checkbox" class="J-chkFinish" />' + aTask.title + '<p>\
 		<p>\
-			<span>' + fConvertTime(aTask.limit_time) + '</span>\
+			<span class="pull-left">' + fConvertTime(aTask.limit_time) + '</span>\
 			' + avatarsHtml.join('') + '\
 		</p>\
 	</div>';
 	return $.extend(this, $(taskHtml));
 }
+
+var Page = {
+	taskCategorys : [],
+	getTaskCategory : function(id){
+		for(var i in this.taskCategorys){
+			if(this.taskCategorys[i].data('id') == id){
+				return this.taskCategorys[i];
+			}
+		}
+	}
+};
 
 $(function(){
 	App.loadParam('project/<projectId:\\d+>.htm');

@@ -22,6 +22,6 @@ class Task extends \yii\db\ActiveRecord{
 	 * @return array
 	 */
 	public function getWorkers(){
-		return Worker::findAll(['id' => $this->worker_ids]);
+		return Worker::findAll(['id' => explode(',', $this->worker_ids)]);
 	}
 }

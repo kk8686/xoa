@@ -1,6 +1,6 @@
 var mocker = require('mockjs');
 module.exports = mocker.mock({
-	message : '',
+	message : '添加成功',
 	code : 0,
 	data : {
 		id : 11,
@@ -9,9 +9,8 @@ module.exports = mocker.mock({
 		'workers|1-3' : [
 			//负责人
 			{
-				'id|1-999' : 11,
-				name : '@cfirst@cname',
-				avatar : /\/data\/worker\/avatar\/[1-5]\.jpg/
+				name : /(小明|小红|陈莹莹|王晶晶|张风|林云龙)/,
+				avatar : /\/data\/worker\/avatar\/xx\.jpg\?id=[1-5]/
 			}
 		]
 	}

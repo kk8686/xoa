@@ -69,6 +69,6 @@ class TaskTest extends \Codeception\TestCase\Test
 		$form->taskCategoryId = 1;
 		$tasks = $form->getList();
 		$this->assertInternalType('array', $tasks, '参数对了，会给出列表');
-		$this->tester->assertListHasKeys(['id', 'title', 'limit_time', 'worker_avatar'], $tasks, true, '参数对了，会给出列表');
+		$this->tester->assertListHasKeys(['id', 'title', 'limit_time', 'workers'], $tasks, true, '参数对了，会给出列表');
 	}
 }

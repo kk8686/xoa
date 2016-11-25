@@ -62,7 +62,8 @@ function setupTasks(config){
 	gulp.task('mincss', function(){
 		var buildCss = function(file){
 			console.log(file + ' 发生变动');
-			var stream = gulp.src(file, srcOptions);
+			//var stream = gulp.src(file, srcOptions);
+			var stream = gulp.src(config.src + '/**/**.{scss,css}', srcOptions);
 			if(path.extname(file) == '.scss'){
 				stream = stream.pipe(sass().on('error', sass.logError));
 			}

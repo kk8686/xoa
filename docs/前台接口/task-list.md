@@ -1,15 +1,9 @@
-ÈÎÎñ - ÁĞ±í
+ä»»åŠ¡ - åˆ—è¡¨
 ===
 
-- µØÖ·£ºGET `/task/list.json`
-
-- ²ÎÊı£º
-
-	- `projectId`£ºÏîÄ¿ID
-
-	- `categoryId`£ºÈÎÎñ·ÖÀàID
+- åœ°å€ï¼šGET `/task/$ä»»åŠ¡åˆ†ç±»ID/tasks.json`
 	
-- ·µ»Ø£º
+- è¿”å›ï¼š
 
 	```js
 	{
@@ -18,9 +12,18 @@
 		data : [
 			{
 				id : 1,
-				title : '¿ª·¢¹¦ÄÜA',
+				title : 'å¼€å‘åŠŸèƒ½A',
 				limit_time : '2016-12-12 18:00:00',
-				worker_avatar : '/data/worker/avatar/1.jpg',
+				workers : [
+					{
+						name :'å°æ˜',
+						avatar : '/data/worker/avatar/1.jpg'
+					},
+					{
+						name :'å°çº¢',
+						avatar : '/data/worker/avatar/2.jpg'
+					}
+				],
 			}
 		]
 	}
