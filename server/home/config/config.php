@@ -56,6 +56,7 @@ $config = [
 				
 				//任务
 				'task/add.do' => 'task/add',
+				'task/<categoryId>/tasks.json' => 'task/list',
 				
 				'<page:.+>.htm<xx:l{0,1}>' => 'site/r',
             ],

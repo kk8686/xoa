@@ -197,11 +197,7 @@ function TaskCategory(options){
 	$category.refreshTasks = function(){
 		var $itemContainer = this.find('.J-listItems');
 		App.ajax({
-			url : '/task/list.json',
-			data : {
-				projectId : App.aParams.projectId,
-				categoryId : this.data('id')
-			},
+			url : '/task/' + this.data('id') + '/tasks.json',
 			success : function(aResult){
 				for(var i in aResult.data){
 					var task = new Task(aResult.data[i]);
@@ -277,12 +273,17 @@ function Task(aTask){
 		return time;
 	};
 	
-	var taskHtml = '<div class="item J-item">\n\
-		<p><input type="checkbox" class="J-chkFinish" />' + aTask.title + '<p>\n\
-		<p>\n\
-			<span>' + fConvertTime(aTask.limit_time) + '</span>\n\
-			<img src="' + aTask.worker_avatar + '"/>\n\
-		</p>\n\
+	var avatarsHtml = [];
+	for(var i in aTask.workers_avatar){
+		avatarsHtml.push('<img src="' + aTask.workers_avatar[i] + '"/>');
+	}
+	
+	var taskHtml = '<div class="item J-item">\
+		<p><input type="checkbox" class="J-chkFinish" />' + aTask.title + '<p>\
+		<p>\
+			<span>' + fConvertTime(aTask.limit_time) + '</span>\
+			' + avatarsHtml.join('') + '\
+		</p>\
 	</div>';
 	return $.extend(this, $(taskHtml));
 }

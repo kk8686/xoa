@@ -4,8 +4,8 @@ module.exports = mocker.mock({
 	code : 0,
 	'data|1-7' : [{
 		id : 11,
-		title : '开发功能A',
+		title : /(开发|修复)[\u4E00-\u9FA5]{4,7}功能/,
 		limit_time : '@DATETIME("2016-MM-dd HH:mm:ss")',
-		worker_avatar : /\/data\/worker\/avatar\/xx\.jpg\?id=[1-5]/
+		'workers_avatar|1-3' : [/\/data\/worker\/avatar\/xx\.jpg\?id=[1-5]/] 
 	}]
 });
