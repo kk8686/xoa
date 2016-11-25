@@ -182,13 +182,7 @@ function TaskCategory(options){
 			<button type="button" class="btn btn-primary J-btnAddTask">+任务</button>\
 		</h4>\n\
 		<div class="J-listItems">\n\
-			<div class="item J-item">\n\
-				<p><input type="checkbox" name="" id="" /> 任务标题任务标题任务标题任务标题任务标题任务标题任务标题任务标题<p>\n\
-				<p>\n\
-					<span>周五 截止</span>\n\
-					<img src="/data/worker/avatar/avatar1.jpg" />\n\
-				</p>\n\
-			</div>\n\
+			\n\
 		</div>\
 	</div>');
 	
@@ -199,6 +193,23 @@ function TaskCategory(options){
 	});
 	
 	$category.on('click', '.J-btnAddTask', _fShowTaskForm);
+	
+	$category.refreshTasks = function(){
+		var $itemContainer = this.find('.J-listItems');
+		App.ajax({
+			url : '/task/list.json',
+			data : {
+				projectId : App.aParams.projectId,
+				categoryId : this.data('id')
+			},
+			success : function(aResult){
+				for(var i in aResult.data){
+					var task = new Task(aResult.data[i]);
+					$itemContainer.append(task);
+				}
+			}
+		});
+	};
 	return $.extend(self, $category);
 }
 
@@ -246,6 +257,7 @@ function showTasks(){
 			for(var i in aResult.data){
 				var category = new TaskCategory(aResult.data[i]);
 				$taskCategorys.append(category);
+				category.refreshTasks();
 			}
 		}
 	});
@@ -261,7 +273,18 @@ function showProjectInfo(){
 }
 
 function Task(aTask){
-	var taskHtml = 'TODO';
+	var fConvertTime = function(time){
+		return time;
+	};
+	
+	var taskHtml = '<div class="item J-item">\n\
+		<p><input type="checkbox" class="J-chkFinish" />' + aTask.title + '<p>\n\
+		<p>\n\
+			<span>' + fConvertTime(aTask.limit_time) + '</span>\n\
+			<img src="' + aTask.worker_avatar + '"/>\n\
+		</p>\n\
+	</div>';
+	return $.extend(this, $(taskHtml));
 }
 
 $(function(){

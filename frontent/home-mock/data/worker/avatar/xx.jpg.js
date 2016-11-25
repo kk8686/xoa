@@ -1,0 +1,1 @@
+response.sendFile(__dirname + '/' + request.query.id + '.jpg');

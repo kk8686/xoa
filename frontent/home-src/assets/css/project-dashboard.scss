@@ -32,8 +32,8 @@ $unMainFontColor:#666;
 			border-radius:4px;
 			p{
 				&:last-child{
-				text-align:right;
-			}
+					text-align:right;
+				}
 			}
 		}
 
@@ -41,6 +41,7 @@ $unMainFontColor:#666;
 			width:35px;
 			height:35px; 
 			border-radius:17px;
+			cursor:pointer;
 		}
 	}
 }
