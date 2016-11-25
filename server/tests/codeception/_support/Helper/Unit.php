@@ -15,15 +15,16 @@ class Unit extends \Codeception\Module
         $this->_tester = $tester;
     }
 	
-	public function assertHasKeys($keys, $array){
+	public function assertHasKeys($keys, $array, $only = true, $message = ''){
 		foreach($keys as $key){
-			PHPUnit_Framework_Assert::assertArrayHasKey($key, $array);
+			PHPUnit_Framework_Assert::assertArrayHasKey($key, $array, $message);
 		}
+		PHPUnit_Framework_Assert::assertEmpty(array_diff($keys, array_keys($array)), '数组有多出的key');
 	}
 	
-	public function assertListHasKeys($keys, $list){
+	public function assertListHasKeys($keys, $list, $only = true, $message = ''){
 		foreach($list as $item){
-			$this->assertHasKeys($keys, $item);
+			$this->assertHasKeys($keys, $item, $only, $message);
 		}
 	}
 }

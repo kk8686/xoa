@@ -56,4 +56,19 @@ class TaskTest extends \Codeception\TestCase\Test
 		$taskCategory = TaskCategory::findOne(1);
 		$this->assertInstanceOf(Project::className(), $taskCategory->project);
 	}
+	
+	/**
+	 * 测试任务列表
+	 * @author KK
+	 */
+	public function testList(){
+		$form = new TaskForm(['scenario' => TaskForm::SCENE_LIST]);
+		$this->assertFalse($form->getList(), '什么都不填，必有错');
+		$this->tester->assertHasKeys(['taskCategoryId'], $form->errors, true, '任务分类ID相关的错误');
+		
+		$form->taskCategoryId = 1;
+		$tasks = $form->getList();
+		$this->assertInternalType('array', $tasks, '参数对了，会给出列表');
+		$this->tester->assertListHasKeys(['id', 'title', 'limit_time', 'worker_avatar'], $tasks, true, '参数对了，会给出列表');
+	}
 }

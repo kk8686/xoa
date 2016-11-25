@@ -186,9 +186,9 @@ class m160803_032057_init extends yii\db\Migration{
 			'detail' => $this->text()->notNull()->defaultValue('')->comment('详情'),
 			'ok' => $this->boolean()->notNull()->defaultValue(false)->comment('是否搞定了'),
 			'order' => $this->smallInteger()->notNull()->defaultValue(0)->comment('排序'),
-			'limit_time' => $this->smallInteger()->notNull()->defaultValue(0)->comment('要求完成时间'),
-			'end_time' => $this->smallInteger()->notNull()->defaultValue('')->comment('实际完成时间'),
-			'add_time' => $this->smallInteger()->notNull()->defaultValue(0)->comment('发布时间'),
+			'limit_time' => $this->dateTime()->notNull()->defaultValue(0)->comment('要求完成时间'),
+			'end_time' => $this->dateTime()->notNull()->defaultValue('0000-00-00 00:00:00')->comment('实际完成时间'),
+			'add_time' => $this->dateTime()->notNull()->defaultValue('')->comment('发布时间'),
 		]);
 	}
 	
@@ -197,9 +197,24 @@ class m160803_032057_init extends yii\db\Migration{
 	 * @author KK
 	 */
 	private function _task_mock() {
-		//待定
+		$fields = [
+			'id',
+			Project::tableName() . '_id',
+			TaskCategory::tableName() . '_id',
+			Worker::tableName() . '_ids',
+			'related_member_ids',
+			'title',
+			'detail',
+			'ok',
+			'order',
+			'limit_time',
+			'end_time',
+			'add_time'
+		];
+		Yii::$app->db->createCommand()->batchInsert(Task::tableName(), $fields, [
+			[1, 1, 1, '1', '', '完成用户登陆功能', '', false, 1, date('Y-m-d H:i:s', strtotime('+1day')), '0000-00-00 00:00:00', date('Y-m-d H:i:s')],
+		])->execute();
 	}
-	
 	
 	/**
 	 * 项目加入邀请表创建

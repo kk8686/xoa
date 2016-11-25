@@ -30,6 +30,7 @@ $unMainFontColor:#666;
 			background:#FFF;
 			border:3px solid #DDD;
 			border-radius:4px;
+			cursor:pointer;
 			p{
 				&:last-child{
 					text-align:right;
@@ -40,8 +41,8 @@ $unMainFontColor:#666;
 		img{
 			width:35px;
 			height:35px; 
+			margin-right:3px;
 			border-radius:17px;
-			cursor:pointer;
 		}
 	}
 }

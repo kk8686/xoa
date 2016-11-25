@@ -1,8 +1,11 @@
 <?php
 namespace xoa\home\forms;
 
-use xoa\common\models\Worker;
-use xoa\common\models\Task;
+use xoa\common\models\{
+	Project,
+	Task,
+	Worker
+};
 use xoa\home\models\TaskCategory;
 
 /**
@@ -10,7 +13,14 @@ use xoa\home\models\TaskCategory;
  * @author KK
  */
 class TaskForm extends \yii\base\Model{
+	/**
+	 * 场景：添加任务
+	 */
 	const SCENE_ADD = 'add';
+	/**
+	 * 场景：任务列表
+	 */
+	const SCENE_LIST = 'list';
 	/**
 	 * @var string 任务标题
 	 */
@@ -78,11 +88,13 @@ class TaskForm extends \yii\base\Model{
 	public function scenarios() {
 		return [
 			static::SCENE_ADD => ['title', 'detail', 'taskCategoryId', 'workerIds', 'relatedMemberIds', 'limitTime'],
+			static::SCENE_LIST => ['taskCategoryId'],
 		];
 	}
 	
 	/**
 	 * 验证成员ID集
+	 * @author KK
 	 * @param string $attributeName 被验证的属性名称
 	 * @param array $params 验证的附加参数
 	 */
@@ -92,8 +104,8 @@ class TaskForm extends \yii\base\Model{
 			$role = $attributeName == 'workerIds' ? '负责人' : '成员';
 			$this->addError($attributeName, '无效的' . $role . 'ID');
 		}else{
-			$attr = $attributeName == 'workerIds' ? 'workers' : 'relatedMembers';
-			$this->{$attr} = $workers;
+			$setAttr = $attributeName == 'workerIds' ? 'workers' : 'relatedMembers';
+			$this->{$setAttr} = $workers;
 		}
 	}
 	
@@ -108,7 +120,7 @@ class TaskForm extends \yii\base\Model{
 	}
 	
 	/**
-	 * 添加任务
+	 * 获取任务列表
 	 * @author KK
 	 * @return Task
 	 * @throws \yii\base\ErrorException
@@ -137,5 +149,32 @@ class TaskForm extends \yii\base\Model{
 		}else{
 			return $task;
 		}
+	}
+	
+	/**
+	 * 获取任务列表
+	 * @author KK
+	 * @test \xoa_test\home\unit\TaskTest::testList
+	 * @return array
+	 */
+	public function getList(){
+		if(!$this->validate()){
+			return false;
+		}
+		
+		$tasks = Task::findAll([
+			'project_id' => $this->_taskCategory->project->id,
+			'task_category_id' => $this->_taskCategory->id,
+		]);
+		$result = [];
+		foreach($tasks as $task){
+			$item = $task->toArray(['id', 'title', 'limit_time']);
+			$item['workers_avatar'] = [];
+			foreach($task->workers as $worker){
+				$item['workers_avatar'][] = $worker->avatar;
+			}
+			$result[] = $item;
+		}
+		return $result;
 	}
 }
