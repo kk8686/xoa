@@ -37,5 +37,7 @@
 
 依然是使用`debug`函数，支持第2个参数传入**11**以停止运行
 
-你当作是`codecept_debug`的快捷版本就好了，因为输入codecept_debug这个参数名真心累人，而且还要开启`-d`参数直接`debug($data, 11)`就不需要-d都可以看输出了
+你当作是`codecept_debug`的快捷版本就好了，因为输入codecept_debug这个参数名真心累人，而且还要开启`-d`参数
+
+在本项目里咱直接`debug($data, 11)`就不需要-d都可以看输出了
 
