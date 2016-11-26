@@ -7,9 +7,13 @@
 
 ---
 
-主要编程语言**：PHP7** （提示：下载phpStudy最新版可以切换到PHP7）
+样式语言：**[SASS](http://www.w3cplus.com/sassguide)**
 
-程序框架：**[Yii2](https://github.com/yiisoft/yii2)**
+前端构建环境：**[Gulp](http://www.kkh86.com/it/gulp-build-dev-env/guide-README.html)**
+
+后端语言**：PHP7** （提示：下载phpStudy最新版可以切换到PHP7）
+
+后端框架：**Yii2 2.0.9**，**[中文官网](http://www.yiichina.com/doc/guide/2.0)**，**[英文官网（教程内容更完整）](http://www.yiiframework.com/doc-2.0/guide-index.html)**
 
 数据库：**[SQLite3](http://www.runoob.com/sqlite/sqlite-tutorial.html)**（*熟悉Yii的话可以快速改成MySQL，未来会出修改指引*）
 
@@ -23,15 +27,11 @@ Web服务器：不限，但自带.htaccess，用Nginx请自主定义相关重写规则
 
 前端UI：**暂时用[Bootstrap3](http://v3.bootcss.com/css)，最终是想用Bootstrap4的**
 
-样式语言：**[SASS](http://www.w3cplus.com/sassguide)**
-
-前端构建平台：**[Gulp](http://www.kkh86.com/it/gulp-build-dev-env/guide-README.html)**
-
 ---
 
 一些工具用了bat脚本，以后会考虑用C#做可视化版本的工具
 
-前端目前随便写的，还没整理，也没有模块化开发，晚点，晚点吧……谁有空整理前端？
+前端目前随便写的，还没整理，也没有模块化开发
 	
 ---
 	
