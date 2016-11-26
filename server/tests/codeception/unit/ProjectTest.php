@@ -42,6 +42,32 @@ class ProjectTest extends \Codeception\TestCase\Test
     }
 	
 	/**
+	 * 测试项目列表数据
+	 * @author KK
+	 */
+	public function testList(){
+		Yii::$app->worker->login(Worker::findOne(1));
+		$controller = new ProjectController('project', Yii::$app);
+		$response = $controller->runAction('list');
+		$projectList = $response->data['data'];
+		$this->assertInternalType('array', $projectList);
+		$this->tester->assertListHasKeys(['id', 'name'], $projectList);
+	}
+	
+	/**
+	 * 测试项目信息数据
+	 * @author KK
+	 */
+	public function testInfo(){
+		Yii::$app->request->setQueryParams(['projectId' => 1]);
+		$controller = new ProjectController('project', Yii::$app);
+		$response = $controller->runAction('desc');
+		$projectList = $response->data['data'];
+		$this->assertInternalType('array', $projectList);
+		$this->tester->assertHasKeys(['id', 'name'], $projectList);
+	}
+	
+	/**
 	 * 测试邀请项目成员
 	 * @author KK
 	 */
@@ -75,8 +101,8 @@ class ProjectTest extends \Codeception\TestCase\Test
 	 * @author KK
 	 */
 	public function testMembers(){
-		$controller = new ProjectController('project', Yii::$app);
 		Yii::$app->request->setQueryParams(['projectId' => 1]);
+		$controller = new ProjectController('project', Yii::$app);
 		$response = $controller->runAction('members');
 		$workerList = $response->data['data'];
 		$this->assertInternalType('array', $workerList);

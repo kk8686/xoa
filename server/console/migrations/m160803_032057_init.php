@@ -226,7 +226,8 @@ class m160803_032057_init extends yii\db\Migration{
 		$this->createTable(ProjectInvite::tableName(), [
 			'id' => $this->primaryKey(),
 			Project::tableName() . '_id' => $this->integer()->notNull()->defaultValue(0)->comment('项目ID'),
-			TaskCategory::tableName() . '_id' => $this->integer()->notNull()->defaultValue(0)->comment('分类ID'),
+			Worker::tableName() . '_id' => $this->integer()->notNull()->defaultValue(0)->comment('分类ID'),
+			'status' => $this->smallInteger(1)->notNull()->defaultValue(0)->comment('添加时间'),
 			'add_time' => $this->date()->notNull()->comment('添加时间'),
 		]);
 	}

@@ -44,15 +44,16 @@ CREATE TABLE IF NOT EXISTS `task` (
 CREATE TABLE IF NOT EXISTS `project_invite` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`project_id` integer NOT NULL DEFAULT 0,
-	`task_category_id` integer NOT NULL DEFAULT 0,
+	`worker_id` integer NOT NULL DEFAULT 0,
+	`status` smallint NOT NULL DEFAULT 0,
 	`add_time` date NOT NULL
 );
 
-INSERT INTO `worker` (`id`, `email`, `mobile`, `password_hash`, `hash_key`, `name`, `avatar`, `gender`, `birthday`, `add_time`) VALUES (1, '12@12.com', '13800138000', '$2y$13$TrHgZpd.QKADkoN6St5ay.tQXGs3iMPvuCH6Krnuv5z1VOAbdJxUO', 'BxYRTNSK7-XR0DUMxDtVPmvdRp4v_FA6', '陈莹莹', '/data/worker/avatar/1.jpg', 1, '1995-05-05', '2016-11-25'), (2, '99@99.com', '13800138099', '$2y$13$TrHgZpd.QKADkoN6St5ay.tQXGs3iMPvuCH6Krnuv5z1VOAbdJxUO', 'BxYRTNSK7-XR0DUMxDtVPmvdRp4v_FA6', '王自动', '/data/worker/avatar/2.jpg', 1, '2016-11-25', '2016-11-25'), (3, '13@12.com', '13800138001', '$2y$13$TrHgZpd.QKADkoN6St5ay.tQXGs3iMPvuCH6Krnuv5z1VOAbdJxUO', 'BxYRTNSK7-XR0DUMxDtVPmvdRp4v_FA6', '叶聪', '/data/worker/avatar/3.jpg', 1, '1997-12-23', '2016-11-25');
+INSERT INTO `worker` (`id`, `email`, `mobile`, `password_hash`, `hash_key`, `name`, `avatar`, `gender`, `birthday`, `add_time`) VALUES (1, '12@12.com', '13800138000', '$2y$13$a6.kynnQe2lSl.9dInWXT.6FZFbUF47J5HB/pdVf2dvN9JZ6JG7Zu', 'I4Y5qnh5J_1k0fX2J-IB0rrWqUldWUGE', '陈莹莹', '/data/worker/avatar/1.jpg', 1, '1995-05-05', '2016-11-26'), (2, '99@99.com', '13800138099', '$2y$13$a6.kynnQe2lSl.9dInWXT.6FZFbUF47J5HB/pdVf2dvN9JZ6JG7Zu', 'I4Y5qnh5J_1k0fX2J-IB0rrWqUldWUGE', '王自动', '/data/worker/avatar/2.jpg', 1, '2016-11-26', '2016-11-26'), (3, '13@12.com', '13800138001', '$2y$13$a6.kynnQe2lSl.9dInWXT.6FZFbUF47J5HB/pdVf2dvN9JZ6JG7Zu', 'I4Y5qnh5J_1k0fX2J-IB0rrWqUldWUGE', '叶聪', '/data/worker/avatar/3.jpg', 1, '1997-12-23', '2016-11-26');
 
-INSERT INTO `project` (`id`, `name`, `worker_id`, `member_ids`, `add_time`) VALUES (1, '兔子外卖', 1, '2', '2016-11-25'), (2, '嘟嘟打车', 1, '', '2016-11-25'), (3, '去那儿', 1, '', '2016-11-25');
+INSERT INTO `project` (`id`, `name`, `worker_id`, `member_ids`, `add_time`) VALUES (1, '兔子外卖', 1, '2', '2016-11-26'), (2, '嘟嘟打车', 1, '', '2016-11-26'), (3, '去那儿', 1, '', '2016-11-26');
 
 INSERT INTO `task_category` (`id`, `name`, `project_id`, `order`) VALUES (1, '待处理', 1, 1), (2, '进行中', 1, 2), (3, '返修', 1, 3), (4, '已验收', 1, 4), (5, '已验收（返修）', 1, 5);
 
-INSERT INTO `task` (`id`, `project_id`, `task_category_id`, `worker_ids`, `related_member_ids`, `title`, `detail`, `ok`, `order`, `limit_time`, `end_time`, `add_time`) VALUES (1, 1, 2, '1', '', '修复登陆验证码错误3次后没有冻结账户的问题', '', 0, 1, '2016-11-26 08:00:32', '0000-00-00 00:00:00', '2016-11-25 08:00:32'), (2, 1, 2, '1,2', '', '新增团购功能，仿XX网站', '', 0, 1, '2016-12-02 08:00:32', '0000-00-00 00:00:00', '2016-11-25 08:00:32'), (3, 1, 1, '3', '', '准备一套mock数据，周六路演要用', '', 0, 1, '2016-12-02 08:00:32', '0000-00-00 00:00:00', '2016-11-25 08:00:32');
+INSERT INTO `task` (`id`, `project_id`, `task_category_id`, `worker_ids`, `related_member_ids`, `title`, `detail`, `ok`, `order`, `limit_time`, `end_time`, `add_time`) VALUES (1, 1, 2, '1', '', '修复登陆验证码错误3次后没有冻结账户的问题', '', 0, 1, '2016-11-27 13:53:23', '0000-00-00 00:00:00', '2016-11-26 13:53:23'), (2, 1, 2, '1,2', '', '新增团购功能，仿XX网站', '', 0, 1, '2016-12-03 13:53:23', '0000-00-00 00:00:00', '2016-11-26 13:53:23'), (3, 1, 1, '3', '', '准备一套mock数据，周六路演要用', '', 0, 1, '2016-12-03 13:53:23', '0000-00-00 00:00:00', '2016-11-26 13:53:23');
 

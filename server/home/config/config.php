@@ -48,7 +48,7 @@ $config = [
 				
 				//项目
 				'project/list.json' => 'project/list',
-				'project/<projectId:\d+>.json' => 'project/info',
+				'project/<projectId:\d+>.json' => 'project/desc',
 				'project/<projectId:\d+>/members.json' => 'project/members',
 				'project/<projectId:\d+>/task-categorys.json' => 'project/task-categories',
 				'project/add.do' => 'project/add',

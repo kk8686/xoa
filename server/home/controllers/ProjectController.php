@@ -17,6 +17,7 @@ class ProjectController extends \yii\web\Controller{
 	 * 获取项目列表
 	 * @author KK
 	 * @return Response
+	 * @test \xoa_test\home\unit\ProjectTest::testList
 	 */
 	public function actionList(){
 		$list = Project::find()->asArray()->select(['id', 'name'])->where(['worker_id' => Yii::$app->worker->id])->all();
@@ -27,8 +28,9 @@ class ProjectController extends \yii\web\Controller{
 	 * 获取项目信息
 	 * @author KK
 	 * @return Response
+	 * @test \xoa_test\home\unit\ProjectTest::testInfo
 	 */
-	public function actionInfo(){
+	public function actionDesc(){
 		$id = (int)Yii::$app->request->get('projectId');
 		if(!$project = Project::findOne($id)){
 			return new Response('无效的项目ID');
