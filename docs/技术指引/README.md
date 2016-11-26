@@ -6,9 +6,8 @@ xoa技术指引
 ---
 * [技术介绍](base-tech-desc.md)
 * [运行部署](base-deploy.md)
-* [杂七杂八的](base-common.md)
-* [文案规范](base-tips.md)
 * [响应数据](base-response.md)
+* [杂七杂八的](base-common.md)
 
 
 前端开发
