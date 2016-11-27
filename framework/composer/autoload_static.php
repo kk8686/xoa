@@ -25,7 +25,9 @@ class ComposerStaticInite7bbc9e18f4d13c4675486b0c8f56260
         ),
         'c' => 
         array (
+            'cebe\\markdown\\latex\\' => 20,
             'cebe\\markdown\\' => 14,
+            'cebe\\jssearch\\' => 14,
         ),
         'F' => 
         array (
@@ -66,9 +68,17 @@ class ComposerStaticInite7bbc9e18f4d13c4675486b0c8f56260
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2',
         ),
-        'cebe\\markdown\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/cebe/markdown',
+        'cebe\\markdown\\latex\\' =>
+            array (
+                0 => __DIR__ . '/..' . '/cebe/markdown-latex',
+        ),
+        'cebe\\markdown\\' =>
+            array (
+                0 => __DIR__ . '/..' . '/cebe/markdown',
+            ),
+        'cebe\\jssearch\\' =>
+            array (
+                0 => __DIR__ . '/..' . '/cebe/js-search/lib',
         ),
         'Faker\\' => 
         array (
@@ -82,6 +92,10 @@ class ComposerStaticInite7bbc9e18f4d13c4675486b0c8f56260
             'HTMLPurifier' => 
             array (
                 0 => __DIR__ . '/..' . '/ezyang/htmlpurifier/library',
+            ),
+            'Highlight\\' =>
+            array (
+                0 => __DIR__ . '/..' . '/scrivo/highlight.php',
             ),
         ),
         'D' => 
