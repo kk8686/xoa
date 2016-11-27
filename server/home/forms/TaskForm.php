@@ -196,7 +196,7 @@ class TaskForm extends \yii\base\Model{
 		}
 		
 		if($task->save()){
-			return $task;
+			return $this->_buildTaskDescInfo($task);
 		}else{
 			throw new \yii\base\ErrorException('添加任务失败');
 		}
@@ -219,12 +219,7 @@ class TaskForm extends \yii\base\Model{
 		]);
 		$result = [];
 		foreach($tasks as $task){
-			$item = $task->toArray(['id', 'title', 'limit_time']);
-			$item['workers'] = [];
-			foreach ($task->workers as $worker) {
-				$item['workers'][] = $worker->toArray(['name', 'avatar']);
-			}
-			$result[] = $item;
+			$result[] = $this->_buildTaskDescInfo($task);
 		}
 		return $result;
 	}
@@ -247,5 +242,21 @@ class TaskForm extends \yii\base\Model{
 		
 		$this->_task->category = $this->_taskCategory;
 		return $this->_task;
+	}
+	
+	/**
+	 * 构造任务简要信息
+	 * @author KK
+	 * @param Task $task 任务模型
+	 * @return array
+	 * @test \xoa_test\home\unit\TaskTest::testAdd
+	 */
+	protected function _buildTaskDescInfo(Task $task){
+		$taskInfo = $task->toArray(['id', 'title', 'limit_time']);
+		$taskInfo['workers'] = [];
+		foreach ($task->workers as $worker) {
+			$taskInfo['workers'][] = $worker->toArray(['name', 'avatar']);
+		}
+		return $taskInfo;
 	}
 }

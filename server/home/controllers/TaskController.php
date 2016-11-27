@@ -2,9 +2,11 @@
 namespace xoa\home\controllers;
 
 use Yii;
-use yii\helpers\ArrayHelper;
 use xoa\common\ext\web\Response;
 use xoa\home\forms\TaskForm;
+use xoa\common\models\{
+	Project
+};
 
 /**
  * 任务相关的控制器
@@ -23,11 +25,7 @@ class TaskController extends \yii\web\Controller{
 		}
 		
 		$form->worker = Yii::$app->worker;
-		if($task = $form->add()){
-			$taskInfo = $task->toArray(['id', 'title', 'limit_time']);
-			foreach ($task->workers as $worker) {
-				$taskInfo['workers'][] = $worker->toArray(['name', 'avatar']);
-			}
+		if($taskInfo = $form->add()){
 			return new Response('添加成功', 0, $taskInfo);
 		}else{
 			return new Response(current($form->errors)[0]);

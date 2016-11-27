@@ -49,7 +49,9 @@ class TaskTest extends \Codeception\TestCase\Test
 			'limitTime' => date('Y-m-d H:i', strtotime('+1day')),
 		], '');
 		$form->worker = Worker::findOne(1);
-		$this->assertInstanceOf(Task::className(), $form->add(), '添加成功后会返回任务实例');
+		$taskInfo = $form->add();
+		$this->assertInternalType('array', $taskInfo, '添加成功后会返回任务信息');
+		$this->tester->assertHasKeys(['id', 'title', 'limit_time', 'workers'], $taskInfo);
     }
 	
 	/**
