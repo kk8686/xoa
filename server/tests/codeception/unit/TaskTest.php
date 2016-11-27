@@ -7,6 +7,7 @@ use xoa\common\models\{
 };
 use xoa\home\forms\TaskForm;
 use xoa\home\models\TaskCategory;
+
 /**
  * 任务测试
  * @author KK
@@ -49,12 +50,13 @@ class TaskTest extends \Codeception\TestCase\Test
     }
 	
 	/**
-	 * 测试任务分类
+	 * 测试任务分类所属的项目
 	 * @author KK
 	 */
 	public function testTaskCategory(){
 		$taskCategory = TaskCategory::findOne(1);
 		$this->assertInstanceOf(Project::className(), $taskCategory->project);
+		$this->assertEquals(1, $taskCategory->project->id);
 	}
 	
 	/**

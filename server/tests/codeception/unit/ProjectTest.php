@@ -9,6 +9,10 @@ use xoa\common\models\{
 use xoa\home\forms\ProjectForm;
 use xoa\home\controllers\ProjectController;
 
+/**
+ * 项目测试
+ * @author KK
+ */
 class ProjectTest extends \Codeception\TestCase\Test
 {
     /**
@@ -28,7 +32,7 @@ class ProjectTest extends \Codeception\TestCase\Test
 			'creater' => Worker::findOne(1),
 		]);
 		$this->assertFalse($form->validate());
-		$this->assertArrayHasKey('name', $form->errors, '包含项目名称的错误');
+		$this->assertArrayHasKey('name', $form->errors, '会有项目名称的错误');
 		
 		$form->name = [1,2,3];
 		$this->assertFalse($form->validate());
@@ -36,9 +40,9 @@ class ProjectTest extends \Codeception\TestCase\Test
 		
 		$form->name = 'test';
 		$project = $form->add();
-		$this->assertInstanceOf(Project::className(), $project, '注册后应返回Project实例');
+		$this->assertInstanceOf(Project::className(), $project, '添加后应返回Project实例');
 		
-		$this->tester->seeInDatabase(Project::tableName(), ['id' => $project->id], '注册后数据库应该有这个ID的记录');
+		$this->tester->seeInDatabase(Project::tableName(), ['id' => $project->id], '数据库应该有了这个ID的记录');
     }
 	
 	/**
@@ -93,19 +97,19 @@ class ProjectTest extends \Codeception\TestCase\Test
 		], '');
 		$this->assertTrue($form->inviteMember(), '第一次邀请会成功');
 		
-		$this->assertFalse($form->inviteMember(), '已经邀请过');
+		$this->assertFalse($form->inviteMember(), '已经邀请过，重复邀请无效');
 	}
 	
 	/**
-	 * 测试获取项目成员
+	 * 测试获取参与到一个项目中的所有成员
 	 * @author KK
 	 */
 	public function testMembers(){
 		Yii::$app->request->setQueryParams(['projectId' => 1]);
 		$controller = new ProjectController('project', Yii::$app);
 		$response = $controller->runAction('members');
-		$workerList = $response->data['data'];
-		$this->assertInternalType('array', $workerList);
-		$this->tester->assertListHasKeys(['id', 'name', 'avatar'], $workerList);
+		$memberList = $response->data['data'];
+		$this->assertInternalType('array', $memberList);
+		$this->tester->assertListHasKeys(['id', 'name', 'avatar'], $memberList);
 	}
 }
