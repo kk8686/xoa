@@ -105,11 +105,17 @@ EOL;
 	 * ```
 	 */
 	function debug($data, $mode = 0){
-		if($mode == 11){
+		if($mode){
 			echo PHP_EOL . PHP_EOL . '======debug start======' . PHP_EOL;
 			print_r($data);
 			echo PHP_EOL . '======debug end======' . PHP_EOL . PHP_EOL;
-			exit;
+			
+			if($mode == 111){
+				echo (new \Exception())->getTraceAsString();
+			}
+			if($mode == 11 || $mode == 111){
+				exit;
+			}
 		}else{
 			codecept_debug('======debug start======');
 			codecept_debug($data);

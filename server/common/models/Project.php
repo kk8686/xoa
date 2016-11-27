@@ -2,7 +2,7 @@
 namespace xoa\common\models;
 
 use xoa\common\models\Worker;
-use xoa\home\models\TaskCategory;
+use xoa\common\models\TaskCategory;
 
 /**
  * 项目

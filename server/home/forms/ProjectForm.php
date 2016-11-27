@@ -4,11 +4,8 @@ namespace xoa\home\forms;
 use yii\db\Query;
 use xoa\common\models\{
 	Project,
+	ProjectInvite,
 	Worker
-};
-
-use xoa\home\models\{
-	ProjectInvite
 };
 
 /**

@@ -4,9 +4,9 @@ namespace xoa\home\forms;
 use xoa\common\models\{
 	Project,
 	Task,
+	TaskCategory,
 	Worker
 };
-use xoa\home\models\TaskCategory;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -18,10 +18,22 @@ class TaskForm extends \yii\base\Model{
 	 * 场景：添加任务
 	 */
 	const SCENE_ADD = 'add';
+	
 	/**
 	 * 场景：任务列表
 	 */
 	const SCENE_LIST = 'list';
+	
+	/**
+	 * 场景：移动任务
+	 */
+	const SCENE_MOVE = 'move';
+	
+	/**
+	 * @var int 任务ID
+	 */
+	public $taskId = 0;
+	
 	/**
 	 * @var string 任务标题
 	 */
@@ -63,9 +75,20 @@ class TaskForm extends \yii\base\Model{
 	public $limitTime = '';
 	
 	/**
+	 * @var Worker 工作者
+	 */
+	public $worker = null;
+	
+	/**
+	 * @var Task 任务
+	 */
+	protected $_task = null;
+	
+	/**
 	 * @var TaskCategory 任务分类
 	 */
-	private $_taskCategory = null;
+	protected $_taskCategory = null;
+	
 	
 	/**
 	 * @inheritedoc
@@ -73,13 +96,14 @@ class TaskForm extends \yii\base\Model{
 	 */
 	public function rules(){
 		return [
-			[['title', 'workerIds'], 'required'],
+			[['title', 'workerIds', 'taskId'], 'required'],
 			['title', 'string', 'length' => [4, 30], 'message' => '任务标题在4到30个字之间'],
 			['detail', 'string', 'length' => [4, 65535], 'message' => '任务详情在4到65535个字之间'],
 			[['workerIds', 'relatedMemberIds'], 'each', 'rule' => ['integer']],
 			[['workerIds', 'relatedMemberIds'], 'validateMemberIds'],
 			['taskCategoryId', 'validateCategoryId'],
 			['limitTime', 'validateLimitTime'],
+			['taskId', 'validateTaskId'],
 		];
 	}
 	
@@ -91,6 +115,7 @@ class TaskForm extends \yii\base\Model{
 		return [
 			static::SCENE_ADD => ['title', 'detail', 'taskCategoryId', 'workerIds', 'relatedMemberIds', 'limitTime'],
 			static::SCENE_LIST => ['taskCategoryId'],
+			static::SCENE_MOVE => ['taskId', 'taskCategoryId'],
 		];
 	}
 	
@@ -112,11 +137,21 @@ class TaskForm extends \yii\base\Model{
 	}
 	
 	/**
+	 * 验证任务ID
+	 */
+	public function validateTaskId(){
+		if(!$task = Task::findOne($this->taskId)){
+			return $this->addError('taskId', '无效的任务ID');
+		}
+		$this->_task = $task;
+	}
+	
+	/**
 	 * 验证任务分类ID
 	 */
 	public function validateCategoryId(){
 		if(!$taskCategory = TaskCategory::findOne($this->taskCategoryId)){
-			return $this->addError('taskCategoryId', '无效的任务分类');
+			return $this->addError('taskCategoryId', '无效的任务分类ID');
 		}
 		$this->_taskCategory = $taskCategory;
 	}
@@ -151,6 +186,7 @@ class TaskForm extends \yii\base\Model{
 			'task_category_id' => $this->_taskCategory->id,
 			'title' => $this->title,
 			'detail' => $this->detail,
+			'creater_id' => $this->worker->id,
 			'worker_ids' => implode(',', $this->workerIds),
 			'limit_time' => $this->limitTime,
 			'add_time' => date('Y-m-d H:i:'),
@@ -191,5 +227,25 @@ class TaskForm extends \yii\base\Model{
 			$result[] = $item;
 		}
 		return $result;
+	}
+	
+	/**
+	 * 移动任务到指定分类
+	 * @author KK
+	 * @return Task 移动后的任务实例
+	 * @test \xoa_test\home\unit\TaskTest::testMove
+	 */
+	public function moveTask(){
+		if(!$this->validate()){
+			return false;
+		}
+		
+		if(!$this->_task->isAllowModify($this->worker)){
+			$this->addError('worker', '您无法移动该任务');
+			return false;
+		}
+		
+		$this->_task->category = $this->_taskCategory;
+		return $this->_task;
 	}
 }

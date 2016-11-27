@@ -40,20 +40,6 @@ class ProjectController extends \yii\web\Controller{
 	}
 	
 	/**
-	 * 获取任务分类
-	 * @author KK
-	 * @return Response
-	 */
-	public function actionTaskCategories(){
-		$id = (int)Yii::$app->request->get('projectId');
-		if(!$project = Project::findOne($id)){
-			return new Response('无效的项目ID' . $id);
-		}
-		
-		return new Response('', 0, $project->taskCategories);
-	}
-	
-	/**
 	 * 获取项目的成员
 	 * @author KK
 	 * @test \xoa_test\home\unit\ProjectTest::testMembers

@@ -1,5 +1,5 @@
 <?php
-namespace xoa\home\models;
+namespace xoa\common\models;
 
 /**
  * 项目邀请

@@ -50,13 +50,13 @@ $config = [
 				'project/list.json' => 'project/list',
 				'project/<projectId:\d+>.json' => 'project/desc',
 				'project/<projectId:\d+>/members.json' => 'project/members',
-				'project/<projectId:\d+>/task-categorys.json' => 'project/task-categories',
 				'project/add.do' => 'project/add',
 				'project/invite-member.do' => 'project/invite-member',
 				
 				//任务
 				'task/add.do' => 'task/add',
 				'task/<categoryId>/tasks.json' => 'task/list',
+				'project/<projectId:\d+>/task-categorys.json' => 'task/task-categories',
 				
 				'<page:.+>.htm<xx:l{0,1}>' => 'site/r',
             ],

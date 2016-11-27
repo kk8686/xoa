@@ -19,3 +19,4 @@
 ---
 * [添加](task-add.md)
 * [任务列表](task-list.md)
+* [移动任务分类](task-move.md)

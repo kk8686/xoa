@@ -1,13 +1,10 @@
 <?php
 use xoa\common\models\{
 	Project,
-	Task,
-	Worker
-};
-
-use xoa\home\models\{
 	ProjectInvite,
-	TaskCategory
+	Task,
+	TaskCategory,
+	Worker
 };
 
 /**
@@ -168,6 +165,8 @@ class m160803_032057_init extends yii\db\Migration{
 			[3, '返修', 1, 3],
 			[4, '已验收', 1, 4],
 			[5, '已验收（返修）', 1, 5],
+			
+			[11, '2号项目的测试分类1', 2, 1],
 		])->execute();
 	}
 	
@@ -180,6 +179,7 @@ class m160803_032057_init extends yii\db\Migration{
 			'id' => $this->primaryKey(),
 			Project::tableName() . '_id' => $this->integer()->notNull()->defaultValue(0)->comment('所属项目的ID'),
 			TaskCategory::tableName() . '_id' => $this->integer()->notNull()->defaultValue(0)->comment('所属的分类ID'),
+			'creater_id' => $this->integer()->notNull()->defaultValue(0)->comment('创建者ID'),
 			Worker::tableName() . '_ids' => $this->string()->notNull()->defaultValue('')->comment('负责人ID集，逗号隔开'),
 			'related_member_ids' => $this->string()->notNull()->defaultValue('')->comment('相关人员ID集，逗号隔开'),
 			'title' => $this->string(30)->notNull()->defaultValue('')->comment('标题'),
@@ -201,6 +201,7 @@ class m160803_032057_init extends yii\db\Migration{
 			'id',
 			Project::tableName() . '_id',
 			TaskCategory::tableName() . '_id',
+			'creater_id',
 			Worker::tableName() . '_ids',
 			'related_member_ids',
 			'title',
@@ -212,9 +213,9 @@ class m160803_032057_init extends yii\db\Migration{
 			'add_time'
 		];
 		Yii::$app->db->createCommand()->batchInsert(Task::tableName(), $fields, [
-			[1, 1, 2, '1', '', '修复登陆验证码错误3次后没有冻结账户的问题', '', false, 1, date('Y-m-d H:i:s', strtotime('+1day')), '0000-00-00 00:00:00', date('Y-m-d H:i:s')],
-			[2, 1, 2, '1,2', '', '新增团购功能，仿XX网站', '', false, 1, date('Y-m-d H:i:s', strtotime('+7day')), '0000-00-00 00:00:00', date('Y-m-d H:i:s')],
-			[3, 1, 1, '3', '', '准备一套mock数据，周六路演要用', '', false, 1, date('Y-m-d H:i:s', strtotime('+7day')), '0000-00-00 00:00:00', date('Y-m-d H:i:s')],
+			[1, 1, 2, 1, '1', '', '修复登陆验证码错误3次后没有冻结账户的问题', '', false, 1, date('Y-m-d H:i:s', strtotime('+1day')), '0000-00-00 00:00:00', date('Y-m-d H:i:s')],
+			[2, 1, 2, 1, '1,2', '', '新增团购功能，仿XX网站', '', false, 1, date('Y-m-d H:i:s', strtotime('+7day')), '0000-00-00 00:00:00', date('Y-m-d H:i:s')],
+			[3, 1, 1, 1, '3', '', '准备一套mock数据，周六路演要用', '', false, 1, date('Y-m-d H:i:s', strtotime('+7day')), '0000-00-00 00:00:00', date('Y-m-d H:i:s')],
 		])->execute();
 	}
 	

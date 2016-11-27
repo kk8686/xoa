@@ -1,5 +1,5 @@
 <?php
-namespace xoa\home\models;
+namespace xoa\common\models;
 
 use xoa\common\models\Project;
 
