@@ -74,7 +74,7 @@ $config = [
 			'site/error',
 			'site/captcha',
 			'site/r',
-		]); //是否请求谁都可以访问的action
+		]); //是否不登陆可以访问
 		
 		if(!$isCommonAccessAction){
 			$event->isValid = false;
