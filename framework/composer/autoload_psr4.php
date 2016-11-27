@@ -16,4 +16,7 @@ return array(
     'yii\\' => array($vendorDir . '/yiisoft/yii2'),
     'cebe\\markdown\\' => array($vendorDir . '/cebe/markdown'),
     'Faker\\' => array($vendorDir . '/fzaninotto/faker/src/Faker'),
+    'yii\\apidoc\\' => array($vendorDir . '/yiisoft/yii2-apidoc'),
+    'cebe\\markdown\\latex\\' => array($vendorDir . '/cebe/markdown-latex'),
+    'cebe\\jssearch\\' => array($vendorDir . '/cebe/js-search/lib'),
 );
