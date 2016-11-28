@@ -11,7 +11,7 @@ module.exports = {
 					layoutFile : '',
 					files : [
 						'worker/register.html',
-						'login.html'
+						'worker/login.html'
 					]
 				}
 			],
