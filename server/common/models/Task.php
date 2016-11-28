@@ -25,10 +25,58 @@ class Task extends \yii\db\ActiveRecord{
 	const REPEAT_NO = 1;
 	
 	/**
+	 * 周期：工作日
+	 */
+	const REPEAT_WORK_DAY = 2;
+	
+	/**
+	 * 周期：每天
+	 */
+	const REPEAT_EVERY_DAY = 3;
+	
+	/**
+	 * 周期：每周
+	 */
+	const REPEAT_EVERY_WEEK = 4;
+	
+	/**
+	 * 周期：每月
+	 */
+	const REPEAT_EVERY_MONTH = 5;
+	
+	/**
 	 * @inheritdoc
 	 */
 	public static function tableName(){
 		return 'task';
+	}
+	
+	/**
+	 * 获取取得周期集合
+	 * @labels
+	 * @author KK
+	 * @return array
+	 */
+	public function repeats(){
+		return [
+			static::REPEAT_NO => '不重复',
+			static::REPEAT_WORK_DAY => '工作日',
+			static::REPEAT_EVERY_DAY => '每天',
+			static::REPEAT_EVERY_WEEK => '每周',
+			static::REPEAT_EVERY_MONTH => '每月',
+		];
+	}
+	
+	/**
+	 * 获取级别集合
+	 * @labels
+	 * @author KK
+	 * @return array
+	 */
+	public function levels(){
+		return [
+			static::LEVEL_NORMAL => '普通'
+		];
 	}
 	
 	/**

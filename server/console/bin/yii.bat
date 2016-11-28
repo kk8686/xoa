@@ -1,5 +1,4 @@
 @echo off
-
 rem -------------------------------------------------------------
 rem  Yii command line bootstrap script for Windows.
 rem
@@ -12,7 +11,6 @@ rem -------------------------------------------------------------
 @setlocal
 
 if "%PHP_COMMAND%" == "" set PHP_COMMAND=php.exe
-
 "%PHP_COMMAND%" "%~dp0yii" %*
 
 @endlocal
