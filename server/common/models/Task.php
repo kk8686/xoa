@@ -15,6 +15,16 @@ use xoa\common\models\{
  */
 class Task extends \yii\db\ActiveRecord{
 	/**
+	 * 级别：普通
+	 */
+	const LEVEL_NORMAL = 3;
+	
+	/**
+	 * 周期：不重复
+	 */
+	const REPEAT_NO = 1;
+	
+	/**
 	 * @inheritdoc
 	 */
 	public static function tableName(){
@@ -22,7 +32,7 @@ class Task extends \yii\db\ActiveRecord{
 	}
 	
 	/**
-	 * 获取任务负责人集合
+	 * 获取负责人集合
 	 * @author KK
 	 * @return array
 	 */
@@ -31,12 +41,21 @@ class Task extends \yii\db\ActiveRecord{
 	}
 	
 	/**
-	 * 获取任务的创建者
+	 * 获取创建者
 	 * @author KK
 	 * @return Worker
 	 */
 	public function getCreater(){
 		return $this->hasOne(Worker::className(), ['id' => 'creater_id']);
+	}
+	
+	/**
+	 * 获取相关的成员集
+	 * @author KK
+	 * @return array
+	 */
+	public function getRelatedMembers(){
+		return $this->related_member_ids ? Worker::findAll(['id' => explode(',', $this->related_member_ids)]) : [];
 	}
 	
 	/**

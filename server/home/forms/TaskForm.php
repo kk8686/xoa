@@ -25,6 +25,11 @@ class TaskForm extends \yii\base\Model{
 	const SCENE_LIST = 'list';
 	
 	/**
+	 * 场景：任务信息
+	 */
+	const SCENE_INFO = 'info';
+	
+	/**
 	 * 场景：移动任务
 	 */
 	const SCENE_MOVE = 'move';
@@ -43,6 +48,16 @@ class TaskForm extends \yii\base\Model{
 	 * @var string 任务详情
 	 */
 	public $detail = '';
+	
+	/**
+	 * @var int 任务级别，默认 普通
+	 */
+	public $level = Task::LEVEL_NORMAL;
+	
+	/**
+	 * @var int 周期，默认 不重复
+	 */
+	public $repeat = Task::REPEAT_NO;
 	
 	/**
 	 * @var int 任务分类ID
@@ -99,6 +114,7 @@ class TaskForm extends \yii\base\Model{
 			[['title', 'workerIds', 'taskId'], 'required'],
 			['title', 'string', 'length' => [4, 30], 'message' => '任务标题在4到30个字之间'],
 			['detail', 'string', 'length' => [4, 65535], 'message' => '任务详情在4到65535个字之间'],
+			[['level', 'repeat'], 'integer'],
 			[['workerIds', 'relatedMemberIds'], 'each', 'rule' => ['integer']],
 			[['workerIds', 'relatedMemberIds'], 'validateMemberIds'],
 			['taskCategoryId', 'validateCategoryId'],
@@ -113,8 +129,9 @@ class TaskForm extends \yii\base\Model{
 	 */
 	public function scenarios() {
 		return [
-			static::SCENE_ADD => ['title', 'detail', 'taskCategoryId', 'workerIds', 'relatedMemberIds', 'limitTime'],
+			static::SCENE_ADD => ['title', 'detail', 'level', 'repeat', 'taskCategoryId', 'workerIds', 'relatedMemberIds', 'limitTime'],
 			static::SCENE_LIST => ['taskCategoryId'],
+			static::SCENE_INFO => ['taskId'],
 			static::SCENE_MOVE => ['taskId', 'taskCategoryId'],
 		];
 	}
@@ -186,6 +203,7 @@ class TaskForm extends \yii\base\Model{
 			'task_category_id' => $this->_taskCategory->id,
 			'title' => $this->title,
 			'detail' => $this->detail,
+			'level' => $this->level,
 			'creater_id' => $this->worker->id,
 			'worker_ids' => implode(',', $this->workerIds),
 			'limit_time' => $this->limitTime,
@@ -222,6 +240,19 @@ class TaskForm extends \yii\base\Model{
 			$result[] = $this->_buildTaskDescInfo($task);
 		}
 		return $result;
+	}
+	
+	/**
+	 * 获取任务信息
+	 * @author KK
+	 * @return array
+	 */
+	public function getInfo() {
+		if(!$this->validate()){
+			return false;
+		}
+		
+		return $this->_task->toArray(['id', 'title', 'detail', 'level', 'repeat', 'is_finish', 'limit_time', 'end_time', 'add_time', 'history']);
 	}
 	
 	/**

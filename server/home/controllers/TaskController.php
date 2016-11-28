@@ -51,6 +51,24 @@ class TaskController extends \yii\web\Controller{
 	}
 	
 	/**
+	 * 任务列表
+	 * @author KK
+	 * @param int $taskId 任务ID
+	 */
+	public function actionInfo(int $taskId) : Response{
+		$form = new TaskForm([
+			'scenario' => TaskForm::SCENE_INFO,
+			'taskId' => $taskId,
+		]);
+		$task = $form->getInfo();
+		if($task === false){
+			return new Response(current($form->errors)[0]);
+		}else{
+			return new Response('0', 0, $task);
+		}
+	}
+	
+	/**
 	 * 移动任务到指定分类
 	 * @author KK
 	 * @return Response
