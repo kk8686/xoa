@@ -1,5 +1,7 @@
 var path = require('path');
 var PROJECT_PATH = path.resolve('../../');
+var dict = require(PROJECT_PATH + '/common/dict.js'); //数据字典，由后端生成
+
 module.exports = {
 	projects : {
 		1 : { //前台
@@ -15,6 +17,7 @@ module.exports = {
 					]
 				}
 			],
+			dict : dict,
 			urlRulesFile : PROJECT_PATH + '/frontent/home-url-rules.js',
 			buildUrlRulesFileName : PROJECT_PATH+ '/web/home-url-rules.json'
 		},
@@ -30,7 +33,8 @@ module.exports = {
 						'login.html'
 					]
 				}
-			]
+			],
+			dict : dict
 		}
 	}
 };

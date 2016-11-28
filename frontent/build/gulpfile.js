@@ -5,8 +5,12 @@ var gulp = require('gulp'),
 	sass = require('gulp-sass'),
 	mockServer = require('mock-server'),
 	path = require('path'),
-	fs = require('fs');
+	fs = require('fs'),
+	template = require('art-template');
 
+template.config('cache', false);
+template.config('extname', '');
+template.config('compress', true);
 
 var projectId = getBuildProjectId();
 var configs = require('./config');
@@ -89,7 +93,13 @@ function setupTasks(config){
 		var buildHtml = function(file){
 			gulp.src(file, srcOptions)
 				.pipe(layout.run())
-				.pipe(gulp.dest(config.dist));
+				.pipe(gulp.dest(config.dist))
+				.on('end', function(){
+					var distFile = config.dist + '/' + path.relative(config.src, file);
+					var html = template(distFile, config.dict);
+					fs.writeFile(distFile, html);
+				});
+		
 		};
 
 		watch(config.src + '/**/**.html')
@@ -132,9 +142,20 @@ function setupTasks(config){
 			workingPath : config.src,
 			layouts : config.layouts
 		});
+		
+		var through2 = require('gulp-layout/node_modules/through2');
 		gulp.src(config.src + '/**/**.html')
 			.pipe(layout.run())
-			.pipe(gulp.dest(config.dist));
+			.pipe(gulp.dest(config.dist))
+			.pipe(through2.obj(function(file, enc, cb){
+				console.log('正在编译模板：' + file.path);
+				var distFile = config.dist + '/' + path.relative(config.src, file.path);
+				var html = template(distFile, config.dict);
+				fs.writeFile(distFile, html);
+				
+				this.push(file);
+				return cb();
+			}));
 	
 		buildUrlRules();
 	});
