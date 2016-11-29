@@ -39,15 +39,25 @@ class BuildController extends \yii\console\Controller{
 			$this->stdout('building ' . $class . ' to ' . $nodeName . ' ...');
 			
 			$classReflection = new ReflectionClass($class);
-			$dict[$nodeName] = $this->_getClassConstants($classReflection);
+			$dict[$nodeName] = $this->_getClassConstants($classReflection); //常量字典，必须的
+			
 			if($classReflection->isSubclassOf(Model::className())){
-				$dict[$nodeName]['labels'] = (new $class())->getAttributes();
+				//将所有继承yii\base\Model的类的getAttributes方法的返回值都构建到标签字典中
+				$attributes = array_filter((new $class())->getAttributes(), function($item){
+					return $item !== null;
+				});
+				$attributes && ($dict[$nodeName]['labels'] = $attributes);
 			}
 			
 			foreach($classReflection->getMethods() as $method){
+				//将所有 @labels 注释的方法返回值都构建标签字典中
 				if(preg_match('#\s+\* @labels#', $method->getDocComment())){
 					$dict[$nodeName]['labels'][$method->getName()] = $method->invoke($classReflection->newInstanceArgs());
 				}
+			}
+			
+			if(!$dict[$nodeName]){
+				unset($dict[$nodeName]);
 			}
 			$this->stdout(' done' . PHP_EOL);
 		}
@@ -58,7 +68,14 @@ class BuildController extends \yii\console\Controller{
 			$line = preg_replace('# {4}#', "\t", $line);
 			$result[] = preg_replace('#^(\s+)"(\w+)":#', '$1$2 :', $line);
 		}
-		file_put_contents(static::DICT_FILE, 'module.exports = ' . implode(PHP_EOL, $result) . ';');
+		$dictJson = implode(PHP_EOL, $result);
+		file_put_contents(static::DICT_FILE, <<<EOL
+/**
+ * 数据字典，本文件由服务端程序生成，请勿手动修改
+ */
+module.exports = $dictJson;
+EOL
+		);
 	}
 	
 	/**

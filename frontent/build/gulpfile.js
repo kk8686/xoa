@@ -72,8 +72,7 @@ function setupTasks(config){
 				stream = stream.pipe(sass().on('error', sass.logError));
 			}
 
-			stream.pipe(mincss())
-				.pipe(gulp.dest(config.dist));
+			stream.pipe(mincss()).pipe(gulp.dest(config.dist));
 		};
 
 		watch(config.src + '/**/**.{css,scss}')
