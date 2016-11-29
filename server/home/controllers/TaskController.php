@@ -73,7 +73,7 @@ class TaskController extends \yii\web\Controller{
 	 * @author KK
 	 * @return Response
 	 */
-	public function actionMoveTask() : Response{
+	public function actionMove() : Response{
 		$form = new TaskForm(['scenario' => TaskForm::SCENE_MOVE]);
 		if(!$form->load(Yii::$app->request->post(), '')){
 			return new Response('缺少请求参数');

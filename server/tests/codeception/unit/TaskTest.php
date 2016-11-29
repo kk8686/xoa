@@ -121,6 +121,7 @@ class TaskTest extends \Codeception\TestCase\Test
 		$form->load([
 			'taskId' => 1,
 			'taskCategoryId' => 2,
+			'order' => 2,
 		], '');
 		$form->worker = Worker::findOne(1);
 		$this->assertInstanceOf(Task::className(), $form->moveTask());

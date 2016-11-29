@@ -60,6 +60,11 @@ class TaskForm extends \yii\base\Model{
 	public $repeat = Task::REPEAT_NO;
 	
 	/**
+	 * @var int 排序
+	 */
+	public $order = 0;
+	
+	/**
 	 * @var int 任务分类ID
 	 */
 	public $taskCategoryId = 0;
@@ -114,7 +119,8 @@ class TaskForm extends \yii\base\Model{
 			[['title', 'workerIds', 'taskId'], 'required'],
 			['title', 'string', 'length' => [4, 30], 'message' => '任务标题在4到30个字之间'],
 			['detail', 'string', 'length' => [4, 65535], 'message' => '任务详情在4到65535个字之间'],
-			[['level', 'repeat'], 'integer'],
+			[['level', 'repeat', 'order'], 'integer'],
+			['order', 'compare', 'compareValue' => 0, 'operator' => '>'],
 			[['workerIds', 'relatedMemberIds'], 'each', 'rule' => ['integer']],
 			[['workerIds', 'relatedMemberIds'], 'validateMemberIds'],
 			['taskCategoryId', 'validateCategoryId'],
@@ -132,7 +138,7 @@ class TaskForm extends \yii\base\Model{
 			static::SCENE_ADD => ['title', 'detail', 'level', 'repeat', 'taskCategoryId', 'workerIds', 'relatedMemberIds', 'limitTime'],
 			static::SCENE_LIST => ['taskCategoryId'],
 			static::SCENE_INFO => ['taskId'],
-			static::SCENE_MOVE => ['taskId', 'taskCategoryId'],
+			static::SCENE_MOVE => ['taskId', 'taskCategoryId', 'order'],
 		];
 	}
 	
@@ -272,6 +278,13 @@ class TaskForm extends \yii\base\Model{
 			return false;
 		}
 		
+		$afterTasks = Task::findAll([
+			'and',
+			['<>', 'id', $this->_task->id],
+			['>', 'order', $this->order],
+		]);
+		
+		$this->_task->order = $this->order;
 		$this->_task->category = $this->_taskCategory;
 		return $this->_task;
 	}

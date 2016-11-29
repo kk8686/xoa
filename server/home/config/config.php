@@ -57,6 +57,7 @@ $config = [
 				'task/add.do' => 'task/add',
 				'task/<categoryId>/tasks.json' => 'task/list',
 				'project/<projectId:\d+>/task-categorys.json' => 'task/task-categories',
+				'task/move.do' => 'task/move',
 				
 				'<page:.+>.htm<xx:l{0,1}>' => 'site/r',
             ],
