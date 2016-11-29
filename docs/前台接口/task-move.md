@@ -8,6 +8,8 @@
 	- `taskId`: 要移动的任务ID
 
 	- `taskCategoryId`: 新的任务分类ID
+
+	- `order`: 排序数字，建议任务排在第几就传第几
 	
 	---
 
