@@ -121,6 +121,8 @@ class TaskForm extends \yii\base\Model{
 			['detail', 'string', 'length' => [4, 65535], 'message' => '任务详情在4到65535个字之间'],
 			[['level', 'repeat', 'order'], 'integer'],
 			['order', 'compare', 'compareValue' => 0, 'operator' => '>'],
+			['level', 'in', 'range' => array_keys(Task::levels())],
+			['repeat', 'in', 'range' => array_keys(Task::repeats())],
 			[['workerIds', 'relatedMemberIds'], 'each', 'rule' => ['integer']],
 			[['workerIds', 'relatedMemberIds'], 'validateMemberIds'],
 			['taskCategoryId', 'validateCategoryId'],
@@ -278,13 +280,7 @@ class TaskForm extends \yii\base\Model{
 			return false;
 		}
 		
-		$afterTasks = Task::findAll([
-			'and',
-			['<>', 'id', $this->_task->id],
-			['>', 'order', $this->order],
-		]);
-		
-		$this->_task->order = $this->order;
+		$this->_task->orderTo($this->order);
 		$this->_task->category = $this->_taskCategory;
 		return $this->_task;
 	}

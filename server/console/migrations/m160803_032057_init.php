@@ -184,7 +184,7 @@ class m160803_032057_init extends yii\db\Migration{
 			'related_member_ids' => $this->string()->notNull()->defaultValue('')->comment('相关人员ID集，逗号隔开'),
 			'title' => $this->string(30)->notNull()->defaultValue('')->comment('标题'),
 			'detail' => $this->text()->notNull()->defaultValue('')->comment('详情'),
-			'level' => $this->smallInteger(1)->notNull()->defaultValue(0)->comment('级别 1=有空处理 2=不紧急 3=普通 4=紧急 5=非常紧急'),
+			'level' => $this->smallInteger(1)->notNull()->defaultValue(0)->comment('级别 1=有空处理 2=不急 3=普通 4=紧急 5=非常紧急'),
 			'repeat' => $this->smallInteger(1)->notNull()->defaultValue(0)->comment('周期 1=不重复 2=工作日重复 3=每天重复 4=每周重复 5=每月重复'),
 			'is_finish' => $this->boolean()->notNull()->defaultValue(false)->comment('是否完成'),
 			'order' => $this->smallInteger()->notNull()->defaultValue(0)->comment('排序'),
@@ -217,10 +217,27 @@ class m160803_032057_init extends yii\db\Migration{
 			'end_time',
 			'add_time'
 		];
+		
+		$categoryWait = 1;
+		$categoryDoing = 2;
+		$now = date('Y-m-d H:i');
+		$noTime = $this->_time();
+		$commomLimitTime = $this->_time('+7day');
 		Yii::$app->db->createCommand()->batchInsert(Task::tableName(), $fields, [
-			[1, 1, 2, 1, '1', '', '修复登陆验证码错误3次后没有冻结账户的问题', '', 3, 1, false, 1, date('Y-m-d H:i:s', strtotime('+1day')), '0000-00-00 00:00:00', date('Y-m-d H:i:s')],
-			[2, 1, 2, 1, '1,2', '', '新增团购功能，仿XX网站', '', 3, 1, false, 1, date('Y-m-d H:i:s', strtotime('+7day')), '0000-00-00 00:00:00', date('Y-m-d H:i:s')],
-			[3, 1, 1, 1, '3', '', '准备一套mock数据，周六路演要用', '', 1, 3, false, 1, date('Y-m-d H:i:s', strtotime('+7day')), '0000-00-00 00:00:00', date('Y-m-d H:i:s')],
+			//兔子外卖进行中任务1
+			[1, 1, $categoryDoing, 1, '1', '', '修复登陆验证码错误3次后没有冻结账户的问题', '', Task::LEVEL_NORMAL, Task::REPEAT_NO, false, 1, $this->_time('+1day'), $noTime, date('Y-m-d H:i:s')],
+			
+			//兔子外卖进行中任务2
+			[2, 1, $categoryDoing, 1, '1,2', '', '新增团购功能，仿XX网站', '', Task::LEVEL_NORMAL, Task::REPEAT_NO, false, 2, $commomLimitTime, $noTime, $now],
+			
+			//兔子外卖进行中任务3
+			[4, 1, $categoryDoing, 1, '2', '', '运营统计界面切图', '1,3', Task::LEVEL_NORMAL, Task::REPEAT_NO, false, 3, $commomLimitTime, $noTime, $now],
+			
+			//兔子外卖进行中任务4
+			[5, 1, $categoryDoing, 1, '3', '', '处理线上日志', '1,3', Task::LEVEL_NORMAL, Task::REPEAT_WORK_DAY, false, 4, $noTime, $noTime, $now],
+
+			//兔子外卖待处理任务1
+			[3, 1, $categoryWait, 1, '3', '', '准备一套mock数据，周六路演要用', '', Task::LEVEL_URGENT, Task::REPEAT_NO, false, 8, $commomLimitTime, $noTime, $now],
 		])->execute();
 	}
 	
@@ -236,5 +253,18 @@ class m160803_032057_init extends yii\db\Migration{
 			'status' => $this->smallInteger(1)->notNull()->defaultValue(0)->comment('添加时间'),
 			'add_time' => $this->date()->notNull()->comment('添加时间'),
 		]);
+	}
+	
+	/**
+	 * 生成时间
+	 * @author KK
+	 * @param string $pattern strtotime的表达式
+	 * @return string
+	 */
+	private function _time(string $pattern = ''){
+		if(!$pattern){
+			return '0000-00-00 00:00:00';
+		}
+		return date('Y-m-d H:i:s', strtotime($pattern));
 	}
 }

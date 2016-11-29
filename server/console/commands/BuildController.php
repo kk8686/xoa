@@ -51,7 +51,7 @@ class BuildController extends \yii\console\Controller{
 			
 			foreach($classReflection->getMethods() as $method){
 				//将所有 @labels 注释的方法返回值都构建标签字典中
-				if(preg_match('#\s+\* @labels#', $method->getDocComment())){
+				if($method->isPublic() && preg_match('#\s+\* @labels#', $method->getDocComment())){
 					$dict[$nodeName]['labels'][$method->getName()] = $method->invoke($classReflection->newInstanceArgs());
 				}
 			}

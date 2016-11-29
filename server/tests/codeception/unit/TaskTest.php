@@ -44,6 +44,8 @@ class TaskTest extends \Codeception\TestCase\Test
 			'title' => '测试任务',
 			'detail' => '',
 			'taskCategoryId' => 1,
+			'level' => Task::LEVEL_NORMAL,
+			'repeat' => Task::REPEAT_NO,
 			'workerIds' => [2],
 			'relatedMemberIds' => [3],
 			'limitTime' => date('Y-m-d H:i', strtotime('+1day')),
@@ -121,7 +123,7 @@ class TaskTest extends \Codeception\TestCase\Test
 		$form->load([
 			'taskId' => 1,
 			'taskCategoryId' => 2,
-			'order' => 2,
+			'order' => 5,
 		], '');
 		$form->worker = Worker::findOne(1);
 		$this->assertInstanceOf(Task::className(), $form->moveTask());
@@ -144,5 +146,25 @@ class TaskTest extends \Codeception\TestCase\Test
 		$taskInfo = $form->getInfo();
 		$this->assertInternalType('array', $taskInfo);
 		$this->tester->assertHasKeys(['id', 'title', 'detail', 'level', 'repeat', 'is_finish', 'limit_time', 'end_time', 'add_time', 'history'], $taskInfo, '不传任何参数会失败');
+	}
+	
+	/**
+	 * 测试排序到指定位置
+	 * @author KK
+	 */
+	public function testOrderTo(){
+		$testOrder = 1;
+		$task = Task::findOne(2);
+		$this->assertTrue($task->orderTo($testOrder));
+		$this->tester->seeInDatabase(Task::tableName(), [
+			'id' => $task->id,
+			'order' => $testOrder,
+		]);
+		
+		//另一个任务的排序肯定被更换了
+		$this->tester->seeInDatabase(Task::tableName(), [
+			'id' => 1,
+			'order' => 2,
+		]);
 	}
 }

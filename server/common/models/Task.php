@@ -1,6 +1,7 @@
 <?php
 namespace xoa\common\models;
 
+use yii\db\Expression;
 use xoa\common\models\{
 	TaskCategory,
 	Worker
@@ -15,9 +16,29 @@ use xoa\common\models\{
  */
 class Task extends \yii\db\ActiveRecord{
 	/**
+	 * 级别：有空处理
+	 */
+	const LEVEL_WAIT = 1;
+	
+	/**
+	 * 级别：不急
+	 */
+	const LEVEL_NOT_URGENT = 2;
+	
+	/**
 	 * 级别：普通
 	 */
 	const LEVEL_NORMAL = 3;
+	
+	/**
+	 * 级别：紧急urgent 
+	 */
+	const LEVEL_URGENT = 4;
+	
+	/**
+	 * 级别：非常紧急
+	 */
+	const LEVEL_SO_URGENT = 5;
 	
 	/**
 	 * 周期：不重复
@@ -57,7 +78,7 @@ class Task extends \yii\db\ActiveRecord{
 	 * @author KK
 	 * @return array
 	 */
-	public function repeats(){
+	public static function repeats(){
 		return [
 			static::REPEAT_NO => '不重复',
 			static::REPEAT_WORK_DAY => '工作日',
@@ -73,9 +94,13 @@ class Task extends \yii\db\ActiveRecord{
 	 * @author KK
 	 * @return array
 	 */
-	public function levels(){
+	public static function levels(){
 		return [
-			static::LEVEL_NORMAL => '普通'
+			static::LEVEL_WAIT => '有空处理',
+			static::LEVEL_NOT_URGENT => '不急',
+			static::LEVEL_NORMAL => '普通',
+			static::LEVEL_URGENT => '紧急',
+			static::LEVEL_SO_URGENT => '非常紧急',
 		];
 	}
 	
@@ -144,5 +169,25 @@ class Task extends \yii\db\ActiveRecord{
 		$isCreater = $worker->id == $this->creater_id;
 		$isWorker = in_array($worker->id, explode(',', $this->worker_ids));
 		return $isCreater || $isWorker;
+	}
+	
+	/**
+	 * 排序到指定位置
+	 * @author KK
+	 * @param int $order
+	 * @return boolean
+	 * @test \xoa_test\home\unit\TaskTest::testOrderTo
+	 */
+	public function orderTo(int $order){
+		$query = static::find()->select(['id'])->where([
+			'and',
+			['<>', 'id', $this->id],
+			['>=', 'order', $order],
+			['=', 'task_category_id', $this->task_category_id],
+		]);
+		static::updateAll(['order' => new Expression('`order` + 1')], ['in', 'id', $query]);
+		
+		$this->order = $order;
+		return (bool)$this->save();
 	}
 }
