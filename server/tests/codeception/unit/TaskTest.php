@@ -125,4 +125,23 @@ class TaskTest extends \Codeception\TestCase\Test
 		$form->worker = Worker::findOne(1);
 		$this->assertInstanceOf(Task::className(), $form->moveTask());
 	}
+	
+	/**
+	 * 测试获取任务信息
+	 * @author KK
+	 */
+	public function testInfo(){
+		$form = new TaskForm(['scenario' => TaskForm::SCENE_INFO]);
+		$this->assertFalse($form->getInfo(), '不传任何参数会失败');
+		$this->tester->assertHasKeys(['taskId'], $form->errors, '缺少任务ID');
+		
+		$form->taskId = 9999;
+		$this->assertFalse($form->getInfo(), '乱传ID也会失败');
+		$this->tester->assertHasKeys(['taskId'], $form->errors, '这是个无效的任务ID');
+		
+		$form->taskId = 1;
+		$taskInfo = $form->getInfo();
+		$this->assertInternalType('array', $taskInfo);
+		$this->tester->assertHasKeys(['id', 'title', 'detail', 'level', 'repeat', 'is_finish', 'limit_time', 'end_time', 'add_time', 'history'], $taskInfo, '不传任何参数会失败');
+	}
 }

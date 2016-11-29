@@ -223,8 +223,8 @@ class TaskForm extends \yii\base\Model{
 	/**
 	 * 获取任务列表
 	 * @author KK
-	 * @test \xoa_test\home\unit\TaskTest::testList
 	 * @return array
+	 * @test \xoa_test\home\unit\TaskTest::testList
 	 */
 	public function getList(){
 		if(!$this->validate()){
@@ -246,6 +246,7 @@ class TaskForm extends \yii\base\Model{
 	 * 获取任务信息
 	 * @author KK
 	 * @return array
+	 * @test \xoa_test\home\unit\TaskTest::testInfo
 	 */
 	public function getInfo() {
 		if(!$this->validate()){
