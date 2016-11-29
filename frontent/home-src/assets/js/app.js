@@ -154,7 +154,6 @@
 				aUserInfo = JSON.parse(aUserInfo);
 			}
 			
-			//为什么下面.glyphicon出不来图标 求解
 			$('#mainOut').before('<header class="container-full">\
 				<div class="left"><a href="/home.html">首页</a></div>\
 				<div class="right">\

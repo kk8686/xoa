@@ -9,11 +9,46 @@ ul {
 a:hover {
   text-decoration: none; }
 
+/*webkit内核滚动条修改*/
+::-webkit-scrollbar {
+  width: 10px; }
+
+::-webkit-scrollbar:horizontal {
+  height: 10px; }
+
+::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+  background-color: #ccc; }
+
+::-webkit-scrollbar-track {
+  border-radius: 10px; }
+
+::-webkit-scrollbar-track-piece {
+  background-color: #ccc;
+  border-radius: 10px; }
+
+::-webkit-scrollbar-thumb {
+  width: 10px;
+  border-radius: 5px;
+  background: #999; }
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8e8e8e; }
+
+::-webkit-scrollbar-corner {
+  background-color: #ccc;
+  border-radius: 5px; }
+
 .taskCategorys {
+  display: -webkit-flex;
+  display: flex;
+  flex-flow: row nowrap;
   width: 1280px;
-  height: 676px;
+  height: 700px;
   overflow-x: scroll; }
   .taskCategorys .taskList {
+    flex: none;
     background: #EEE;
     padding: 4px 7px;
     border-radius: 4px;
@@ -21,6 +56,8 @@ a:hover {
     width: 290px;
     min-height: 680px; }
     .taskCategorys .taskList h4 {
+      height: 34px;
+      line-height: 34px;
       color: #666; }
       .taskCategorys .taskList h4:hover {
         color: #000; }
@@ -75,6 +112,13 @@ header {
     float: right; }
     header .right a:nth-child(3) {
       color: #666; }
+    header .right .glyphicon.glyphicon-envelope {
+      top: 2px;
+      margin-right: 4px;
+      color: #fff; }
+    header .right .glyphicon.glyphicon-envelope:hover {
+      color: #428bca;
+      cursor: pointer; }
   header a {
     color: #FFF; }
 
@@ -99,6 +143,7 @@ header {
 
 .wrapProjectName {
   background: #EEE;
+  width: 1280px;
   padding: 8px 16px;
   font-size: 24px;
   margin-bottom: 20px; }
