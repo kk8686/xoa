@@ -7,7 +7,7 @@
         "issues": "https://github.com/kk8686/xoa/issues",
         "wiki": "https://github.com/kk8686/xoa/wiki",
         "source": "https://github.com/kk8686/xoa"
-    }
+    },
 	"authors": [
         {
             "name": "KK",
@@ -21,7 +21,7 @@
             "name": "Hanx",
             "email": "xuanxinhan@vip.qq.com"
         }
-    ]
+    ],
     "repositories": [
         {
             "type": "vcs",
