@@ -2,6 +2,7 @@
 namespace xoa\common\models;
 
 use yii\db\Expression;
+use xoa\common\ext\behaviors\ArrayField;
 use xoa\common\models\{
 	TaskCategory,
 	Worker
@@ -73,6 +74,22 @@ class Task extends \yii\db\ActiveRecord{
 	}
 	
 	/**
+	 * @inheritdoc
+	 */
+	public function behaviors(){
+		return [
+			[
+				'class' => ArrayField::className(),
+				'fields' => [
+					'worker_ids' => ArrayField::TYPE_COMMA,
+					'related_member_ids' => ArrayField::TYPE_COMMA,
+					'history',
+				],
+			],
+		];
+	}
+	
+	/**
 	 * 获取取得周期集合
 	 * @labels
 	 * @author KK
@@ -110,7 +127,7 @@ class Task extends \yii\db\ActiveRecord{
 	 * @return array
 	 */
 	public function getWorkers(){
-		return Worker::findAll(['id' => explode(',', $this->worker_ids)]);
+		return Worker::findAll(['id' => $this->worker_ids]);
 	}
 	
 	/**
@@ -128,7 +145,7 @@ class Task extends \yii\db\ActiveRecord{
 	 * @return array
 	 */
 	public function getRelatedMembers(){
-		return $this->related_member_ids ? Worker::findAll(['id' => explode(',', $this->related_member_ids)]) : [];
+		return $this->related_member_ids ? Worker::findAll(['id' => $this->related_member_ids]) : [];
 	}
 	
 	/**
@@ -167,7 +184,7 @@ class Task extends \yii\db\ActiveRecord{
 	 */
 	public function isAllowModify(Worker $worker){
 		$isCreater = $worker->id == $this->creater_id;
-		$isWorker = in_array($worker->id, explode(',', $this->worker_ids));
+		$isWorker = in_array($worker->id, $this->worker_ids);
 		return $isCreater || $isWorker;
 	}
 	

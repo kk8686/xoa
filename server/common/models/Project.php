@@ -1,8 +1,11 @@
 <?php
 namespace xoa\common\models;
 
-use xoa\common\models\Worker;
-use xoa\common\models\TaskCategory;
+use xoa\common\models\{
+	Worker,
+	TaskCategory
+};
+use xoa\common\ext\behaviors\ArrayField;
 
 /**
  * 项目
@@ -20,6 +23,20 @@ class Project extends \yii\db\ActiveRecord{
 	}
 	
 	/**
+	 * @inheritdoc
+	 */
+	public function behaviors(){
+		return [
+			[
+				'class' => ArrayField::className(),
+				'fields' => [
+					'member_ids' => ArrayField::TYPE_COMMA,
+				],
+			],
+		];
+	}
+	
+	/**
 	 * 获取项目的所有任务分类
 	 * @author KK
 	 * @return array
@@ -34,7 +51,7 @@ class Project extends \yii\db\ActiveRecord{
 	 * @return array
 	 */
 	public function getWorkers(){
-		$workerIds = array_merge([$this->worker_id], explode(',', $this->member_ids));
+		$workerIds = array_merge([$this->worker_id], $this->member_ids);
 		return Worker::findAll(['id' => $workerIds]);
 	}
 }

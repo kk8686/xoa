@@ -113,7 +113,7 @@ class ProjectForm extends \yii\base\Model{
 		$project = new Project([
 			'name' => $this->name,
 			'worker_id' => $this->creater->id,
-			'member_ids' => '',
+			'member_ids' => [],
 			'add_time' => date('Y-m-d'),
 		]);
 		

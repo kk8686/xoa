@@ -2,12 +2,10 @@
 namespace xoa\home\forms;
 
 use xoa\common\models\{
-	Project,
 	Task,
 	TaskCategory,
 	Worker
 };
-use yii\helpers\ArrayHelper;
 
 /**
  * 任务表单
@@ -213,12 +211,12 @@ class TaskForm extends \yii\base\Model{
 			'detail' => $this->detail,
 			'level' => $this->level,
 			'creater_id' => $this->worker->id,
-			'worker_ids' => implode(',', $this->workerIds),
+			'worker_ids' => $this->workerIds,
 			'limit_time' => $this->limitTime,
 			'add_time' => date('Y-m-d H:i:'),
 		]);
 		if($this->relatedMemberIds){
-			$task->related_member_ids = implode(',', $this->relatedMemberIds);
+			$task->related_member_ids = $this->relatedMemberIds;
 		}
 		
 		if($task->save()){
