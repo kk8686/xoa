@@ -7,7 +7,7 @@ var gulp = require('gulp'),
 	path = require('path'),
 	fs = require('fs'),
 	template = require('art-template');
-
+	
 template.config('cache', false);
 template.config('extname', '');
 template.config('compress', true);

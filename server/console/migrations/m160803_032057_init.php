@@ -65,7 +65,6 @@ class m160803_032057_init extends yii\db\Migration{
 			if(Yii::$app->db->schema->getTableSchema($dropTable)){
 				$this->dropTable($dropTable);
 			}
-			
 		}
     }
 	
