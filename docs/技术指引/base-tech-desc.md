@@ -9,7 +9,9 @@
 
 样式语言：**[SASS](http://www.w3cplus.com/sassguide)**
 
-前端构建环境：**[Gulp](http://www.kkh86.com/it/gulp-build-dev-env/guide-README.html)**
+前端开发构建环境：**[Gulp](http://www.kkh86.com/it/gulp-build-dev-env/guide-README.html)**
+
+前端模板引擎：**[artTemplate](https://github.com/aui/artTemplate)**
 
 后端语言**：PHP7** （提示：下载phpStudy最新版可以切换到PHP7）
 
@@ -19,9 +21,9 @@
 
 单元测试框架：**[Codeception](http://www.kkh86.com/it/codeception/guide-README.html)**
 
-Web服务器：不限，但自带.htaccess，用Nginx请自主定义相关重写规则
+Web服务器：不限，但自带**.htaccess**，用Nginx请自主定义相关重写规则
 
-文档编写语言：**[Markdown](http://www.kkh86.com/it/markdown/guide-README.html)**
+文档书写格式：**[Markdown](http://www.kkh86.com/it/markdown/guide-README.html)**
 
 运行平台：**Windows/Linux**
 
