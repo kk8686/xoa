@@ -8,6 +8,7 @@ var gulp = require('gulp'),
 	fs = require('fs'),
 	template = require('art-template');
 
+global.dataMocker = require('mockjs');
 template.config('cache', false);
 template.config('extname', '');
 template.config('compress', true);
