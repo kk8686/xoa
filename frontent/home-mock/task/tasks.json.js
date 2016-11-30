@@ -1,5 +1,4 @@
-var mocker = require('mockjs');
-module.exports = mocker.mock({
+module.exports = dataMocker.mock({
 	message : '',
 	code : 0,
 	'data|1-7' : [{

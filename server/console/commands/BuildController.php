@@ -27,8 +27,8 @@ class BuildController extends \yii\console\Controller{
 	 */
 	public function actionDict(){
 		$dict = [];
-		$buildModelFiles = $this->_collectAllFiles(Yii::getAlias('@xoa/common/models'));
-		$buildFormFiles =$this->_collectAllFiles(Yii::getAlias('@xoa/common/forms'));
+		//$buildModelFiles = $this->_collectAllFiles(Yii::getAlias('@xoa/common/models'));
+		//$buildFormFiles =$this->_collectAllFiles(Yii::getAlias('@xoa/common/forms'));
 		
 		foreach([
 			Task::className(),
@@ -80,6 +80,7 @@ EOL
 	
 	/**
 	 * 获取节点名称
+	 * @author KK
 	 * @param string $className 类名
 	 * @return string
 	 */
@@ -115,6 +116,7 @@ EOL
 	
 	/**
 	 * 收集所有文件
+	 * @author KK
 	 * @param string $path 要收集的目录
 	 * @return array
 	 */

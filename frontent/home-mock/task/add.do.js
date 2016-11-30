@@ -1,5 +1,4 @@
-var mocker = require('mockjs');
-module.exports = mocker.mock({
+module.exports = dataMocker.mock({
 	message : '添加成功',
 	code : 0,
 	data : {
