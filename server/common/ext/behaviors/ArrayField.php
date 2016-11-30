@@ -10,6 +10,7 @@ use yii\db\ActiveRecord;
 /**
  * 数组字段
  * @author KK
+ * @test \xoa_test\unit\yii_ext\ArrayFieldTest
  */
 class ArrayField extends Behavior {
 
