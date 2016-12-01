@@ -1,4 +1,5 @@
 <?php
+use yii\helpers\Console;
 use xoa\common\models\{
 	Project,
 	ProjectInvite,
@@ -31,16 +32,15 @@ class m160803_032057_init extends yii\db\Migration{
 	 * @author KK
 	 */
 	public function mockData() {
-		$controller = Yii::$app->controller;
-		$controller->stdout(PHP_EOL . PHP_EOL . 'Start to mock data' . PHP_EOL);
+		Console::stdout(PHP_EOL . PHP_EOL . 'Start to mock data' . PHP_EOL);
 		$migrateReflection = new \ReflectionClass(self::className());
 		foreach($migrateReflection->getMethods(ReflectionMethod::IS_PRIVATE) as $method){
 			if(
 				preg_match('#^_(.+)_mock$#', $method->getName(), $matchResult)){
-				$controller->stdout('    > mock ' . $matchResult[1] . ' ...');
+				Console::stdout('    > mock ' . $matchResult[1] . ' ...');
 				$method->setAccessible(true);
 				$method->invoke($migrateReflection->newInstanceArgs());
-				$controller->stdout(' done' . PHP_EOL);
+				Console::stdout(' done' . PHP_EOL);
 			}
 		}
 	}
@@ -248,7 +248,7 @@ class m160803_032057_init extends yii\db\Migration{
 		$this->createTable(ProjectInvite::tableName(), [
 			'id' => $this->primaryKey(),
 			Project::tableName() . '_id' => $this->integer()->notNull()->defaultValue(0)->comment('项目ID'),
-			Worker::tableName() . '_id' => $this->integer()->notNull()->defaultValue(0)->comment('分类ID'),
+			Worker::tableName() . '_id' => $this->integer()->notNull()->defaultValue(0)->comment('被邀请的工作者ID'),
 			'status' => $this->smallInteger(1)->notNull()->defaultValue(0)->comment('添加时间'),
 			'add_time' => $this->date()->notNull()->comment('添加时间'),
 		]);
