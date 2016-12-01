@@ -161,6 +161,7 @@ class TaskForm extends \yii\base\Model{
 	
 	/**
 	 * 验证任务ID
+	 * @author KK
 	 */
 	public function validateTaskId(){
 		if(!$task = Task::findOne($this->taskId)){
@@ -171,6 +172,7 @@ class TaskForm extends \yii\base\Model{
 	
 	/**
 	 * 验证任务分类ID
+	 * @author KK
 	 */
 	public function validateCategoryId(){
 		if(!$taskCategory = TaskCategory::findOne($this->taskCategoryId)){
@@ -181,6 +183,7 @@ class TaskForm extends \yii\base\Model{
 	
 	/**
 	 * 验证限制完成时间
+	 * @author KK
 	 */
 	public function validateLimitTime(){
 		$time = strtotime($this->limitTime);
@@ -290,7 +293,7 @@ class TaskForm extends \yii\base\Model{
 	 * @return array
 	 * @test \xoa_test\home\unit\TaskTest::testAdd
 	 */
-	protected function _buildTaskDescInfo(Task $task){
+	protected function _buildTaskDescInfo(Task $task) : array{
 		$taskInfo = $task->toArray(['id', 'title', 'limit_time']);
 		$taskInfo['workers'] = [];
 		foreach ($task->workers as $worker) {
