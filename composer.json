@@ -1,6 +1,7 @@
 {
 	"name": "kk8686/xoa",
 	"description": "小团队工作用的OA，主要参考Teambition，把主要的功能做出来就好，具体的设计文档未来再慢慢推出，目前先看Github的Projects\n\n暂时自己做也没压力，不急不忙的，慢慢抽业余时间折腾吧",
+	"homepage": "https://github.com/kk8686/xoa",
 	"keywords": ["小OA", "OA", "Codeception实例", "团队工具", "团队协作"],
 	"license": "BSD-3-Clause",
 	"support": {
