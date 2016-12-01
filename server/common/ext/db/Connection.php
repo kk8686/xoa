@@ -14,6 +14,7 @@ class Connection extends \yii\db\Connection{
 	 * @param string $patten 搜索表达式,可以为普通字符串搜索,或者以#或/作定界符的正则表达式搜索
 	 * @return array 匹配的SQL语句列表
 	 * @author KK
+	 * @test \xoa_test\home\unit\yii_ext\ConnectionTest::testGetLastSqls
 	 */
 	public function getLastSqls($nums = 1, $patten = ''){
 		$messageList = &Yii::getLogger()->messages;
