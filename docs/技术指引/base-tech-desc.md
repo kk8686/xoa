@@ -1,48 +1,48 @@
-»ù´¡ - ¼¼Êõ½éÉÜ
+åŸºç¡€ - æŠ€æœ¯ä»‹ç»
 ===
 
-- ÎÄµµ±àĞ´£ºKK
+- æ–‡æ¡£ç¼–å†™ï¼šKK
 
 - 2016.11.08
 
 ---
 
-ÑùÊ½ÓïÑÔ£º**[SASS](http://www.w3cplus.com/sassguide)**
+æ ·å¼è¯­è¨€ï¼š**[SASS](http://www.w3cplus.com/sassguide)**
 
-Ç°¶Ë¿ª·¢¹¹½¨»·¾³£º**[Gulp](http://www.kkh86.com/it/gulp-build-dev-env/guide-README.html)**
+å‰ç«¯å¼€å‘æ„å»ºç¯å¢ƒï¼š**[Gulp](http://www.kkh86.com/it/gulp-build-dev-env/guide-README.html)**
 
-Ç°¶ËÄ£°åÒıÇæ£º**[artTemplate](https://github.com/aui/artTemplate)**
+å‰ç«¯æ¨¡æ¿å¼•æ“ï¼š**[artTemplate](https://github.com/aui/artTemplate)**
 
-ºó¶ËÓïÑÔ**£ºPHP7** £¨ÌáÊ¾£ºÏÂÔØphpStudy×îĞÂ°æ¿ÉÒÔÇĞ»»µ½PHP7£©
+åç«¯è¯­è¨€**ï¼šPHP7** ï¼ˆæç¤ºï¼šä¸‹è½½phpStudyæœ€æ–°ç‰ˆå¯ä»¥åˆ‡æ¢åˆ°PHP7ï¼‰
 
-ºó¶Ë¿ò¼Ü£º**Yii2 2.0.9**£¬**[ÖĞÎÄ¹ÙÍø](http://www.yiichina.com/doc/guide/2.0)**£¬**[Ó¢ÎÄ¹ÙÍø£¨½Ì³ÌÄÚÈİ¸üÍêÕû£©](http://www.yiiframework.com/doc-2.0/guide-index.html)**
+åç«¯æ¡†æ¶ï¼š**Yii2 2.0.9**ï¼Œ**[ä¸­æ–‡å®˜ç½‘](http://www.yiichina.com/doc/guide/2.0)**ï¼Œ**[è‹±æ–‡å®˜ç½‘ï¼ˆæ•™ç¨‹å†…å®¹æ›´å®Œæ•´ï¼‰](http://www.yiiframework.com/doc-2.0/guide-index.html)**
 
-Êı¾İ¿â£º**[SQLite3](http://www.runoob.com/sqlite/sqlite-tutorial.html)**£¨*ÊìÏ¤YiiµÄ»°¿ÉÒÔ¿ìËÙ¸Ä³ÉMySQL£¬Î´À´»á³öĞŞ¸ÄÖ¸Òı*£©
+æ•°æ®åº“ï¼š**[SQLite3](http://www.runoob.com/sqlite/sqlite-tutorial.html)**ï¼ˆ*ç†Ÿæ‚‰Yiiçš„è¯å¯ä»¥å¿«é€Ÿæ”¹æˆMySQLï¼Œæœªæ¥ä¼šå‡ºä¿®æ”¹æŒ‡å¼•*ï¼‰
 
-µ¥Ôª²âÊÔ¿ò¼Ü£º**[Codeception](http://www.kkh86.com/it/codeception/guide-README.html)**
+å•å…ƒæµ‹è¯•æ¡†æ¶ï¼š**[Codeception](http://www.kkh86.com/it/codeception/guide-README.html)**
 
-Web·şÎñÆ÷£º²»ÏŞ£¬µ«×Ô´ø**.htaccess**£¬ÓÃNginxÇë×ÔÖ÷¶¨ÒåÏà¹ØÖØĞ´¹æÔò
+WebæœåŠ¡å™¨ï¼šä¸é™ï¼Œä½†è‡ªå¸¦**.htaccess**ï¼Œç”¨Nginxè¯·è‡ªä¸»å®šä¹‰ç›¸å…³é‡å†™è§„åˆ™
 
-ÎÄµµÊéĞ´¸ñÊ½£º**[Markdown](http://www.kkh86.com/it/markdown/guide-README.html)**
+æ–‡æ¡£ä¹¦å†™æ ¼å¼ï¼š**[Markdown](http://www.kkh86.com/it/markdown/guide-README.html)**
 
-ÔËĞĞÆ½Ì¨£º**Windows/Linux**
+è¿è¡Œå¹³å°ï¼š**Windows/Linux**
 
-Ç°¶ËUI£º**ÔİÊ±ÓÃ[Bootstrap3](http://v3.bootcss.com/css)£¬×îÖÕÊÇÏëÓÃBootstrap4µÄ**
+å‰ç«¯UIï¼š**æš‚æ—¶ç”¨[Bootstrap3](http://v3.bootcss.com/css)ï¼Œæœ€ç»ˆæ˜¯æƒ³ç”¨Bootstrap4çš„**
 
 ---
 
-Ò»Ğ©¹¤¾ßÓÃÁËbat½Å±¾£¬ÒÔºó»á¿¼ÂÇÓÃC#×ö¿ÉÊÓ»¯°æ±¾µÄ¹¤¾ß
+ä¸€äº›å·¥å…·ç”¨äº†batè„šæœ¬ï¼Œä»¥åä¼šè€ƒè™‘ç”¨C#åšå¯è§†åŒ–ç‰ˆæœ¬çš„å·¥å…·
 
-Ç°¶ËÄ¿Ç°Ëæ±ãĞ´µÄ£¬»¹Ã»ÕûÀí£¬Ò²Ã»ÓĞÄ£¿é»¯¿ª·¢
+å‰ç«¯ç›®å‰éšä¾¿å†™çš„ï¼Œè¿˜æ²¡æ•´ç†ï¼Œä¹Ÿæ²¡æœ‰æ¨¡å—åŒ–å¼€å‘
 	
 ---
 	
-¸½Â¼£º
+é™„å½•ï¼š
 	
-[Í¨ÓÃ´úÂë¹æ·¶](http://www.kkh86.com/it/code-standard/guide-std-global.html)
+[é€šç”¨ä»£ç è§„èŒƒ](http://www.kkh86.com/it/code-standard/guide-std-global.html)
 
-[ºó¶Ë´úÂë¹æ·¶](http://www.kkh86.com/it/code-standard/guide-std-php.html)
+[åç«¯ä»£ç è§„èŒƒ](http://www.kkh86.com/it/code-standard/guide-std-php.html)
 
-[JS´úÂë¹æ·¶](http://www.kkh86.com/it/code-standard/guide-std-js.html)
+[JSä»£ç è§„èŒƒ](http://www.kkh86.com/it/code-standard/guide-std-js.html)
 
 [HTML+CSS](http://www.kkh86.com/it/code-standard/guide-std-html-css.html)

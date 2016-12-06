@@ -1,14 +1,14 @@
-»ù´¡ - ÔËÐÐ²âÊÔÓÃÀý
+åŸºç¡€ - è¿è¡Œæµ‹è¯•ç”¨ä¾‹
 ===
 
-- ÎÄµµ±àÐ´£ºKK
+- æ–‡æ¡£ç¼–å†™ï¼šKK
 
 - 2016.11.09
 
 ---
 
-1. ÏÈÌí¼ÓÒ»¸ö½ÐcodeceptµÄÏµÍ³±äÁ¿£¬ÖµÊÇ`php $codecept.pharµÄÂ·¾¶`£¬±ÈÈçcodecept.pharµÄÂ·¾¶ÊÇ`D:\php\bin\codecept.phar`£¬Ôòcodecept±äÁ¿µÄÖµÊÇ`php D:\php\bin\codecept.phar`
+1. å…ˆæ·»åŠ ä¸€ä¸ªå«codeceptçš„ç³»ç»Ÿå˜é‡ï¼Œå€¼æ˜¯`php $codecept.pharçš„è·¯å¾„`ï¼Œæ¯”å¦‚codecept.pharçš„è·¯å¾„æ˜¯`D:\php\bin\codecept.phar`ï¼Œåˆ™codeceptå˜é‡çš„å€¼æ˜¯`php D:\php\bin\codecept.phar`
 
-2. È·ÈÏcodecept±äÁ¿Ìí¼Ó³É¹¦£¬ÖØ¿ªÒ»¸öcmdÖ´ÐÐ`echo %codecept%`ÓÐÉÏÊöÂ·¾¶Êä³ö¾Í¿ÉÒÔ
+2. ç¡®è®¤codeceptå˜é‡æ·»åŠ æˆåŠŸï¼Œé‡å¼€ä¸€ä¸ªcmdæ‰§è¡Œ`echo %codecept%`æœ‰ä¸Šè¿°è·¯å¾„è¾“å‡ºå°±å¯ä»¥
 
-3. ²âÊÔ³ÌÐòÄ¿Â¼¶¼ÔÚserver/testsÀï£¬ÔËÐÐÀïÃæµÄ**test-tools.bat**¿ÉÒÔ¿ìËÙÖ´ÐÐ²âÊÔ£¬»òÕß×Ô¼ºÊìÏ¤CodeceptionÃüÁîµÄ»°×Ô¼ºÔÚcmdÀïÇÃÃüÁîÖ´ÐÐ°É
+3. æµ‹è¯•ç¨‹åºç›®å½•éƒ½åœ¨server/testsé‡Œï¼Œè¿è¡Œé‡Œé¢çš„**test-tools.bat**å¯ä»¥å¿«é€Ÿæ‰§è¡Œæµ‹è¯•ï¼Œæˆ–è€…è‡ªå·±ç†Ÿæ‚‰Codeceptionå‘½ä»¤çš„è¯è‡ªå·±åœ¨cmdé‡Œæ•²å‘½ä»¤æ‰§è¡Œå§

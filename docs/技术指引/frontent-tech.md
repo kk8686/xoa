@@ -1,7 +1,7 @@
-���� - ǰ�˼���˵��
+基础 - 前端技术说明
 ===
 
-- �ĵ���д��KK
+- 文档编写：KK
 
 - 2016.11.09
 
@@ -9,54 +9,54 @@
 
 - jQuery
 
-	��Ȼ��ʱ��ǰ�˴�������ʱ�ģ����ǳ�Զ�ģ������Ժ��ѡ���Ҿ��û�����jQuery�ȽϺ���һЩ
+	虽然现时的前端代码是暂时的，不是长远的，但是以后的选型我觉得还是用jQuery比较合适一些
 
 	---
 	
-- ͳһ��ajax����
+- 统一的ajax方法
 
-	�����з�װapp.js���������ajax������ͳһ�õ�
-
-	---
-
-- ҳ����Ⱦ
-	
-	ҳ��ģ��һ�㶼�������ٵ�HTML����Ҫ����ͨ��JS����Ⱦҳ�棬�����ĺô���JS�ļ��ܱ���������棬ʵ��ҳ��Դ��������������
-	
-	�����ֳ�����Ʒ�ʽ��ά���ɱ����Ѷ���ʵ��û�������е���ô�ߣ�ֻҪJS�����߼������Ϳ��ԣ��ڹ�˾������е����Ӷ���hold��ס
-	
-	���������Ⱦҳ���JS�ļ�������ҳ����ͬ��Ŀ¼�£�������ҳ��ʹ����ͬ���ļ�ǰ׺��������ο�`home-src/project/dashboard.html`��`home-src/project/dashboard.js`�Ĺ�ϵ
+	其中有封装app.js，这里面的ajax方法是统一用的
 
 	---
-	
-- URL·��
 
-	���й���·�ɵĽ����߼�Ҳ��ӭ�Ϻ�˿����·�ɲ��������ģ���ϸ��·��˵���д������ĵ�
+- 页面渲染
 	
+	页面模板一般都尽量留少点HTML，主要都是通过JS来渲染页面，这样的好处是JS文件能被浏览器缓存，实现页面源代码请求量更少
+	
+	而这种程序设计方式的维护成本和难度其实并没有设想中的那么高，只要JS代码逻辑清晰就可以，在公司里，新入行的妹子都能hold得住
+	
+	其中这个渲染页面的JS文件放在与页面相同的目录下，并且与页面使用相同的文件前缀命名，请参考`home-src/project/dashboard.html`和`home-src/project/dashboard.js`的关系
+
 	---
 	
-- URL����ʶ��
+- URL路由
 
-	��Ҫ��ȡ1����Ŀ����Ϣʱ��ַ������`/project.json?id=1`������`/project/1.json`��Ȼ��ҳ����Ҫ��1���������ô����أ�
-	
-	�취������ִ��`App.loadParam('URL����ƥ�����ʽ')`
-	
-	ʾ����`App.loadParam('project/<id:\\d+>.json')`
-	
-	����`<`��`>`�м���Ǳ������֣�`:`�����˵�����������ƣ�������Լ������־Ϳ��ԣ�Ȼ���ұ����������ʽ�����ᱻ�ײ���ȥ`new RegExp(����ʽ)`��������`\\d+`������`\d+`������`\`����һ��`\`
-	
-	ִ��loadParam������ֱ���������ʾ��ܵõ������ˣ�`App.aParams.id`�����Ǵ�App.aParams��ȡֵ��ȡֵ�����Ƹ�loadParam��ָ���Ĳ�������ͬ���ɣ����Բ���`/project/dashboard.js`����ص��ã�
+	还有关于路由的解析逻辑也是迎合后端框架做路由参数解析的，详细的路由说明有待完善文档
 	
 	---
 	
-- ��½��֤
+- URL参数识别
+
+	当要获取1号项目的信息时地址并不是`/project.json?id=1`，而是`/project/1.json`，然后页面里要用1这个参数怎么获得呢？
 	
-	�κ�Ҫ��½���ܷ��ʵ�ҳ�棬URL���ӵ�ַ��׺��Ҫд`.htm`
+	办法就是先执行`App.loadParam('URL参数匹配表达式')`
 	
-	�����home.htm����1����Ŀ�Ĺ���̨����HTML����`<a href="/project/1.htm">������Ŀ1</a>`������˻����`.htm`��׺��������е�½��֤��һ��û�е�½���Զ�������½ҳ
+	示例：`App.loadParam('project/<id:\\d+>.json')`
 	
-	�����html�򲻻ᾭ����ˣ�����ֱ�Ӷ�ȡ�ļ�ϵͳ�ϵ�html�ļ�����������ĺ����������ajax���ܻ���Ϊδ��½���ò�������
+	其中`<`和`>`中间就是变量部分，`:`号左边说明变量的名称，这个你自己起名字就可以，然后右边是正则表达式，将会被底层拿去`new RegExp(表达式)`，所以是`\\d+`而不是`\d+`，两个`\`代表一个`\`
+	
+	执行loadParam方法后直接这样访问就能得到参数了：`App.aParams.id`，就是从App.aParams里取值，取值的名称跟loadParam里指定的参数名相同即可（可以参照`/project/dashboard.js`的相关调用）
+	
+	---
+	
+- 登陆验证
+	
+	任何要登陆才能访问的页面，URL链接地址后缀都要写`.htm`
+	
+	比如从home.htm跳到1号项目的工作台，那HTML就是`<a href="/project/1.htm">进入项目1</a>`，服务端会针对`.htm`后缀的请求进行登陆验证，一旦没有登陆会自动跳到登陆页
+	
+	如果用html则不会经过后端，而是直接读取文件系统上的html文件输出，这样的后果就是它的ajax可能会因为未登陆而得不到数据
 	
 ---
 
-����������պ󲹳䣬�����������Ŷ
+更多的内容日后补充，有需求请提出哦

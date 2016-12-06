@@ -1,13 +1,13 @@
-ÈÎÎñ - ÐÅÏ¢
+ä»»åŠ¡ - ä¿¡æ¯
 ===
 
-- µØÖ·: GET `/task/$ÈÎÎñID.json`
+- åœ°å€: GET `/task/$ä»»åŠ¡ID.json`
 
-- ²ÎÊý£º
+- å‚æ•°ï¼š
 
-	- `taskId`: ÈÎÎñID
+	- `taskId`: ä»»åŠ¡ID
 	
-- ·µ»Ø£º
+- è¿”å›žï¼š
 
 	```js
 	{
@@ -15,48 +15,48 @@
 		code : 0,
 		data : {
 			id : 11,
-			title : 'ÈÎÎñ±êÌâ',
+			title : 'ä»»åŠ¡æ ‡é¢˜',
 			limit_time : '2012-12-12 18:00',
-			level : 3,	//ÈÎÎñ¼¶±ð
-			repeat : 1,	//ÖØ¸´ÖÜÆÚ
+			level : 3,	//ä»»åŠ¡çº§åˆ«
+			repeat : 1,	//é‡å¤å‘¨æœŸ
 			
 			workers : [
-				//¸ºÔðÈË
+				//è´Ÿè´£äºº
 				{
 					id : 11,
-					name : '¸ºÔðÈË1³Æºô',
+					name : 'è´Ÿè´£äºº1ç§°å‘¼',
 					avatar : '/data/worker/avatar/1.jpg'
 				},
 				{
 					id : 22,
-					name : '¸ºÔðÈË2³Æºô',
+					name : 'è´Ÿè´£äºº2ç§°å‘¼',
 					avatar : '/data/worker/avatar/2.jpg'
 				},
-				//¸ü¶àÈËÔ±
+				//æ›´å¤šäººå‘˜
 			],
 			
 			related_members : [
-				//Ïà¹ØÈËÔ±
+				//ç›¸å…³äººå‘˜
 				{
 					id : 11,
-					name : 'Ïà¹ØÈËÔ±1³Æºô',
+					name : 'ç›¸å…³äººå‘˜1ç§°å‘¼',
 					avatar : '/data/worker/avatar/1.jpg'
 				},
 				{
 					id : 22,
-					name : 'Ïà¹ØÈËÔ±2³Æºô',
+					name : 'ç›¸å…³äººå‘˜2ç§°å‘¼',
 					avatar : '/data/worker/avatar/2.jpg'
 				},
-				//¸ü¶àÈËÔ±
+				//æ›´å¤šäººå‘˜
 			],
 			
 			'history' => [
-				//ÈÎÎñÀúÊ·ÊÂ¼þ£¬ÏêÏ¸ÄÚÈÝÎ´È·¶¨£¬¿ÉÒÔÏÈ²»ÏÔÊ¾ÀúÊ·
+				//ä»»åŠ¡åŽ†å²äº‹ä»¶ï¼Œè¯¦ç»†å†…å®¹æœªç¡®å®šï¼Œå¯ä»¥å…ˆä¸æ˜¾ç¤ºåŽ†å²
 				{
 					id : 1,
-					time : 1, //·¢ÉúÊ±¼ä
-					type : 1, //ÊÂ¼þÀàÐÍ
-					desc : 'KK ÐÞ¸ÄÁËÈÎÎñÄÚÈÝÎª $ÈÎÎñÄÚÈÝµÄÇ°200×Ö', //ÊÂ¼þÃèÊö
+					time : 1, //å‘ç”Ÿæ—¶é—´
+					type : 1, //äº‹ä»¶ç±»åž‹
+					desc : 'KK ä¿®æ”¹äº†ä»»åŠ¡å†…å®¹ä¸º $ä»»åŠ¡å†…å®¹çš„å‰200å­—', //äº‹ä»¶æè¿°
 				}
 			],
 		}

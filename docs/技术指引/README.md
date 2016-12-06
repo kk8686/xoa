@@ -1,24 +1,24 @@
-xoa¼¼ÊõÖ¸Òı
+xoaæŠ€æœ¯æŒ‡å¼•
 ===
 
 
-¹«¹²¼¼ÊõÎÄµµ
+å…¬å…±æŠ€æœ¯æ–‡æ¡£
 ---
-* [¼¼Êõ½éÉÜ](base-tech-desc.md)
-* [ÔËĞĞ²¿Êğ](base-deploy.md)
-* [ÏìÓ¦Êı¾İ](base-response.md)
-* [ÔÓÆßÔÓ°ËµÄ](base-common.md)
+* [æŠ€æœ¯ä»‹ç»](base-tech-desc.md)
+* [è¿è¡Œéƒ¨ç½²](base-deploy.md)
+* [å“åº”æ•°æ®](base-response.md)
+* [æ‚ä¸ƒæ‚å…«çš„](base-common.md)
 
 
-Ç°¶Ë¿ª·¢
+å‰ç«¯å¼€å‘
 ---
-* [Ç°¶Ë¿ª·¢»·¾³´î½¨](frontent-build-frontent-dev-env.md)
-* [Ç°¶Ë¼¼ÊõËµÃ÷](frontent-tech.md)
+* [å‰ç«¯å¼€å‘ç¯å¢ƒæ­å»º](frontent-build-frontent-dev-env.md)
+* [å‰ç«¯æŠ€æœ¯è¯´æ˜](frontent-tech.md)
 
 
-ºó¶Ë¿ª·¢
+åç«¯å¼€å‘
 ---
-* [µ÷ÊÔ](server-debug.md)
-* [Êı¾İ¿â](server-db.md)
-* [ÔËĞĞ²âÊÔÓÃÀı](server-performance-test.md)
-* [²âÊÔÊı¾İ](server-test-data.md)
+* [è°ƒè¯•](server-debug.md)
+* [æ•°æ®åº“](server-db.md)
+* [è¿è¡Œæµ‹è¯•ç”¨ä¾‹](server-performance-test.md)
+* [æµ‹è¯•æ•°æ®](server-test-data.md)

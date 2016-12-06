@@ -1,23 +1,22 @@
-Ç°Ì¨½Ó¿Ú
+å‰å°æ¥å£
 ===
 
 
-¹¤×÷Õß
+å·¥ä½œè€…
 ---
-* [×¢²á](worker-register.md)
-* [µÇÂ½](worker-login.md)
-* [¸ü¶à½Ó¿Ú¡­¡­](worker-xxx.md)
+* [æ³¨å†Œ](worker-register.md)
+* [ç™»é™†](worker-login.md)
 
 
-ÏîÄ¿
+é¡¹ç›®
 ---
-* [ÁĞ±í](project-list.md)
-* [¼òÒªĞÅÏ¢](project-desc.md)
+* [åˆ—è¡¨](project-list.md)
+* [ç®€è¦ä¿¡æ¯](project-desc.md)
 
 
-ÈÎÎñ
+ä»»åŠ¡
 ---
-* [Ìí¼Ó](task-add.md)
-* [ÈÎÎñÁĞ±í](task-list.md)
-* [ÈÎÎñĞÅÏ¢](task-info.md)
-* [ÒÆ¶¯ÈÎÎñ·ÖÀà](task-move.md)
+* [æ·»åŠ ](task-add.md)
+* [ä»»åŠ¡åˆ—è¡¨](task-list.md)
+* [ä»»åŠ¡ä¿¡æ¯](task-info.md)
+* [ç§»åŠ¨ä»»åŠ¡åˆ†ç±»](task-move.md)
