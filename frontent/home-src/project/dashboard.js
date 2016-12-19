@@ -216,17 +216,36 @@ function TaskCategory(options){
 			url : '/task/' + this.data('id') + '/tasks.json',
 			success : function(aResult){
 				for(var i in aResult.data){
-					var task = new Task(aResult.data[i]);
-					$itemContainer.append(task);
+					var $task = new Task(aResult.data[i]);
+					$task.css('opacity', 0);
+					$itemContainer.append($task);
+					$task.animate({opacity:1}, 1000);
 				}
 			}
 		});
 	};
 	
+	$category.__defineGetter__('id', function(){
+		return this.data('id');
+	});
+	
 	//添加新任务
 	$category.addTask = function($task){
 		this.find('.J-listItems').append($task);
 	};
+	
+	//监听拖动任务
+	$category.on('dragover', function(event){
+		event.preventDefault();
+		var dontAppend = $(event.target).hasClass('J-item');
+		$category.data('dont_append', dontAppend);
+	});
+	$category.on('drop', function(){
+		if(!$category.data('dont_append')){
+			moveTask(Page.$dragingTask, $(this).find('.J-listItems'), true);
+		}
+		$category.data('dont_append', false);
+	});
 	
 	return $.extend(self, $category);
 }
@@ -302,18 +321,59 @@ function Task(aTask){
 		avatarsHtml.push('<img class="pull-right" src="' + worker.avatar + '" title="' + worker.name + '"/>');
 	}
 	
-	var taskHtml = '<div class="item J-item">\
+	var taskHtml = '<div class="item J-item" draggable="true" data-id="' + aTask.id + '">\
 		<p><input type="checkbox" class="J-chkFinish" />' + aTask.title + '<p>\
 		<p>\
 			<span class="pull-left">' + fConvertTime(aTask.limit_time) + '</span>\
 			' + avatarsHtml.join('') + '\
 		</p>\
 	</div>';
-	return $.extend(this, $(taskHtml));
+	
+	var $task = $.extend(this, $(taskHtml));
+	
+	//拖动任务
+	$task.on('dragstart', function(event){
+		Page.$dragingTask = $(this);
+	});
+	$task.on('dragover', function(event){
+		event.preventDefault();
+	});
+	$task.on('drop', function(){
+		moveTask(Page.$dragingTask, $(this));
+	});
+	
+	return $task;
+}
+
+function moveTask($task, $context, isCategoryContext){
+	App.ajax({
+		url : '/task/move.do',
+		data : {
+			taskId : $task.data('id'),
+			taskCategoryId : $task.closest('.J-taskList').data('id'),
+			order : $task.index() + 1
+		},
+		error : function(){
+			alert('移动出错，请重新加载页面');
+		}
+	});
+	
+	if(isCategoryContext){
+		$context.append($task);
+	}else{
+		$context.before($task);
+	}
+	$task.addClass('dou');
+	setTimeout(function(){
+		$task.removeClass('dou');
+	}, 500);
+	
+	Page.$dragingTask = null;
 }
 
 var Page = {
 	taskCategorys : [],
+	$dragingTask : null,
 	getTaskCategory : function(id){
 		for(var i in this.taskCategorys){
 			if(this.taskCategorys[i].data('id') == id){

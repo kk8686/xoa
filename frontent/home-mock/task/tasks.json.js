@@ -2,7 +2,7 @@ module.exports = dataMocker.mock({
 	message : '',
 	code : 0,
 	'data|1-7' : [{
-		id : 11,
+		'id|11-999' : 11,
 		title : /(开发|修复)[\u4E00-\u9FA5]{4,20}功能/,
 		limit_time : '@DATETIME("2016-MM-dd HH:mm:ss")',
 		'workers|1-3' : [{

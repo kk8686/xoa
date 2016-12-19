@@ -2,6 +2,44 @@ $mainFontColor: #000;
 $mainBackgroundColor: #EEE;
 $unMainFontColor: #666;
 
+
+@keyframes taskDou{
+	0%, 100% {
+		-moz-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+
+	25% {
+		-moz-transform: rotate(15deg);
+		-ms-transform: rotate(15deg);
+		-webkit-transform: rotate(15deg);
+		transform: rotate(15deg);
+	}
+
+	50% {
+		-moz-transform: rotate(-15deg);
+		-ms-transform: rotate(-15deg);
+		-webkit-transform: rotate(-15deg);
+		transform: rotate(-15deg);
+	}
+
+	75% {
+		-moz-transform: rotate(5deg);
+		-ms-transform: rotate(5deg);
+		-webkit-transform: rotate(5deg);
+		transform: rotate(5deg);
+	}
+
+	85% {
+		-moz-transform: rotate(-5deg);
+		-ms-transform: rotate(-5deg);
+		-webkit-transform: rotate(-5deg);
+		transform: rotate(-5deg);
+	}
+}
+
 .taskCategorys {
 	display: -webkit-flex;
 	display: flex;
@@ -9,7 +47,7 @@ $unMainFontColor: #666;
 	width: 1280px;
 	height: 700px;
 	overflow-x: scroll;
-	
+
 	.taskList {
 		flex: none;
 		background: $mainBackgroundColor;
@@ -22,16 +60,16 @@ $unMainFontColor: #666;
 			height: 34px;
 			line-height: 34px;
 			color: $unMainFontColor;
-			
+
 			&:hover {
 				color: $mainFontColor;
 			}
-			
+
 			button {
 				display: none;
 			}
 		}
-	
+
 		.item {
 			clear: both;
 			background: #FFF;
@@ -41,19 +79,19 @@ $unMainFontColor: #666;
 			border: 3px solid #DDD;
 			border-radius: 4px;
 			cursor: pointer;
-			transition: 0.2s background;
+			transition: all 0.2s;
 			color: $unMainFontColor;
 			&:hover {
 				background: #00ccdd;
 				color: $mainFontColor;
 			}
-			
+
 			p {
 				clear: both;
 				&:last-child {
 					text-align: right;
 				}
-				
+
 				span {
 					background: #3DA8F5;
 					padding: 3px;
@@ -63,6 +101,10 @@ $unMainFontColor: #666;
 					top: 3px;
 				}
 			}
+		}
+		
+		.item.dou{
+			animation: taskDou 0.5s alternate;
 		}
 
 		img {
@@ -76,7 +118,7 @@ $unMainFontColor: #666;
 
 .wrapAddTaskWorker {
 	padding: 10px;
-	
+
 	.btn-success {
 		width: 88px;
 	}

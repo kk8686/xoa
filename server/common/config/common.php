@@ -14,7 +14,7 @@ return [
 			'class' => 'yii\web\User',
             'identityClass' => 'xoa\common\models\Worker',
             'enableAutoLogin' => true,
-			'loginUrl' => '/login.html',
+			'loginUrl' => '/worker/login.html',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

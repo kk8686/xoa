@@ -78,11 +78,13 @@ class TaskController extends \yii\web\Controller{
 		if(!$form->load(Yii::$app->request->post(), '')){
 			return new Response('缺少请求参数');
 		}
+		
+		$form->worker = Yii::$app->worker;
 		if($task = $form->moveTask()){
-			//Yii::$app->notice->send(Notice::TYPE_MOVE_TASK, $task); //通知的设计
+			//Yii::$app->notice->send(Notice::TYPE_MOVE_TASK, $task); //通知的设计，未实现
 			return new Response('', 0);
 		}else{
-			return new Response($form->firstError[0]);
+			return new Response('',1,$form->firstErrors);
 		}
 	}
 	
