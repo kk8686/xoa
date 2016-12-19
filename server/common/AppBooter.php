@@ -76,8 +76,8 @@ class AppBooter{
 		}
 		
 		if(!static::$vendorPath){
-			if(!static::$vendorPath = realpath(__DIR__ . '/../../framework')){
-				throw new \ErrorException('无效的框架目录: ' . __DIR__ . '/../../framework');
+			if(!static::$vendorPath = realpath(__DIR__ . '/../framework')){
+				throw new \ErrorException('无效的框架目录: ' . __DIR__ . '/../framework');
 			}
 		}
 		

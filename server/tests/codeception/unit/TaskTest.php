@@ -25,7 +25,7 @@ class TaskTest extends \Codeception\TestCase\Test
 	 * 测试添加任务
 	 * @author KK
 	 */
-    public function testAdd(){
+	public function testAdd(){
 		$form = new TaskForm(['scenario' => TaskForm::SCENE_ADD]);
 		$this->assertFalse($form->validate(), '什么都不填，肯定验证不过');
 		$this->tester->assertHasKeys(['title', 'workerIds'], $form->errors);

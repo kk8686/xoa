@@ -14,7 +14,7 @@
 			var aUsingOption = $.extend({
 				type : 'post',
 				complete : function(oXhr){
-					if(oXhr.status >= 300 && oXhr.status < 400 && oXhr.status != 304){
+					if((oXhr.status >= 300 && oXhr.status < 400) && oXhr.status != 304){
 						var redirectUrl = oXhr.getResponseHeader('X-Redirect');
 						if(oXhr.responseText.length){
 							alert(oXhr.responseText);
@@ -26,7 +26,9 @@
 					aOption.complete && aOption.complete(oXhr);
 				},
 				error : function(oXhr){
-					alert(oXhr.responseText);
+					if((oXhr.status >= 300 && oXhr.status < 400) && oXhr.status != 304){
+						alert(oXhr.responseText);
+					}
 				}
 			}, aOption);
 			
@@ -137,7 +139,9 @@
 		
 		showHeadBar : function(){
 			var aUserInfo = sessionStorage.getItem('userInfo');
-			if(!aUserInfo){
+			if(aUserInfo){
+				aUserInfo = JSON.parse(aUserInfo);
+			}else{
 				self.ajax({
 					url : '/worker/headbar.json',
 					async : false,
@@ -150,8 +154,6 @@
 						sessionStorage.setItem('userInfo', JSON.stringify(aResult.data));
 					}
 				});
-			}else{
-				aUserInfo = JSON.parse(aUserInfo);
 			}
 			
 			$('#mainOut').before('<header class="container-full">\
