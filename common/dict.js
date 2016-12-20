@@ -3,7 +3,11 @@
  */
 module.exports = {
 	commonModelsTask : {
+		LEVEL_WAIT : 1,
+		LEVEL_NOT_URGENT : 2,
 		LEVEL_NORMAL : 3,
+		LEVEL_URGENT : 4,
+		LEVEL_SO_URGENT : 5,
 		REPEAT_NO : 1,
 		REPEAT_WORK_DAY : 2,
 		REPEAT_EVERY_DAY : 3,
@@ -18,7 +22,11 @@ module.exports = {
 				5 : "每月"
 			},
 			levels : {
-				3 : "普通"
+				1 : "有空处理",
+				2 : "不急",
+				3 : "普通",
+				4 : "紧急",
+				5 : "非常紧急"
 			}
 		}
 	},
