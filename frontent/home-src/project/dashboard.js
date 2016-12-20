@@ -384,7 +384,7 @@ function Task(aTask){
  */
 function buildChildTaskForm(defaultWorker, $wrapAddChildTask){
 	var $wrapForm = $('<div class="row wrapAddChildTaskForm">\n\
-		<textarea class="form-control" rows="2"></textarea>\n\
+		<textarea class="form-control J-content" rows="2"></textarea>\n\
 		<p>\n\
 			<span class="limitTime J-childTaskLimitTime">期限</span>\n\
 			<img class="avatar J-childTaskWorker" src="' + defaultWorker.avatar + '" title="' + defaultWorker.name + '"/>\n\
@@ -394,7 +394,7 @@ function buildChildTaskForm(defaultWorker, $wrapAddChildTask){
 	</div>');
 
 	$wrapForm.find('.J-saveChildTask').click(function(){
-		var content = '要用XXXXX';
+		var content = $wrapForm.find('.J-content').val();
 		var worker = defaultWorker;
 		App.ajax({
 			url : '/task/add-child-task.do',
@@ -409,7 +409,7 @@ function buildChildTaskForm(defaultWorker, $wrapAddChildTask){
 				$wrapAddChildTask.before('<div class="row childTask">\n\
 					<div class="pull-left childContent">' + content + '</div>\n\
 					<div class="pull-right childInfo">\n\
-						明天 <img class="avatar" src="' + worker.avatar + '"/>\n\
+						明天 <img class="avatar avatarSmall" src="' + worker.avatar + '"/>\n\
 					</div>\n\
 				</div>');
 			}
@@ -448,7 +448,7 @@ function buildTaskDetailDialog(aTaskDetail){
 		title : '任务详情',
 		dialogClass : 'wrapTaskDetail',
 		content : '<form role="form">\
-			<div class="form-group J-title" contenteditable="true">' + aTaskDetail.title + '</div>\
+			<div class="form-group taskTitle J-title" contenteditable="true">' + aTaskDetail.title + '</div>\
 			<div class="form-group">\n\
 				<div class="row topInfo">\n\
 					<div class="col-md-3">\n\
