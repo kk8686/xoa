@@ -1,4 +1,4 @@
-(function(){
+(function(container, $){
 function _fShowTaskForm(event){
 	var categoryId = $(event.delegateTarget).data('id');
 	
@@ -323,7 +323,7 @@ function Task(aTask){
 	var avatarsHtml = [];
 	for(var i in aTask.workers){
 		var worker = aTask.workers[i];
-		avatarsHtml.push('<img class="pull-right" src="' + worker.avatar + '" title="' + worker.name + '"/>');
+		avatarsHtml.push('<img class="pull-right avatar" src="' + worker.avatar + '" title="' + worker.name + '"/>');
 	}
 	
 	var taskHtml = '<div class="item J-item" draggable="true" data-id="' + aTask.id + '">\
@@ -349,42 +349,165 @@ function Task(aTask){
 	
 	//显示详情
 	$task.showDetail = function(){
+		var aTaskDetail = this.data('detail');
+		if(aTaskDetail){
+			var $dialog = buildTaskDetailDialog(aTaskDetail);
+			$dialog.show();
+			return;
+		}
 		
-		
-		var $dialog = new ModalDialog({
-			width : 500,
-			height : 520,
-			title : '任务详情',
-			content : '<form action="" role="form">\
-				<div class="form-group J-title" contenteditable="true">' + aTask.title + '</div>\
-				<div class="form-group">\n\
-				<textarea class="form-control">' + aTask.detail + '</textarea>\
-				</div>\
-				<div class="form-group"></div>\
-				<div class="form-group"></div>\
-			</form>',
-			footer : '<button class="btn btn-default">关闭</button>'
-		});
-		
-		$dialog.find('.J-title').blur(function(){
-			App.ajax({
-				url : '/task/update.do',
-				data : {
-					taskId : $task.data('id'),
-					title : $(this).text()
-				},
-				success : function(aResult){
-					if(aResult.code){
-						alert(aResult.message);
-					}
+		var self = this;
+		App.ajax({
+			url : '/task/detail/' + this.data('id') + '.json',
+			success : function(aResult){
+				if(aResult.code){
+					App.alert(aResult.message);
+					return;
 				}
-			});
+				
+				self.data('detail', aResult.data);
+				
+				var $dialog = buildTaskDetailDialog(aResult.data);
+				$dialog.show();
+			}
 		});
-		
-		$dialog.show();
 	};
 	
 	return $task;
+}
+
+/**
+ * 构建添加子任务的表单
+ * @param {type} defaultWorker
+ * @param {type} $wrapAddChildTask
+ * @returns {jQuery|$|@pro;window@pro;$|Window.$}
+ */
+function buildChildTaskForm(defaultWorker, $wrapAddChildTask){
+	var $wrapForm = $('<div class="row wrapAddChildTaskForm">\n\
+		<textarea class="form-control" rows="2"></textarea>\n\
+		<p>\n\
+			<span class="limitTime J-childTaskLimitTime">期限</span>\n\
+			<img class="avatar J-childTaskWorker" src="' + defaultWorker.avatar + '" title="' + defaultWorker.name + '"/>\n\
+			<span class="close J-close"></span>\n\
+			<button type="button" class="btn btn-success J-saveChildTask">保存</button>\n\
+		</p>\n\
+	</div>');
+
+	$wrapForm.find('.J-saveChildTask').click(function(){
+		var content = '要用XXXXX';
+		var worker = defaultWorker;
+		App.ajax({
+			url : '/task/add-child-task.do',
+			data : {},
+			success : function(aResult){
+				if(aResult.code){
+					alert(aResult.message);
+					return;
+				}
+				$wrapForm.remove();
+				$wrapAddChildTask.show();
+				$wrapAddChildTask.before('<div class="row childTask">\n\
+					<div class="pull-left childContent">' + content + '</div>\n\
+					<div class="pull-right childInfo">\n\
+						明天 <img class="avatar" src="' + worker.avatar + '"/>\n\
+					</div>\n\
+				</div>');
+			}
+		});
+	});
+	return $wrapForm;
+}
+
+/**
+ * 构建任务详情弹窗
+ * @param {type} aTaskDetail
+ * @returns {ModalDialog}
+ */
+function buildTaskDetailDialog(aTaskDetail){
+	var workersHtml = (function(){
+		var workersHtml = [];
+		for(var i in aTaskDetail.workers){
+			var worker = aTaskDetail.workers[i];
+			workersHtml.push('<img class="avatar avatarSmall" src="' + worker.avatar + '" title="' + worker.name + '"/>');
+		}
+		return workersHtml.join('');
+	})();
+	
+	var relatedMembersHtml = (function(){
+		var relatedMembersHtml = [];
+		for(var i in aTaskDetail.related_members){
+			var member = aTaskDetail.related_members[i];
+			relatedMembersHtml.push('<img class="avatar avatarSmall" src="' + member.avatar + '" title="' + member.name + '"/>');
+		}
+		return relatedMembersHtml.join('');
+	})();
+
+	var $dialog = new ModalDialog({
+		width : 500,
+		height : 520,
+		title : '任务详情',
+		dialogClass : 'wrapTaskDetail',
+		content : '<form role="form">\
+			<div class="form-group J-title" contenteditable="true">' + aTaskDetail.title + '</div>\
+			<div class="form-group">\n\
+				<div class="row topInfo">\n\
+					<div class="col-md-3">\n\
+						<p>负责人</p>\n\
+						<p>' + workersHtml + '</p>\n\
+					</div>\n\
+					<div class="col-md-3">\n\
+						<p>截止时间</p>\n\
+						<p>' + aTaskDetail.limit_time + '</p>\n\
+					</div>\n\
+					<div class="col-md-3">\n\
+						<p>优先级</p>\n\
+						<p>' + Page.aVars.levels[aTaskDetail.level] + '</p>\n\
+					</div>\n\
+					<div class="col-md-3">\n\
+						<p>重复</p>\n\
+						<p>' + Page.aVars.repeats[aTaskDetail.repeat] + '</p>\n\
+					</div>\n\
+				</div>\n\
+			</div>\
+			<div class="form-group">\n\
+				<textarea class="form-control" rows="4" placeholder="任务详情，支持用Markdown书写">' + aTaskDetail.detail + '</textarea>\
+			</div>\
+			<div class="form-group">\n\
+				<div class="row J-wrapAddChildTask">\n\
+					<button type="button" class="btn btn-warning btnAddChildTask">+子任务</button>\
+				</div>\
+			</div>\
+			<div class="form-group">\n\
+				<div class="row">相关人员：' + relatedMembersHtml + '</div>\
+			</div>\
+		</form>',
+		footer : '<button data-dismiss="modal" class="btn btn-default">关闭</button>'
+	});
+
+	$dialog.find('.J-title').blur(function(){
+		App.ajax({
+			url : '/task/update.do',
+			data : {
+				taskId : aTaskDetail.id,
+				title : aTaskDetail.title
+			},
+			success : function(aResult){
+				if(aResult.code){
+					alert(aResult.message);
+				}
+			}
+		});
+	});
+	
+	$dialog.find('.btnAddChildTask').click(function(){
+		var $wrapAddChildTask = $(this).closest('.J-wrapAddChildTask');
+		$wrapAddChildTask.hide();
+		
+		var $wrapForm = buildChildTaskForm(aTaskDetail.workers[0], $wrapAddChildTask);
+		$wrapAddChildTask.after($wrapForm);
+	});
+	
+	return $dialog;
 }
 
 function moveTask($task, $context, isCategoryContext){
@@ -420,7 +543,7 @@ function moveTask($task, $context, isCategoryContext){
 	Page.$dragingTask = null;
 }
 
-var Page = {
+container.Page = {
 	aTaskCategorys : [],
 	aTasks : [],
 	$dragingTask : null,
@@ -430,14 +553,14 @@ var Page = {
 				return this.aTaskCategorys[i];
 			}
 		}
+	},
+	aVars : {},
+	render : function(){
+		App.loadParam('project/<projectId:\\d+>.htm');
+		listenPage();
+		showProjectInfo();
+		showTasks();
 	}
 };
 
-$(function(){
-	App.loadParam('project/<projectId:\\d+>.htm');
-	listenPage();
-	showProjectInfo();
-	showTasks();
-});
-
-})();
+})(window, jQuery);

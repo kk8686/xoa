@@ -1,7 +1,8 @@
 $mainFontColor: #000;
 $mainBackgroundColor: #EEE;
 $unMainFontColor: #666;
-
+$borderColor: #E6E6E6;
+$border:1px solid #E6E6E6;
 
 @keyframes taskDou{
 	0%, 100% {
@@ -111,13 +112,6 @@ $unMainFontColor: #666;
 		.item.dou{
 			animation: taskDou 0.5s alternate;
 		}
-
-		img {
-			width: 35px;
-			height: 35px; 
-			margin-right: 3px;
-			border-radius: 17px;
-		}
 	}
 }
 
@@ -132,4 +126,98 @@ $unMainFontColor: #666;
 			margin-right: 12px;
 		}
 	}
+}
+
+.wrapTaskDetail{
+	.modal-content{
+		background:#F7F7F7;
+		padding:13px;
+	}
+	
+	.modal-body{
+		padding:0;
+	}
+	
+	.row{
+		margin:0;
+	}
+	
+	.topInfo{
+		background:#FFF;
+		height:80px;
+		border:1px solid $borderColor;
+		border-radius: 4px;
+		div{
+			border-right:1px solid $borderColor;
+			height:100%;
+		}
+		div:last-child{
+			border-right:none;
+		}
+		
+		p:first-child{
+			font-size:12px;
+			color:$unMainFontColor;
+			margin:3px 0;
+		}
+		.avatar{
+			margin-bottom:5px;
+		}
+	}
+
+	.wrapAddChildTaskForm{
+		margin-top:7px;
+		p{
+			text-align:right;
+			margin-top:5px;
+			img,span,button{
+				margin-right:5px;
+			}
+			.limitTime{
+				cursor:pointer;
+			}
+		}
+	}
+	
+	.btnAddChildTask{
+		margin-top:7px;
+	}
+	
+	.childTask{
+		background:#FFF;
+		border-left:$border;
+		border-right:$border;
+		border-bottom:$border;
+		padding: 2px 4px;
+		
+		.childContent{
+			width:80%;
+		}
+
+		.childInfo{
+			width:20%;
+		}
+	}
+	
+	.childTask:first-child{
+		border-radius:4px 4px 0 0;
+		border-top:$border;
+	}
+	
+	.childTask:last-child{
+		border-radius:0 0 4px 4px;
+	}
+}
+
+.avatar{
+	width: 35px;
+	height: 35px; 
+	margin-right: 3px;
+	border-radius: 17px;
+	cursor:pointer;
+}
+
+.avatar.avatarSmall{
+	width: 25px;
+	height: 25px;
 }
