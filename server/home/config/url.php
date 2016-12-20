@@ -18,10 +18,11 @@ return [
 		'project/invite-member.do' => 'project/invite-member',
 
 		//任务
-		'task/add.do' => 'task/add',
+		'task/add.do' => 'task/add-task',
 		'task/<categoryId>/tasks.json' => 'task/list',
 		'project/<projectId:\d+>/task-categorys.json' => 'task/task-categories',
-		'task/move.do' => 'task/move',
+		'task/move.do' => 'task/move-task',
+		'task/update.do' => 'task/update-task',
 
 		'<page:.+>.htm<xx:l{0,1}>' => 'site/r',
 	],
