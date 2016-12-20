@@ -122,7 +122,7 @@ class TaskTest extends \Codeception\TestCase\Test
 		
 		$form->load([
 			'taskId' => 1,
-			'taskCategoryId' => 2,
+			'taskCategoryId' => 3,
 			'order' => 5,
 		], '');
 		$form->worker = Worker::findOne(1);
