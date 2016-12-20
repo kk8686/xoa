@@ -81,11 +81,16 @@ $unMainFontColor: #666;
 			cursor: pointer;
 			transition: all 0.2s;
 			color: $unMainFontColor;
+			
 			&:hover {
 				background: #00ccdd;
 				color: $mainFontColor;
 			}
-
+			
+			.taskTitle{
+				height: 42px;
+			}
+			
 			p {
 				clear: both;
 				&:last-child {

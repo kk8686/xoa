@@ -327,7 +327,7 @@ function Task(aTask){
 	}
 	
 	var taskHtml = '<div class="item J-item" draggable="true" data-id="' + aTask.id + '">\
-		<p><input type="checkbox" class="J-chkFinish" />' + aTask.title + '<p>\
+		<p class="taskTitle"><input type="checkbox" class="J-chkFinish" />' + aTask.title + '</p>\
 		<p>\
 			<span class="pull-left">' + fConvertTime(aTask.limit_time) + '</span>\
 			' + avatarsHtml.join('') + '\
@@ -349,13 +349,17 @@ function Task(aTask){
 	
 	//显示详情
 	$task.showDetail = function(){
+		
+		
 		var $dialog = new ModalDialog({
 			width : 500,
 			height : 520,
 			title : '任务详情',
 			content : '<form action="" role="form">\
 				<div class="form-group J-title" contenteditable="true">' + aTask.title + '</div>\
-				<div class="form-group"></div>\
+				<div class="form-group">\n\
+				<textarea class="form-control">' + aTask.detail + '</textarea>\
+				</div>\
 				<div class="form-group"></div>\
 				<div class="form-group"></div>\
 			</form>',
@@ -363,7 +367,18 @@ function Task(aTask){
 		});
 		
 		$dialog.find('.J-title').blur(function(){
-			
+			App.ajax({
+				url : '/task/update.do',
+				data : {
+					taskId : $task.data('id'),
+					title : $(this).text()
+				},
+				success : function(aResult){
+					if(aResult.code){
+						alert(aResult.message);
+					}
+				}
+			});
 		});
 		
 		$dialog.show();
@@ -373,23 +388,30 @@ function Task(aTask){
 }
 
 function moveTask($task, $context, isCategoryContext){
-	App.ajax({
-		url : '/task/move.do',
-		data : {
-			taskId : $task.data('id'),
-			taskCategoryId : $task.closest('.J-taskList').data('id'),
-			order : $task.index() + 1
-		},
-		error : function(){
-			alert('移动出错，请重新加载页面');
-		}
-	});
-	
 	if(isCategoryContext){
 		$context.append($task);
 	}else{
 		$context.before($task);
 	}
+	
+	var taskId = $task.data('id');
+	App.ajax({
+		url : '/task/move.do',
+		data : {
+			taskId : taskId,
+			taskCategoryId : $task.closest('.J-taskList').data('id'),
+			order : $task.index() + 1
+		},
+		success : function(aResult){
+			if(aResult.code){
+				App.alert(aResult.message);
+			}
+		},
+		error : function(){
+			App.alert('移动出错，请重新加载页面');
+		}
+	});
+	
 	$task.addClass('dou');
 	setTimeout(function(){
 		$task.removeClass('dou');
