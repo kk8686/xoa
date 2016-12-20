@@ -177,7 +177,7 @@ class TaskTest extends \Codeception\TestCase\Test
 		$this->assertArrayHasKey('taskId', $form->errors);
 		
 		$form->taskId = 1;
-		$form->title = 'bbb';
+		$form->title = '改成别的任务标题';
 		$this->assertTrue($form->update());
 	}
 }
