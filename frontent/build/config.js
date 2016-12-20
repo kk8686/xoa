@@ -17,6 +17,7 @@ module.exports = {
 					]
 				}
 			],
+			minjs : false,
 			dict : dict,
 			urlRulesFile : PROJECT_PATH + '/frontent/home-url-rules.js',
 			buildUrlRulesFileName : PROJECT_PATH+ '/web/home-url-rules.json'

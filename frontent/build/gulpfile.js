@@ -11,7 +11,9 @@ var gulp = require('gulp'),
 global.dataMocker = require('mockjs');
 template.config('cache', false);
 template.config('extname', '');
+template.config('escape', false);
 template.config('compress', true);
+template.helper('json', JSON.stringify);
 
 var projectId = getBuildProjectId();
 var configs = require('./config');
@@ -23,6 +25,11 @@ setupTasks(configs.projects[projectId]);
 
 function setupTasks(config){
 	var srcOptions = {base : config.src};
+
+	if(config.minjs === undefined){
+		//默认压缩JS
+		config.minjs = true;
+	}
 
 	//默认任务	
 	gulp.task('default', ['minjs', 'mincss', 'layout', 'assets', 'url-rules', 'mock']);
@@ -50,11 +57,13 @@ function setupTasks(config){
 	gulp.task('minjs', function(){
 		var buildJs = function(file){
 			console.log(file + ' 发生变动');
-			gulp.src(file, srcOptions)
-				.pipe(minjs().on('error', function(error){
+			var stream = gulp.src(file, srcOptions);
+			if(config.minjs){
+				stream = stream.pipe(minjs().on('error', function(error){
 					console.error(error.message + '\n出错行号:' + error.lineNumber);
-				}))
-				.pipe(gulp.dest(config.dist));
+				}));
+			}
+			stream.pipe(gulp.dest(config.dist));
 		};
 
 		watch(config.src + '/**/**.js')
@@ -113,6 +122,7 @@ function setupTasks(config){
 	});
 
 	gulp.task('mock', function(){
+		module.runningMockServer = true;
 		mockServer({
 			webPath : config.dist,
 			dataPath : config.mockData,
