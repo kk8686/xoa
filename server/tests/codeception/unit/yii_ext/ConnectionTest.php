@@ -47,8 +47,8 @@ class ConnectionTest extends \Codeception\TestCase\Test
 		$this->assertEquals(1, count($lastSqls), '获取上一条失败');
 		$this->assertEquals($command1->rawSql, $lastSqls[0], '上一条SQL语句不相同');
 
-		//Yii::$app->db->createCommand('SELECT * FROM `worker` limit 1')->execute();
-				//从表里查询
+		
+		//从表里查询
 		$command2 =	(new Query())
 						->select(['id'])
 						->from(Worker::tableName())
