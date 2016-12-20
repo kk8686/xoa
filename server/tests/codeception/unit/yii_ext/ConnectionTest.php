@@ -24,13 +24,10 @@ class ConnectionTest extends \Codeception\TestCase\Test
      */
     protected $tester;
 
-    protected function _before()
-    {
+    protected function _before(){
+		Yii::$app->set('db', Yii::createObject(Yii::$app->components['db'])); //不知为什么运行过ArrayFieldTest就会导致下面无法执行SQL，重新初始化db组件就行了，是不是ArrayFieldTest哪里影响了db组件呢？暂时查不出，把这里的SQL放在ArrayFieldTest的底部执行是没问题的，可是放在这个测试用例里就有问题了
+		
 		$this->assertInstanceOf(Connection::className(), Yii::$app->db);
-    }
-
-    protected function _after()
-    {
     }
 
 	/**
@@ -50,7 +47,8 @@ class ConnectionTest extends \Codeception\TestCase\Test
 		$this->assertEquals(1, count($lastSqls), '获取上一条失败');
 		$this->assertEquals($command1->rawSql, $lastSqls[0], '上一条SQL语句不相同');
 
-		//从表里查询
+		//Yii::$app->db->createCommand('SELECT * FROM `worker` limit 1')->execute();
+				//从表里查询
 		$command2 =	(new Query())
 						->select(['id'])
 						->from(Worker::tableName())
