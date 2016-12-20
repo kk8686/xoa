@@ -2,7 +2,6 @@
 namespace xoa\common\models;
 
 use yii\db\Expression;
-use yii\web\User;
 use xoa\common\ext\behaviors\ArrayField;
 use xoa\common\models\{
 	TaskCategory,
@@ -180,10 +179,10 @@ class Task extends \yii\db\ActiveRecord{
 	/**
 	 * 判断一个工作者是否允许修改任务
 	 * @author KK
-	 * @param User 要被判断的工作者
+	 * @param Worker 要被判断的工作者
 	 * @test \xoa_test\home\unit\TaskTest::testIsAllowModify
 	 */
-	public function isAllowModify(User $worker){
+	public function isAllowModify(Worker $worker){
 		$isCreater = $worker->id == $this->creater_id;
 		$isWorker = in_array($worker->id, $this->worker_ids);
 		return $isCreater || $isWorker;

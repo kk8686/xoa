@@ -167,4 +167,17 @@ class TaskTest extends \Codeception\TestCase\Test
 			'order' => 2,
 		]);
 	}
+	
+	/**
+	 * 测试更新
+	 */
+	public function testUpdate() {
+		$form = new TaskForm(['scenario' => TaskForm::SCENE_UPDATE]);
+		$this->assertFalse($form->update());
+		$this->assertArrayHasKey('taskId', $form->errors);
+		
+		$form->taskId = 1;
+		$form->title = 'bbb';
+		$this->assertTrue($form->update());
+	}
 }

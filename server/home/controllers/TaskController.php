@@ -79,12 +79,12 @@ class TaskController extends \yii\web\Controller{
 			return new Response('缺少请求参数');
 		}
 		
-		$form->worker = Yii::$app->worker;
+		$form->worker = Yii::$app->worker->identity;
 		if($task = $form->moveTask()){
 			//Yii::$app->notice->send(Notice::TYPE_MOVE_TASK, $task); //通知的设计，未实现
 			return new Response('', 0);
 		}else{
-			return new Response('',1,$form->firstErrors);
+			return new Response('',1, $form->firstErrors);
 		}
 	}
 	
@@ -100,5 +100,24 @@ class TaskController extends \yii\web\Controller{
 		}
 		
 		return new Response('', 0, $project->taskCategories);
+	}
+	
+	/**
+	 * 获取任务分类
+	 * @author KK
+	 * @return Response
+	 */
+	public function actionUpdateTask() : Response{
+		$form = new TaskForm(['scenario' => TaskForm::SCENE_UPDATE]);
+		if(!$form->load(Yii::$app->request->post(), '')){
+			return new Response('缺少请求参数');
+		}
+		
+		if($task = $form->update()){
+			//Yii::$app->notice->send(Notice::TYPE_UPDATE_TASK, $task); //通知的设计，未实现
+			return new Response('', 0);
+		}else{
+			return new Response('',1, $form->firstErrors);
+		}
 	}
 }

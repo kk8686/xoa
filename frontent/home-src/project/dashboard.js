@@ -5,6 +5,8 @@ function _fShowTaskForm(event){
 	var today = new Date(),
 		todayStr = today.getFullYear() + '/' + today.getMonth() + '/' + today.getDate() + ' 18:00';
 	var $dialog = new ModalDialog({
+		width : 500,
+		height : 520,
 		title : '新任务',
 		content: '<form role="form" class="wrapAddTaskWorker">\
 			<div class="form-group">\
@@ -28,8 +30,6 @@ function _fShowTaskForm(event){
 				<input class="form-control J-limitTime" type="dateTime-local" value="' + todayStr + '">\
 			</div>\
 		</form>',
-		width : 500,
-		height : 520,
 		footer : '<button type="button" class="btn btn-primary J-submit">确定</button>'
 	});
 	
@@ -217,6 +217,7 @@ function TaskCategory(options){
 			success : function(aResult){
 				for(var i in aResult.data){
 					var $task = new Task(aResult.data[i]);
+					Page.aTasks[aResult.data[i].id] = $task;
 					$task.css('opacity', 0);
 					$itemContainer.append($task);
 					$task.animate({opacity:1}, 1000);
@@ -224,10 +225,6 @@ function TaskCategory(options){
 			}
 		});
 	};
-	
-	$category.__defineGetter__('id', function(){
-		return this.data('id');
-	});
 	
 	//添加新任务
 	$category.addTask = function($task){
@@ -245,6 +242,12 @@ function TaskCategory(options){
 			moveTask(Page.$dragingTask, $(this).find('.J-listItems'), true);
 		}
 		$category.data('dont_append', false);
+	});
+	
+	//任务详情
+	$category.on('click', '.J-item', function(){
+		var $task = Page.aTasks[$(this).data('id')];
+		$task.showDetail();
 	});
 	
 	return $.extend(self, $category);
@@ -291,12 +294,14 @@ function showTasks(){
 		url : '/project/' + App.aParams.projectId + '/task-categorys.json',
 		success : function(aResult){
 			var $taskCategorys = $('#taskCategorys');
+			var aCategories = [];
 			for(var i in aResult.data){
 				var category = new TaskCategory(aResult.data[i]);
-				$taskCategorys.append(category);
+				aCategories.push(category);
 				category.refreshTasks();
-				Page.taskCategorys.push(category);
 			}
+			$taskCategorys.append(aCategories);
+			Page.aTaskCategorys = aCategories;
 		}
 	});
 }
@@ -342,6 +347,28 @@ function Task(aTask){
 		moveTask(Page.$dragingTask, $(this));
 	});
 	
+	//显示详情
+	$task.showDetail = function(){
+		var $dialog = new ModalDialog({
+			width : 500,
+			height : 520,
+			title : '任务详情',
+			content : '<form action="" role="form">\
+				<div class="form-group J-title" contenteditable="true">' + aTask.title + '</div>\
+				<div class="form-group"></div>\
+				<div class="form-group"></div>\
+				<div class="form-group"></div>\
+			</form>',
+			footer : '<button class="btn btn-default">关闭</button>'
+		});
+		
+		$dialog.find('.J-title').blur(function(){
+			
+		});
+		
+		$dialog.show();
+	};
+	
 	return $task;
 }
 
@@ -372,12 +399,13 @@ function moveTask($task, $context, isCategoryContext){
 }
 
 var Page = {
-	taskCategorys : [],
+	aTaskCategorys : [],
+	aTasks : [],
 	$dragingTask : null,
 	getTaskCategory : function(id){
-		for(var i in this.taskCategorys){
-			if(this.taskCategorys[i].data('id') == id){
-				return this.taskCategorys[i];
+		for(var i in this.aTaskCategorys){
+			if(this.aTaskCategorys[i].data('id') == id){
+				return this.aTaskCategorys[i];
 			}
 		}
 	}

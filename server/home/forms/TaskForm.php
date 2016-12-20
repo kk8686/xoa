@@ -33,6 +33,11 @@ class TaskForm extends \yii\base\Model{
 	const SCENE_MOVE = 'move';
 	
 	/**
+	 * 场景：更新任务
+	 */
+	const SCENE_UPDATE = 'update';
+	
+	/**
 	 * @var int 任务ID
 	 */
 	public $taskId = 0;
@@ -113,8 +118,8 @@ class TaskForm extends \yii\base\Model{
 	 * @author KK
 	 */
 	public function rules(){
-		return [
-			[['title', 'workerIds', 'taskId'], 'required'],
+		$rules = [
+			['taskId', 'required'],
 			['title', 'string', 'length' => [4, 30], 'message' => '任务标题在4到30个字之间'],
 			['detail', 'string', 'length' => [4, 65535], 'message' => '任务详情在4到65535个字之间'],
 			[['level', 'repeat', 'order'], 'integer'],
@@ -127,6 +132,11 @@ class TaskForm extends \yii\base\Model{
 			['limitTime', 'validateLimitTime'],
 			['taskId', 'validateTaskId'],
 		];
+		
+		if($this->scenario != static::SCENE_UPDATE){
+			$rules[] = [['title', 'workerIds'], 'required'];
+		}
+		return $rules;
 	}
 	
 	/**
@@ -139,6 +149,7 @@ class TaskForm extends \yii\base\Model{
 			static::SCENE_LIST => ['taskCategoryId'],
 			static::SCENE_INFO => ['taskId'],
 			static::SCENE_MOVE => ['taskId', 'taskCategoryId', 'order'],
+			static::SCENE_UPDATE => ['taskId', 'title', 'detail', 'limit_time'],
 		];
 	}
 	
@@ -300,5 +311,31 @@ class TaskForm extends \yii\base\Model{
 			$taskInfo['workers'][] = $worker->toArray(['name', 'avatar']);
 		}
 		return $taskInfo;
+	}
+	
+	public function update(){
+		if(!$this->validate()){
+			return false;
+		}
+		
+		$task = $this->_task;
+		if($this->title){
+			$task->title = $this->title;
+		}
+		
+		if($this->detail){
+			$task->detail = $this->detail;
+		}
+		
+		if($this->limitTime){
+			$task->limit_time = $this->limitTime;
+		}
+		
+		if(!$task->dirtyAttributes){
+			$this->addError('update', '无任何修改的数据');
+			return false;
+		}
+		
+		return (bool)$task->save();
 	}
 }
