@@ -85,12 +85,12 @@ class TaskForm extends \yii\base\Model{
 	/**
 	 * @var array 负责人集合
 	 */
-	public $workers = '';
+	public $workers = [];
 	
 	/**
 	 * @var array 相关人员集合
 	 */
-	public $relatedMembers = '';
+	public $relatedMembers = [];
 	
 	/**
 	 * @var string 限制完成时间
@@ -138,7 +138,7 @@ class TaskForm extends \yii\base\Model{
 		}
 		return $rules;
 	}
-	
+
 	/**
 	 * @inheritedoc
 	 * @author KK
@@ -152,7 +152,7 @@ class TaskForm extends \yii\base\Model{
 			static::SCENE_UPDATE => ['taskId', 'title', 'detail', 'limit_time'],
 		];
 	}
-	
+
 	/**
 	 * 验证成员ID集
 	 * @author KK
@@ -169,7 +169,7 @@ class TaskForm extends \yii\base\Model{
 			$this->{$setAttr} = $workers;
 		}
 	}
-	
+
 	/**
 	 * 验证任务ID
 	 * @author KK
@@ -180,7 +180,7 @@ class TaskForm extends \yii\base\Model{
 		}
 		$this->_task = $task;
 	}
-	
+
 	/**
 	 * 验证任务分类ID
 	 * @author KK
@@ -191,7 +191,7 @@ class TaskForm extends \yii\base\Model{
 		}
 		$this->_taskCategory = $taskCategory;
 	}
-	
+
 	/**
 	 * 验证限制完成时间
 	 * @author KK
