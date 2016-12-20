@@ -189,6 +189,11 @@ class TaskForm extends \yii\base\Model{
 		if(!$taskCategory = TaskCategory::findOne($this->taskCategoryId)){
 			return $this->addError('taskCategoryId', '无效的任务分类ID');
 		}
+		
+		if($this->_task->category->id == $taskCategory->id){
+			return $this->addError('categoryId', '亲移动的分类怎么跟当前分类一模一样(＃－－)/ .');
+		}
+		
 		$this->_taskCategory = $taskCategory;
 	}
 

@@ -24,8 +24,7 @@ class ProjectTest extends \Codeception\TestCase\Test
 	 * 测试添加项目
 	 * @author KK
 	 */
-    public function testAdd()
-    {
+    public function testAdd(){
 		$form = new ProjectForm([
 			'scenario' => ProjectForm::SCENE_ADD,
 			'name' => '',
