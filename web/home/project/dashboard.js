@@ -358,7 +358,7 @@ function Task(aTask){
 		
 		var self = this;
 		App.ajax({
-			url : '/task/detail/' + this.data('id') + '.json',
+			url : '/task/' + this.data('id') + '.json',
 			success : function(aResult){
 				if(aResult.code){
 					App.alert(aResult.message);
@@ -470,7 +470,7 @@ function buildTaskDetailDialog(aTaskDetail){
 				</div>\n\
 			</div>\
 			<div class="form-group">\n\
-				<textarea class="form-control" rows="4" placeholder="任务详情，支持用Markdown书写">' + aTaskDetail.detail + '</textarea>\
+				<textarea class="form-control J-detail" rows="4" placeholder="任务详情，支持用Markdown书写">' + aTaskDetail.detail + '</textarea>\
 			</div>\
 			<div class="form-group">\n\
 				<div class="row J-wrapAddChildTask">\n\
@@ -483,21 +483,25 @@ function buildTaskDetailDialog(aTaskDetail){
 		</form>',
 		footer : '<button data-dismiss="modal" class="btn btn-default">关闭</button>'
 	});
-
-	$dialog.find('.J-title').blur(function(){
+	
+	var fUpdate = function(){
 		App.ajax({
 			url : '/task/update.do',
 			data : {
 				taskId : aTaskDetail.id,
-				title : aTaskDetail.title
+				title : $dialog.find('.J-title').text(),
+				detail : $dialog.find('.J-detail').val()
 			},
 			success : function(aResult){
 				if(aResult.code){
 					alert(aResult.message);
+					return;
 				}
 			}
 		});
-	});
+	};
+
+	$dialog.find('.J-title,.J-detail').blur(fUpdate);
 	
 	$dialog.find('.btnAddChildTask').click(function(){
 		var $wrapAddChildTask = $(this).closest('.J-wrapAddChildTask');

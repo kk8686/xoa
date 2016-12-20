@@ -274,7 +274,16 @@ class TaskForm extends \yii\base\Model{
 			return false;
 		}
 		
-		return $this->_task->toArray(['id', 'title', 'detail', 'level', 'repeat', 'is_finish', 'limit_time', 'end_time', 'add_time', 'history']);
+		$baseInfo = $this->_task->toArray(['id', 'title', 'detail', 'level', 'repeat', 'is_finish', 'limit_time', 'end_time', 'add_time', 'history']);
+		$baseInfo['workers'] = [];
+		foreach($this->_task->workers as $worker){
+			$baseInfo['workers'][] = $worker->toArray(['id', 'name', 'avatar']);
+		}
+		$baseInfo['related_members'] = [];
+		foreach($this->_task->relatedMembers as $member){
+			$baseInfo['related_members'][] = $member->toArray(['id', 'name', 'avatar']);
+		}
+		return $baseInfo;
 	}
 	
 	/**

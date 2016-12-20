@@ -20,6 +20,7 @@ return [
 		//任务
 		'task/add.do' => 'task/add-task',
 		'task/<categoryId>/tasks.json' => 'task/list',
+		'task/<taskId>.json' => 'task/info',
 		'project/<projectId:\d+>/task-categorys.json' => 'task/task-categories',
 		'task/move.do' => 'task/move-task',
 		'task/update.do' => 'task/update-task',
