@@ -129,7 +129,7 @@ EOL
 			$fullFile = $path . PATH_SEPARATOR . $file;
 			$files[] = $path . PATH_SEPARATOR . $file;
 			if(is_dir($fullFile)){
-				$files = array_merge($files, $this->_collectAllModelFiles($fullFile));
+				$files = array_merge($files, $this->_collectAllFiles($fullFile));
 			}
 		}
 		return $files;

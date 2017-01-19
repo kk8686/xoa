@@ -420,7 +420,7 @@ function buildChildTaskForm(defaultWorker, $wrapAddChildTask){
 
 /**
  * 构建任务详情弹窗
- * @param {type} aTaskDetail
+ * @param {object} aTaskDetail
  * @returns {ModalDialog}
  */
 function buildTaskDetailDialog(aTaskDetail){
@@ -448,7 +448,7 @@ function buildTaskDetailDialog(aTaskDetail){
 		title : '任务详情',
 		dialogClass : 'wrapTaskDetail',
 		content : '<form role="form">\
-			<div class="form-group taskTitle J-title" contenteditable="true">' + aTaskDetail.title + '</div>\
+			<div class="form-group taskTitle J-taskTitle" contenteditable="true">' + aTaskDetail.title + '</div>\
 			<div class="form-group">\n\
 				<div class="row topInfo">\n\
 					<div class="col-md-3">\n\
@@ -483,25 +483,40 @@ function buildTaskDetailDialog(aTaskDetail){
 		</form>',
 		footer : '<button data-dismiss="modal" class="btn btn-default">关闭</button>'
 	});
-	
-	var fUpdate = function(){
+
+	var $title = $dialog.find('.J-taskTitle'),
+		$detail = $dialog.find('.J-detail');
+
+		$title.data('last_content', $title.text());
+		$detail.data('last_content', $detail.val());
+	//$($title.selector + ',' + $detail.selector).blur(function(){
+	$dialog.find($title.selector + ',' + $detail.selector).blur(function(){
+		var $this = $(this);
+		var lastContent = $this.data('last_content'),
+			isTitle = $this.hasClass('J-taskTitle'),
+			value = isTitle ? $this.text() : $this.val();
+		
+		if(value == lastContent){
+			//没改变
+			return;
+		}
+		
 		App.ajax({
 			url : '/task/update.do',
 			data : {
 				taskId : aTaskDetail.id,
-				title : $dialog.find('.J-title').text(),
-				detail : $dialog.find('.J-detail').val()
+				title : $title.text(),
+				detail : $detail.val()
 			},
 			success : function(aResult){
 				if(aResult.code){
 					alert(aResult.message);
 					return;
 				}
+				$this.data('last_content', isTitle ? $this.text() : $this.val());
 			}
 		});
-	};
-
-	$dialog.find('.J-title,.J-detail').blur(fUpdate);
+	});
 	
 	$dialog.find('.btnAddChildTask').click(function(){
 		var $wrapAddChildTask = $(this).closest('.J-wrapAddChildTask');
