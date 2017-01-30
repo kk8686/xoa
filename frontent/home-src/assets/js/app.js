@@ -1,5 +1,5 @@
-(function(container, $){
-	container.App = {
+define(['jquery'], function($){
+	var app = {
 		alert : function(message, level, callback){
 			alert(message);
 			
@@ -113,7 +113,7 @@
 			for(var i = 1; i < aParamVaules.length; i++){
 				aParams[aParamNames[i - 1]] = aParamVaules[i];
 			}
-			self.aParams = $.extend(self.aParams, aParams);
+			app.aParams = $.extend(app.aParams, aParams);
 			return aParams;
 		},
 		
@@ -147,7 +147,7 @@
 					async : false,
 					success : function(aResult){
 						if(aResult.code){
-							App.alert(aResult.message, aResult.code, aResult.data);
+							app.alert(aResult.message, aResult.code, aResult.data);
 							return;
 						}
 						aUserInfo = aResult.data;
@@ -164,9 +164,18 @@
 					<a href="/worker/logout.do">退出登陆</a>\
 				</div>\
 			</header>');
+		},
+		
+		util : {
+			isEmptyObject : function(obj) {
+				for (var key in obj){
+					console.log(11, key);
+					return false;  
+				}
+				return true;
+			}  
 		}
 	};
-	
-	var self = container.App;
-	self.init();
-})(window, jQuery);
+	app.init();
+	return app;
+});

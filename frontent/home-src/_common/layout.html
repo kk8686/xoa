@@ -6,17 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/assets/bootstrap3/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/assets/css/common.css" />
-<script type="text/javascript" src="/assets/js/require.js"></script>
-<script type="text/javascript" src="/assets/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/assets/js/modules-config.js"></script>
 </head>
 <body>
 <div id="mainOut" class="container-full mainOut">{{content}}</div>
 <script type="text/javascript">
-$(function(){
-   App.showHeadBar(); 
-});
+if(window.require){
+	require(['app'], function(app){
+	   app.showHeadBar(); 
+	});
+}
 </script>
-<script type="text/javascript" src="/assets/bootstrap3/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/assets/js/app.js"></script>
 </body>
 </html>

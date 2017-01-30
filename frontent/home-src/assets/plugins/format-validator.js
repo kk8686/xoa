@@ -1,5 +1,5 @@
-(function ($, win) {
-	win.FormatValidator = {
+define(function(){
+	return {
 		//是否email格式
 		isEmail: function (email) {
 			return /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/.test(email);
@@ -84,13 +84,6 @@
 				return str.length >= minLength && str.length <= maxLength;
 			}
 			return true;
-		},
-		//是否符合身份证号格式
-		isIdCard : function(str) {
-			return /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/.test(str);
-		
 		}
 	};
-	var self = win.FormatValidator;
-})(jQuery, window);
-
+});

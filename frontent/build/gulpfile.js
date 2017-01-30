@@ -105,8 +105,12 @@ function setupTasks(config){
 				.pipe(gulp.dest(config.dist))
 				.on('end', function(){
 					var distFile = config.dist + '/' + path.relative(config.src, file);
-					var html = template(distFile, config.dict);
-					fs.writeFile(distFile, html);
+					fs.exists(distFile, function(exists){
+						if(exists){
+							var html = template(distFile, config.dict);
+							fs.writeFile(distFile, html);
+						}
+					});
 				});
 		
 		};
