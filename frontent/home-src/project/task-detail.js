@@ -33,7 +33,7 @@ define(['app', 'modal-dialog'], function(app, modalDialog){
 				<div class="form-group">\n\
 					<div class="row topInfo">\n\
 						<div class="col-md-3">\n\
-							<p>负责人</p>\n\
+							<p>' + dict.attributes.name + '</p>\n\
 							<p>' + workersHtml + '</p>\n\
 						</div>\n\
 						<div class="col-md-3">\n\
