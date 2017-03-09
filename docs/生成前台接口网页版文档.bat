@@ -1,2 +1,2 @@
 @echo off
-%~sdp0..\framework\bin\apidoc guide 前台接口 前台接口-网页版
+%~sdp0..\server\framework\bin\apidoc guide 前台接口 前台接口-网页版
