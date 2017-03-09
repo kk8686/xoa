@@ -103,7 +103,7 @@ class ProjectForm extends \yii\base\Model{
 	 * @author KK
 	 * @return Project
 	 * @throws \yii\base\ErrorException
-	 * @test \xoa_test\home\unit\ProjectTest
+	 * @test \xoa_test\home\unit\ProjectTest::testAdd
 	 */
 	public function add() : Project{
 		if(!$this->validate()){
