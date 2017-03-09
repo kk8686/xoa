@@ -121,7 +121,7 @@ class TaskForm extends \yii\base\Model{
 		$rules = [
 			['taskId', 'required'],
 			['title', 'string', 'length' => [4, 30], 'message' => '任务标题在4到30个字之间'],
-			['detail', 'string', 'length' => [4, 65535], 'message' => '任务详情在4到65535个字之间'],
+			['detail', 'string', 'length' => [4, 65535], 'message' => '任务详情在4到65535个字节之间'],
 			[['level', 'repeat', 'order'], 'integer'],
 			['order', 'compare', 'compareValue' => 0, 'operator' => '>'],
 			['level', 'in', 'range' => array_keys(Task::levels())],
