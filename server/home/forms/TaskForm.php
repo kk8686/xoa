@@ -228,6 +228,7 @@ class TaskForm extends \yii\base\Model{
 			'creater_id' => $this->worker->id,
 			'worker_ids' => $this->workerIds,
 			'limit_time' => $this->limitTime,
+			'repeat' => Task::REPEAT_NO,
 			'add_time' => date('Y-m-d H:i:'),
 		]);
 		if($this->relatedMemberIds){

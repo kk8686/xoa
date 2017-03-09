@@ -1,1 +1,181 @@
-define(["jquery"],function(e){var t={alert:function(e,t,r){alert(e),"string"==typeof r?location.href=r:"function"==typeof r&&r()},ajax:function(t){var r=e.extend({type:"post",complete:function(e){if(e.status>=300&&e.status<400&&304!=e.status){var r=e.getResponseHeader("X-Redirect");e.responseText.length?(alert(e.responseText),location.href=r):location.href=r}t.complete&&t.complete(e)},error:function(e){e.status>=300&&e.status<400&&304!=e.status&&alert(e.responseText)}},t);return e.ajax(r)},cookie:function(e,t,r){if("undefined"==typeof t){var a=null;if(document.cookie&&""!=document.cookie)for(var n=document.cookie.split(";"),o=0;o<n.length;o++){var i=jQuery.trim(n[o]);if(i.substring(0,e.length+1)==e+"="){a=decodeURIComponent(i.substring(e.length+1));break}}return a}r=r||{},null===t&&(t="",r.expires=-1);var s="";if(r.expires&&("number"==typeof r.expires||r.expires.toUTCString)){var u;"number"==typeof r.expires?(u=new Date,u.setTime(u.getTime()+24*r.expires*60*60*1e3)):u=r.expires,s="; expires="+u.toUTCString()}var l=r.path?"; path="+r.path:"",c=r.domain?"; domain="+r.domain:"",p=r.secure?"; secure":"";document.cookie=[e,"=",encodeURIComponent(t),s,l,c,p].join("")},loadParam:function(r){var a=location.pathname.substr(1);if(".htm"==a.substr(-4)&&(a+="l"),r==a||r+"l"==a)return{};var n=r.match(new RegExp("<\\w+:.+?>","g")),o=[];if(!n)return null;n.map(function(e){var t=e.replace(/<\w+:/,"("),a=e.match(/<(\w+)/);o.push(a[1]),t=t.replace(">",")"),r=r.replace(e,t)});var i=a.match(new RegExp(r));if(!i)return e.error("App.loadParam 加载请求参数失败"),null;for(var s={},u=1;u<i.length;u++)s[o[u-1]]=i[u];return t.aParams=e.extend(t.aParams,s),s},aParams:{},init:function(){var e=window.location.href,t=null;if(-1!=e.indexOf("?")){t={};var r=e.split("?")[1],a=r.split("&"),n=[];for(var o in a){n=a[o].split("=");var i=n[0],s=n[1];t[i]=s}}t&&(this.aParams=t)},showHeadBar:function(){var r=sessionStorage.getItem("userInfo");r?r=JSON.parse(r):self.ajax({url:"/worker/headbar.json",async:!1,success:function(e){return e.code?void t.alert(e.message,e.code,e.data):(r=e.data,void sessionStorage.setItem("userInfo",JSON.stringify(e.data)))}}),e("#mainOut").before('<header class="container-full">				<div class="left"><a href="/home.html">首页</a></div>				<div class="right">					<span class="glyphicon glyphicon-envelope"></span>					<a href="/worker/center.html">'+r.name+'</a>&nbsp;					<a href="/worker/logout.do">退出登陆</a>				</div>			</header>')},util:{isEmptyObject:function(e){for(var t in e)return console.log(11,t),!1;return!0}}};return t.init(),t});
+define(['jquery'], function($){
+	var app = {
+		alert : function(message, level, callback){
+			alert(message);
+			
+			if(typeof(callback) == 'string'){
+				location.href = callback;
+			}else if(typeof(callback) == 'function'){
+				callback();
+			}
+		},
+		
+		ajax : function(aOption){			
+			var aUsingOption = $.extend({
+				type : 'post',
+				complete : function(oXhr){
+					if((oXhr.status >= 300 && oXhr.status < 400) && oXhr.status != 304){
+						var redirectUrl = oXhr.getResponseHeader('X-Redirect');
+						if(oXhr.responseText.length){
+							alert(oXhr.responseText);
+							location.href = redirectUrl;
+						}else{
+							location.href = redirectUrl;
+						}
+					}
+					aOption.complete && aOption.complete(oXhr);
+				},
+				error : function(oXhr){
+					if((oXhr.status >= 300 && oXhr.status < 400) && oXhr.status != 304){
+						alert(oXhr.responseText);
+					}
+				}
+			}, aOption);
+			
+			return $.ajax(aUsingOption);
+		},
+		
+		cookie : function(name, value, options) {
+			if (typeof value != 'undefined') { // name and value given, set cookie
+				options = options || {};
+				if (value === null) {
+					value = '';
+					options.expires = -1;
+				}
+				var expires = '';
+				if (options.expires && (typeof options.expires == 'number' || options.expires.toUTCString)) {
+					var date;
+					if (typeof options.expires == 'number') {
+						date = new Date();
+						date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
+					} else {
+						date = options.expires;
+					}
+					expires = '; expires=' + date.toUTCString(); // use expires attribute, max-age is not supported by IE
+				}
+				// CAUTION: Needed to parenthesize options.path and options.domain
+				// in the following expressions, otherwise they evaluate to undefined
+				// in the packed version for some reason...
+				var path = options.path ? '; path=' + (options.path) : '';
+				var domain = options.domain ? '; domain=' + (options.domain) : '';
+				var secure = options.secure ? '; secure' : '';
+				document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
+			} else { // only name given, get cookie
+				var cookieValue = null;
+				if (document.cookie && document.cookie != '') {
+					var cookies = document.cookie.split(';');
+					for (var i = 0; i < cookies.length; i++) {
+						var cookie = jQuery.trim(cookies[i]);
+						// Does this cookie string begin with the name we want?
+						if (cookie.substring(0, name.length + 1) == (name + '=')) {
+							cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+							break;
+						}
+					}
+				}
+				return cookieValue;
+			}
+		},
+		
+		//装载URL参数
+		loadParam : function(rule){
+			var pathinfo = location.pathname.substr(1);
+			if(pathinfo.substr(-4) == '.htm'){
+				pathinfo += 'l';
+			}
+			if(rule == pathinfo || rule + 'l' == pathinfo){
+				return {};
+			}
+			//console.log('pathinfo', pathinfo);
+			var matchResults = rule.match(new RegExp('<\\w+:.+?>', 'g'));
+			var aParamNames = [];
+			if(!matchResults){
+				return null;
+			}
+
+			matchResults.map(function(item){
+				var pattern = item.replace(/<\w+:/, '(');
+				var paramNameMatchResult = item.match(/<(\w+)/);
+				aParamNames.push(paramNameMatchResult[1]);
+				pattern = pattern.replace('>', ')');
+				//console.log('pattern', pattern);
+				rule = rule.replace(item, pattern);
+			});
+
+			//console.log('RegExp', eRule);
+			var aParamVaules = pathinfo.match(new RegExp(rule));
+			//console.log('matched', paramVaules);
+			if(!aParamVaules){
+				$.error('App.loadParam 加载请求参数失败');
+				return null;
+			}
+			var aParams = {};
+			for(var i = 1; i < aParamVaules.length; i++){
+				aParams[aParamNames[i - 1]] = aParamVaules[i];
+			}
+			app.aParams = $.extend(app.aParams, aParams);
+			return aParams;
+		},
+		
+		aParams : {},
+		
+		init : function(){
+			var url = window.location.href;
+			var aParams = null;
+			if(url.indexOf('?') != -1){
+				aParams = {};
+				var paramsStr = url.split('?')[1],
+					aParamsArr = paramsStr.split('&'),
+					aParamsPropertyArr = [];
+				for(var j in aParamsArr){
+					aParamsPropertyArr = aParamsArr[j].split('=');
+					var key = aParamsPropertyArr[0],
+						value = aParamsPropertyArr[1];
+					aParams[key] = value;
+				}
+			}
+			aParams && (this.aParams = aParams);
+		},
+		
+		showHeadBar : function(){
+			var aUserInfo = sessionStorage.getItem('userInfo');
+			if(aUserInfo){
+				aUserInfo = JSON.parse(aUserInfo);
+			}else{
+				this.ajax({
+					url : '/worker/headbar.json',
+					async : false,
+					success : function(aResult){
+						if(aResult.code){
+							app.alert(aResult.message, aResult.code, aResult.data);
+							return;
+						}
+						aUserInfo = aResult.data;
+						sessionStorage.setItem('userInfo', JSON.stringify(aResult.data));
+					}
+				});
+			}
+			
+			$('#mainOut').before('<header class="container-full">\
+				<div class="left"><a href="/home.html">首页</a></div>\
+				<div class="right">\
+					<span class="glyphicon glyphicon-envelope"></span>\
+					<a href="/worker/center.html">' + aUserInfo.name + '</a>&nbsp;\
+					<a href="/worker/logout.do">退出登陆</a>\
+				</div>\
+			</header>');
+		},
+		
+		util : {
+			isEmptyObject : function(obj) {
+				for (var key in obj){
+					console.log(11, key);
+					return false;  
+				}
+				return true;
+			}  
+		}
+	};
+	app.init();
+	return app;
+});

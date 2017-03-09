@@ -1,21 +1,9 @@
-module.exports = {
-	code : 0,
+module.exports = dataMocker.mock({
 	message : '',
-	data : [
-		{
-			id : 1,
-			name : '陈莹莹',
-			avatar : '/data/worker/avatar/1.jpg'
-		},
-		{
-			id : 2,
-			name : '王自动',
-			avatar : '/data/worker/avatar/2.jpg'
-		},
-		{
-			id : 3,
-			name : '陈手动',
-			avatar : '/data/worker/avatar/3.jpg'
-		}
-	]
-};
+	code : 0,
+	'data|1-7' : [{
+		'id|11-999' : 11,
+		name : /(小明|小红|陈莹莹|王晶晶|张风|林云龙)/,
+		avatar : /\/data\/worker\/avatar\/xx\.jpg\?id=[1-5]/
+	}]
+});

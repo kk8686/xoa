@@ -33,7 +33,7 @@ define(['app', 'modal-dialog'], function(app, modalDialog){
 				<div class="form-group">\n\
 					<div class="row topInfo">\n\
 						<div class="col-md-3">\n\
-							<p>' + dict.attributes.name + '</p>\n\
+							<p>负责人</p>\n\
 							<p>' + workersHtml + '</p>\n\
 						</div>\n\
 						<div class="col-md-3">\n\
@@ -118,21 +118,27 @@ define(['app', 'modal-dialog'], function(app, modalDialog){
 	 */
 	function _buildChildTaskForm(defaultWorker, $wrapAddChildTask){
 		var $wrapForm = $('<div class="row wrapAddChildTaskForm">\n\
-			<textarea class="form-control J-content" rows="2"></textarea>\n\
+			<textarea class="form-control J-childTaskContent" rows="2"></textarea>\n\
 			<p>\n\
-				<span class="limitTime J-childTaskLimitTime">期限</span>\n\
-				<img class="avatar J-childTaskWorker" src="' + defaultWorker.avatar + '" title="' + defaultWorker.name + '"/>\n\
-				<span class="close J-close"></span>\n\
+				<span class="childTaskWorker J-childTaskWorker"><img class="avatar" src="' + defaultWorker.avatar + '" title="' + defaultWorker.name + '"/></span>\n\
 				<button type="button" class="btn btn-success J-saveChildTask">保存</button>\n\
 			</p>\n\
 		</div>');
 
 		$wrapForm.find('.J-saveChildTask').click(function(){
-			var content = $wrapForm.find('.J-content').val();
+			var content = $wrapForm.find('.J-childTaskContent').val().trim();
+			if(!content){
+				alert('请先填写任务内容');
+				return;
+				
+			}
 			var worker = defaultWorker;
 			app.ajax({
 				url : '/task/add-child-task.do',
-				data : {},
+				data : {
+					content : content,
+					worker : worker
+				},
 				success : function(aResult){
 					if(aResult.code){
 						alert(aResult.message);
@@ -146,6 +152,40 @@ define(['app', 'modal-dialog'], function(app, modalDialog){
 							明天 <img class="avatar avatarSmall" src="' + worker.avatar + '"/>\n\
 						</div>\n\
 					</div>');
+				}
+			});
+		});
+		
+		//选择子任务负责人
+		var $workers = null;
+		$wrapForm.find('.J-childTaskWorker').click(function(){
+			var $this = $(this);
+			if($workers){
+				$workers.is(':hidden') ? $workers.slideDown(100) : $workers.slideUp(100);
+				return;
+			}
+			
+			app.ajax({
+				url : '/project/' + app.aParams.projectId + '/members.json',
+				success : function(result){
+					var workersHtml = [];
+					for(var i in result.data){
+						var worker = result.data[i];
+						workersHtml.push('<li class="J-childTaskWorkerItem" data-id="' + worker.id + '"><img class="avatar" src="' + worker.avatar + '" title="' + worker.name + '" /></li>');
+					}
+					
+					
+					$workers = $('<ul style="display:none;">' + workersHtml.join('') + '</ul>');
+					
+					$this.after($workers);
+					
+					var left = $this.offset().left - $this.parent().offset().left + 'px'; //对齐子任务责任人选择结果
+					$workers.css({left : left});
+					$workers.on('click', '.J-childTaskWorkerItem', function(){
+						$this.data('id', $(this).data('id'));
+						$workers.slideUp(100);
+					});
+					$workers.slideDown(100);
 				}
 			});
 		});
