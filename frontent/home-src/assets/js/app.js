@@ -142,7 +142,7 @@ define(['jquery'], function($){
 			if(aUserInfo){
 				aUserInfo = JSON.parse(aUserInfo);
 			}else{
-				self.ajax({
+				this.ajax({
 					url : '/worker/headbar.json',
 					async : false,
 					success : function(aResult){
