@@ -168,9 +168,9 @@ define(['jquery'], function($){
 			
 			
 			this.ajax({
-				url : '/system/notice.json',
+				url : '/system/check-notice.do',
 				success : function(aResult){
-					if(aResult.data.has_new_message){
+					if(aResult.data === true){
 						$('#newMessageTip').css({display : 'inline-block'});
 					}
 				}
@@ -180,7 +180,6 @@ define(['jquery'], function($){
 		util : {
 			isEmptyObject : function(obj) {
 				for (var key in obj){
-					console.log(11, key);
 					return false;  
 				}
 				return true;

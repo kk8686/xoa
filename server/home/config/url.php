@@ -3,6 +3,9 @@ return [
 	'enablePrettyUrl' => true,
 	'showScriptName' => false,
 	'rules' => [
+		//系统
+		'system/check-notice.do' => 'system/check-notice',
+		
 		//工作者
 		'worker/register.do' => 'worker/register',
 		'worker/login.do' => 'worker/login',

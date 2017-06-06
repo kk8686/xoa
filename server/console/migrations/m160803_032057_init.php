@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Console;
 use xoa\common\models\{
+	Notice,
 	Project,
 	ProjectInvite,
 	Task,
@@ -53,6 +54,7 @@ class m160803_032057_init extends yii\db\Migration{
     public function safeDown(){
 		//要删除的表，新增了表的create后记得这里也加一个表
 		$dropTables = [
+			Notice::tableName(),
 			Project::tableName(),
 			ProjectInvite::tableName(),
 			Task::tableName(),
@@ -253,6 +255,33 @@ class m160803_032057_init extends yii\db\Migration{
 			'add_time' => $this->date()->notNull()->comment('添加时间'),
 		]);
 	}
+	
+	/**
+	 * 通知表创建
+	 * @author KK
+	 */
+	private function _notice_create(){
+		$this->createTable(Notice::tableName(), [
+			'id' => $this->primaryKey(),
+			Worker::tableName() . '_id' => $this->integer()->notNull()->defaultValue(0)->comment('被邀请的工作者ID'),
+			'type' => $this->smallInteger(1)->notNull()->defaultValue(0)->comment('类型 1=收到项目邀请 2=有人接受了项目邀请 3=收到新任务 4=任务被移动分类了 5=任务完成了 6=有人反馈了 7=收到点评 8=任务被取消'),
+			'status' => $this->smallInteger(1)->notNull()->defaultValue(0)->comment('状态 1=未读 2=已读'),
+			'message' => $this->text(1)->notNull()->defaultValue('')->comment('内容'),
+			'add_time' => $this->date()->notNull()->comment('添加时间'),
+		]);
+	}
+	
+	/**
+	 * 通知表数据模拟
+	 * @author KK
+	 */
+	private function _notice_mock(){
+		$this->batchInsert(Notice::tableName(), ['id', Worker::tableName() . '_id', 'type', 'status', 'message', 'add_time'], [
+			[1, 1, Notice::TYPE_INVITE_SUCCESS, Notice::STATUS_UNREAD, '叶聪同意加入了您的项目', $this->_time('-1day')],
+		]);
+	}
+	
+	
 	
 	/**
 	 * 生成时间

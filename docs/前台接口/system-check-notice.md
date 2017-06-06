@@ -1,7 +1,7 @@
 系统 - 通知
 ===
 
-- 地址：GET `/system/notice.json`
+- 地址：GET `/system/check-notice.do`
 	
 - 返回：
 
