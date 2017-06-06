@@ -29,9 +29,29 @@ class MigrateController extends \yii\console\controllers\MigrateController{
 	 */
 	private $_exportFileHandle = null;
 	
-	public function init(){
-		parent::init();
-		Yii::$classMap['yii\db\sqlite\ColumnSchemaBuilder'] = Yii::getAlias('@hook-yii2/db/sqlite/ColumnSchemaBuilder.php');
+	/**
+     * @inheritdoc
+	 */
+	public function beforeAction($action){
+		$result = parent::beforeAction($action);
+		if(!$result){
+			return false;
+		}
+		
+		if($action->id == 'up' && $this->exportFile){
+			$this->_parseExportFile();
+			is_file($this->exportFile) && unlink($this->exportFile);
+			if(!$this->_exportFileHandle = fopen($this->exportFile, 'w')){
+				throw new \medical\std\ErrorException('创建导出文件失败：' . $this->exportFile);
+			}
+			$this->db->commandClass = Command::className();
+			\yii\base\Event::on($this->db->commandClass, Command::EVENT_AFTER_EXECUTE, [$this, 'dumpSql']);
+		}
+		
+		if($this->db->driverName == 'sqlite'){
+			Yii::$classMap['yii\db\sqlite\ColumnSchemaBuilder'] = Yii::getAlias('@hook-yii2/db/sqlite/ColumnSchemaBuilder.php');
+		}
+		return $result;
 	}
 	
     /**
@@ -46,22 +66,6 @@ class MigrateController extends \yii\console\controllers\MigrateController{
         return $options;
     }
 	
-    /**
-     * @inheritdoc
-     */
-	public function beforeAction($action){
-		if($action->id == 'up' && $this->exportFile){
-			$this->_parseExportFile();
-			is_file($this->exportFile) && unlink($this->exportFile);
-			if(!$this->_exportFileHandle = fopen($this->exportFile, 'w')){
-				throw new \medical\std\ErrorException('创建导出文件失败：' . $this->exportFile);
-			}
-			Yii::$app->db->commandClass = Command::className();
-			\yii\base\Event::on(Yii::$app->db->commandClass, Command::EVENT_AFTER_EXECUTE, [$this, 'dumpSql']);
-		}
-		return parent::beforeAction($action);
-	}
-	
 	/**
 	 * 将执行过的sql语句dump到导出文件里
 	 * @param \yii\base\Event $event
@@ -69,6 +73,7 @@ class MigrateController extends \yii\console\controllers\MigrateController{
 	public function dumpSql($event){
 		$sql = $event->sender->getRawSql();
 		if(strpos($sql, '`migration`') === false){
+			//只收集与migration无关的语句
 			$sql = preg_replace('#^CREATE TABLE#', 'CREATE TABLE IF NOT EXISTS', $sql);
 			fwrite($this->_exportFileHandle, "$sql;\n\n");
 		}
@@ -91,8 +96,8 @@ class MigrateController extends \yii\console\controllers\MigrateController{
 		if($exportFile === '@'){
 			$result = null;
 			$fileName = 'dump';
-			if(Yii::$app->db->driverName != 'sqlite'
-				&& !preg_match('#dbname=(.+)$#', Yii::$app->db->dsn, $result)){
+			if($this->db->driverName != 'sqlite'
+				&& !preg_match('#dbname=(.+)$#', $this->db->dsn, $result)){
 				throw new \yii\base\ErrorException('匹配不到数据库名称');
 			}
 			$exportFile = Yii::getAlias('@tests/_data/' . ($result[1] ?? $fileName) . '.sql');

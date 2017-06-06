@@ -159,11 +159,22 @@ define(['jquery'], function($){
 			$('#mainOut').before('<header class="container-full">\
 				<div class="left"><a href="/home.html">首页</a></div>\
 				<div class="right">\
-					<span class="glyphicon glyphicon-envelope"></span>\
+					<span class="newMessageTip" id="newMessageTip"></span>\
+					<span class="glyphicon glyphicon-envelope" id="icoMessage"></span>\
 					<a href="/worker/center.html">' + aUserInfo.name + '</a>&nbsp;\
 					<a href="/worker/logout.do">退出登陆</a>\
 				</div>\
 			</header>');
+			
+			
+			this.ajax({
+				url : '/system/notice.json',
+				success : function(aResult){
+					if(aResult.data.has_new_message){
+						$('#newMessageTip').css({display : 'inline-block'});
+					}
+				}
+			});
 		},
 		
 		util : {

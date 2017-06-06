@@ -30,6 +30,18 @@ header {
 			color: #428bca;
 			cursor: pointer;
 		}
+		
+		.newMessageTip{
+			width : 8px;
+			height : 8px;
+			background-color:red;
+			display: none;
+			border-radius: 4px;
+			position: relative;
+			left: 23px;
+			top: -7px;
+			z-index: 9999;
+		}
 	}
 	a {
 		color: #FFF;
