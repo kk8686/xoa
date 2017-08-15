@@ -11,6 +11,8 @@
 
 前端开发构建环境：**[Gulp](http://www.kkh86.com/it/gulp-build-dev-env/guide-README.html)**
 
+Gulp对应的Node版本是4.4.3，[点击下载](https://pan.baidu.com/s/1qYfSADm)我共享到百度网盘上的Node-4.4.3
+
 前端模板引擎：**[artTemplate](https://github.com/aui/artTemplate)**
 
 后端语言**：PHP7** （提示：下载phpStudy最新版可以切换到PHP7）
