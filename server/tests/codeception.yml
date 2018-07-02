@@ -19,4 +19,6 @@ modules:
             dsn: 'sqlite:../data/database-test.db'
             user: 'root'
             password: '121212'
+            populate: true
+            cleanup: true
             dump: codeception/_data/dump.sql
