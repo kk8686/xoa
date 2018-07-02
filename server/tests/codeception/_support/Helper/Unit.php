@@ -4,7 +4,7 @@ namespace xoa_test\Helper;
 // here you can define custom actions
 // all public methods declared in helper class will be available in $I
 
-use \PHPUnit_Framework_Assert;
+use \PHPUnit\Framework\Assert;
 
 class Unit extends \Codeception\Module
 {
@@ -25,9 +25,9 @@ class Unit extends \Codeception\Module
 	 */
 	public function assertHasKeys(array $keys, array $array, bool $only = true, string $message = ''){
 		foreach($keys as $key){
-			PHPUnit_Framework_Assert::assertArrayHasKey($key, $array, $message);
+			Assert::assertArrayHasKey($key, $array, $message);
 		}
-		$only && PHPUnit_Framework_Assert::assertEmpty(array_diff($keys, array_keys($array)), '数组有多出的key');
+		$only && Assert::assertEmpty(array_diff($keys, array_keys($array)), '数组有多出的key');
 	}
 	
 	
