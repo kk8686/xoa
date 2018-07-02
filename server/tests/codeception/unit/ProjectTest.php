@@ -38,10 +38,11 @@ class ProjectTest extends \Codeception\TestCase\Test
 		$this->assertArrayHasKey('name', $form->errors, '项目名称应该是一个字符串');
 		
 		$form->name = 'test';
-		$project = $form->add();
-		$this->assertInstanceOf(Project::className(), $project, '添加后应返回Project实例');
+		$addResult = $form->add();
+		$this->assertTrue($addResult);
+		$this->assertInstanceOf(Project::className(), $form->project, '添加后应返回Project实例');
 		
-		$this->tester->seeInDatabase(Project::tableName(), ['id' => $project->id], '数据库应该有了这个ID的记录');
+		$this->tester->seeInDatabase(Project::tableName(), ['id' => $form->project->id], '数据库应该有了这个ID的记录');
     }
 	
 	/**

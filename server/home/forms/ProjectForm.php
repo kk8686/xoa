@@ -26,7 +26,7 @@ class ProjectForm extends \yii\base\Model{
 	 * @var string 项目名称
 	 */
 	public $name = '';
-	
+
 	/**
 	 * @var Worker 创建者
 	 */
@@ -36,6 +36,11 @@ class ProjectForm extends \yii\base\Model{
 	 * @var int 项目ID
 	 */
 	public $projectId = 0;
+
+	/**
+	 * @var Project 项目
+	 */
+	public $project = null;
 	
 	/**
 	 * @var int 被邀请加入项目的工作者ID
@@ -105,9 +110,9 @@ class ProjectForm extends \yii\base\Model{
 	 * @throws \yii\base\ErrorException
 	 * @test \xoa_test\home\unit\ProjectTest::testAdd
 	 */
-	public function add() : Project{
+	public function add() : bool{
 		if(!$this->validate()){
-			return null;
+			return false;
 		}
 		
 		$project = new Project([
@@ -120,7 +125,8 @@ class ProjectForm extends \yii\base\Model{
 		if(!$project->save()){
 			throw new \yii\base\ErrorException('添加项目失败');
 		}
-		return $project;
+		$this->project = $project;
+		return true;
 	}
 	
 	/**
